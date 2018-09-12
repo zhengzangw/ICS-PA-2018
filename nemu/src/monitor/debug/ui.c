@@ -58,14 +58,21 @@ static int cmd_info(char *args){
 		printf("rax%#20x%20u",cpu.edx,cpu.edx);
 		printf("rax%#20x%20u",cpu.esi,cpu.esi);
 		printf("rax%#20x%20u",cpu.edi,cpu.edi);
-		printf("rax%#20x%20u",cpu.ebp,cpu.ebp);	
-		printf("rax%#20x%20u",cpu.esp,cpu.esp);
+		printf("rax%#20x%20x",cpu.ebp,cpu.ebp);	
+		printf("rax%#20x%20x",cpu.esp,cpu.esp);
 	}
 	return 0;
 }
 
 static int cmd_x(char *args){
-
+    char *arg1 = strtok(NULL," ");
+	char *arg2 = strtok(NULL," ");
+	uint32_t x_num = strtol(arg1,NULL,10);
+	uint32_t x_pos = strtol(arg2,NULL,16);
+	uint32_t size = 4;
+	for (uint32_t i=0;i<x_num;++i){
+      printf("%#x:%#20x\n",x_pos+i*size,vaddr_read(x_pos+i*size,4));
+	}
 	return 0;
 }
 
