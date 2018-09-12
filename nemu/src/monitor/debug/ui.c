@@ -8,7 +8,7 @@
 #include <readline/history.h>
 
 void cpu_exec(uint64_t);
-
+extern CPU_state cpu;
 /* We use the `readline' library to provide more flexibility to read from stdin. */
 char* rl_gets() {
   static char *line_read = NULL;
@@ -38,6 +38,37 @@ static int cmd_q(char *args) {
 
 static int cmd_help(char *args);
 
+static int cmd_si(char *args){
+	char *arg = strtok(NULL," ");
+	if (arg==NULL){
+		cpu_exec(1);
+	} else {
+		uint32_t exec_num = strtol(arg, NULL, 10);
+		cpu_exec(exec_num);
+	}
+	return 0;
+}
+
+static int cmd_info(char *args){
+	char *arg = strtok(NULL, " ");
+	if (strcmp(arg,"r")==0){
+		printf("rax%#20x%20u",cpu.eax,cpu.eax);
+		printf("rax%#20x%20u",cpu.ebx,cpu.ebx);
+		printf("rax%#20x%20u",cpu.ecx,cpu.ecx);
+		printf("rax%#20x%20u",cpu.edx,cpu.edx);
+		printf("rax%#20x%20u",cpu.esi,cpu.esi);
+		printf("rax%#20x%20u",cpu.edi,cpu.edi);
+		printf("rax%#20x%20u",cpu.ebp,cpu.ebp);	
+		printf("rax%#20x%20u",cpu.esp,cpu.esp);
+	}
+	return 0;
+}
+
+static int cmd_x(char *args){
+
+	return 0;
+}
+
 static struct {
   char *name;
   char *description;
@@ -46,7 +77,9 @@ static struct {
   { "help", "Display informations about all supported commands", cmd_help },
   { "c", "Continue the execution of the program", cmd_c },
   { "q", "Exit NEMU", cmd_q },
-
+  { "si", "Step over exactly one instruction", cmd_si },
+  { "info", "Examine specific area in machine", cmd_info },
+  { "x", "Examine memory", cmd_x },
   /* TODO: Add more commands */
 
 };
