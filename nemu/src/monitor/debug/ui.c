@@ -45,7 +45,7 @@ static int cmd_si(char *args){
 	} else {
 		char *pos;
 		uint32_t exec_num = strtol(arg, &pos, 10);
-		if (exec_num<=0 || pos!='\0') printf("Invalid input!\n");
+		if (exec_num<=0 || *pos!='\0') printf("Invalid input!\n");
 		else cpu_exec(exec_num);
 	}
 	return 0;
@@ -72,7 +72,7 @@ static int cmd_x(char *args){
 	char *pos1, *pos2;
 	uint32_t x_num = strtol(arg1,&pos1,10);
 	uint32_t x_pos = strtol(arg2,&pos2,16);
-	if (pos1!='\0'||pos2!='\0'||x_num<0||x_pos<0) printf("Invalid input!\n");
+	if (*pos1!='\0'||*pos2!='\0'||x_num<0||x_pos<0) printf("Invalid input!\n");
 	else {
 		uint32_t size = 4;
 		for (uint32_t i=0;i<x_num;++i){
