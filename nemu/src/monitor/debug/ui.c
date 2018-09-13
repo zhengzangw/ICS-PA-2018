@@ -43,8 +43,10 @@ static int cmd_si(char *args){
 	if (arg==NULL){
 		cpu_exec(1);
 	} else {
-		uint32_t exec_num = strtol(arg, NULL, 10);
-		cpu_exec(exec_num);
+		char *pos;
+		uint32_t exec_num = strtol(arg, &pos, 10);
+		if (exec_num<=0 || pos!='\0') printf("Invalid input!\n");
+		else cpu_exec(exec_num);
 	}
 	return 0;
 }
@@ -52,26 +54,30 @@ static int cmd_si(char *args){
 static int cmd_info(char *args){
 	char *arg = strtok(NULL, " ");
 	if (strcmp(arg,"r")==0){
-		printf("rax%#20x%20u",cpu.eax,cpu.eax);
-		printf("rax%#20x%20u",cpu.ebx,cpu.ebx);
-		printf("rax%#20x%20u",cpu.ecx,cpu.ecx);
-		printf("rax%#20x%20u",cpu.edx,cpu.edx);
-		printf("rax%#20x%20u",cpu.esi,cpu.esi);
-		printf("rax%#20x%20u",cpu.edi,cpu.edi);
-		printf("rax%#20x%20x",cpu.ebp,cpu.ebp);	
-		printf("rax%#20x%20x",cpu.esp,cpu.esp);
-	}
+		printf("rax%#20x%20u\n",cpu.eax,cpu.eax);
+		printf("rax%#20x%20u\n",cpu.ebx,cpu.ebx);
+		printf("rax%#20x%20u\n",cpu.ecx,cpu.ecx);
+		printf("rax%#20x%20u\n",cpu.edx,cpu.edx);
+		printf("rax%#20x%20u\n",cpu.esi,cpu.esi);
+		printf("rax%#20x%20u\n",cpu.edi,cpu.edi);
+		printf("rax%#20x%20x\n",cpu.ebp,cpu.ebp);	
+		printf("rax%#20x%20x\n",cpu.esp,cpu.esp);
+	} else printf("Invalid input!\n");
 	return 0;
 }
 
 static int cmd_x(char *args){
     char *arg1 = strtok(NULL," ");
 	char *arg2 = strtok(NULL," ");
-	uint32_t x_num = strtol(arg1,NULL,10);
-	uint32_t x_pos = strtol(arg2,NULL,16);
-	uint32_t size = 4;
-	for (uint32_t i=0;i<x_num;++i){
-      printf("%#x:%#20x\n",x_pos+i*size,vaddr_read(x_pos+i*size,4));
+	char *pos1, *pos2;
+	uint32_t x_num = strtol(arg1,&pos1,10);
+	uint32_t x_pos = strtol(arg2,&pos2,16);
+	if (pos1!='\0'||pos2!='\0'||x_num<0||x_pos<0) printf("Invalid input!\n");
+	else {
+		uint32_t size = 4;
+		for (uint32_t i=0;i<x_num;++i){
+	      printf("%#x:%#20x\n",x_pos+i*size,vaddr_read(x_pos+i*size,4));
+	}
 	}
 	return 0;
 }
