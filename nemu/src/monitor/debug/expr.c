@@ -129,6 +129,7 @@ int prime_op(int s,int t){
 			case '/': if (count==0 && curop!='+' && curop!='-'){
 						curop = tokens[pos=i].type;
 					  }
+					  break;
 			case '+':
 			case '-':
 					  if (count==0){
