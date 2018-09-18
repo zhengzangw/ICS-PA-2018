@@ -9,6 +9,8 @@
 
 void cpu_exec(uint64_t);
 extern CPU_state cpu;
+extern nr_token;
+extern tokens[32];
 /* We use the `readline' library to provide more flexibility to read from stdin. */
 char* rl_gets() {
   static char *line_read = NULL;
@@ -73,6 +75,10 @@ static int cmd_info(char *args){
 static int cmd_x(char *args){
     char *arg1 = strtok(NULL," ");
 	char *arg2 = strtok(NULL," ");
+	if (arg1==NULL || arg2==NULL) { 
+		printf("Invalid input!\n");
+		return 0;
+	}
 	char *pos1, *pos2;
 	long x_num = strtol(arg1,&pos1,10);
 	long x_pos = strtol(arg2,&pos2,16);
@@ -92,6 +98,64 @@ static int cmd_x(char *args){
 	return 0;
 }
 
+bool check_parenthesis(int s, int t){
+	int count = 0;
+	for (int i=s;i<t;++i){
+		if (tokens[i].type == '(') count++;
+		if (tokens[i].type == ')') count--;
+		if (count<1) return false;
+	}
+	if (count==1 && tokens[t].type == ')') return true;
+	return false;
+}
+
+int prime_op(int s,int t){
+	int count = 0, pos, curop=256;
+	for (int i=s;i<=t;++i){
+		switch (tokens[i].type){
+			case '(': count++; break;
+			case ')': count--; break;
+			case '*':
+			case '/': if (count==0){
+						curop = tokens[pos=i].type;
+					  }
+			case '+':
+			case '-':
+					  if (count==0 && curop!='*' && corop!='/'){
+						curop = tokens[pos=i].type;
+					  }
+			default: break;
+		}
+	}
+	return pos;
+}
+
+uint32_t eval(int s, int t){
+	if (s>t){
+		assert(0);	
+	} else if (s==t)
+		return strtol(tokens[s].str,NULL,10);
+	} else if (check_parenthesis(t,s)==true){
+		return eval(s+1,t-1);
+	} else {
+		int op = prime_op(s,t);
+		uint32_t val1 = eval(s,op-1);
+		uint32_t val2 = eval(op+1,t);
+		switch (op){
+			case '+': return val1+val2;
+			case '-': return val1-val2;
+			case '*': return val1*val2;
+			case '/': return val1/val2;
+			default: assert(0);
+		}
+	}	
+}
+
+static u_int32_t cmd_p(char *args){
+	make_token(args);		
+	return eval(0,nr_token-1);
+}
+
 static struct {
   char *name;
   char *description;
@@ -103,6 +167,7 @@ static struct {
   { "si", "Step over exactly one instruction", cmd_si },
   { "info", "Examine specific area in machine", cmd_info },
   { "x", "Examine memory", cmd_x },
+  { "p", "Expression Calculation", cmd_p },
   /* TODO: Add more commands */
 
 };
