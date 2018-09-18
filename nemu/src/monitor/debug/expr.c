@@ -120,6 +120,7 @@ bool check_parenthesis(int s, int t){
 		if (tokens[i].type == ')') count--;
 		if (count<1) return false;
 	}
+	Log("Before ruturn, count=%d, tokens[t].type=%c\n",count,tokens[t].type);
 	if (count==1 && tokens[t].type == ')') return true;
 	return false;
 }
@@ -154,7 +155,7 @@ uint32_t eval(int s, int t){
 		long val = strtol(tokens[s].str,&tmp,10);
 		Log("val = %ld", val);
 		return val;
-	} else if (check_parenthesis(t,s)==true){
+	} else if (check_parenthesis(t,s)){
 		return eval(s+1,t-1);
 	} else {
 		int op = prime_op(s,t);
