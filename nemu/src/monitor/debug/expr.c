@@ -8,7 +8,7 @@
 #include <regex.h>
 
 enum {
-  TK_NOTYPE = 256, TK_EQ, TK_NUM, TK_NEGNUM
+  TK_NOTYPE = 256, TK_EQ, TK_NUM
 
   /* TODO: Add more token types */
 
@@ -88,7 +88,6 @@ static bool make_token(char *e) {
 		
         switch (rules[i].token_type) {
 			case TK_NUM:
-			case TK_NEGNUM:
 				if (substr_len>9) {
 					printf("Input a number too larger!\n");
 					return false;
@@ -96,11 +95,6 @@ static bool make_token(char *e) {
 				strncpy(tokens[nr_token].str,substr_start,substr_len);
 				tokens[nr_token++].type = rules[i].token_type;
 				break;
-			case '-':
-				if (rules[i+1].token_type==TK_NUM){
-					tokens[nr_token++].type = '+';
-					rules[i+1].token_type = TK_NEGNUM;
-				} else tokens[nr_token++].type = '-';
 			case TK_NOTYPE:
 				break;
           default:
@@ -171,18 +165,14 @@ uint32_t eval(int s, int t, bool *success){
 		*success = false;
 		return 0;	
 	} else if (s==t) {
-		if (tokens[s].type==TK_NUM){
-			long val = strtol(tokens[s].str,NULL,10);
-			return val;
-		} else if (tokens[s].type==TK_NEGNUM){
-			long val = -strtol(tokens[s].str,NULL,10);
-			return val;
-		} else {
+		if (tokens[s].type!=TK_NUM){
 			*success = false;
 			return 0;
+		} else {
+			long val = strtol(tokens[s].str,NULL,10);
+			return val;
 		}
 	} else if (check_parenthesis(s,t,success)){
-		Log("s=%d,t=%d",s,t);
 		return eval(s+1,t-1,success);
 	} else if (*success){
 		int op = prime_op(s,t);
