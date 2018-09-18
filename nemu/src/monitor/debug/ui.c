@@ -98,6 +98,10 @@ static int cmd_x(char *args){
 
 static int cmd_p(char *args){
 	bool flag=true;
+	if (args==NULL){
+		printf("p must have parameters\n");
+		return 0;
+	}
 	uint32_t val = expr(args,&flag);
 	if (flag)
 		printf("%d\n",val);
