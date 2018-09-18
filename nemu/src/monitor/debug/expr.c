@@ -123,7 +123,7 @@ bool check_parenthesis(int s, int t, bool *success){
 		if (tokens[i].type == ')') count--;
 		if (count<1 && i!=t) flag = 0;
 		if (count<0) {
-			success = false;
+			*success = false;
 			return false;
 		}
 	}
@@ -155,14 +155,14 @@ int prime_op(int s,int t){
 }
 
 uint32_t eval(int s, int t, bool *success){
-	if (!success) return 0;
+	if (!*success) return 0;
 	if (s>t){
-		success = false;
+		*success = false;
 		return 0;	
 	} else if (s==t) {
 		char *tmp;
 		if (tokens[s].type!=TK_NOTYPE){
-			success = false;
+			*success = false;
 			return 0;
 		} else {
 			long val = strtol(tokens[s].str,&tmp,10);
@@ -175,9 +175,9 @@ uint32_t eval(int s, int t, bool *success){
 		int op = prime_op(s,t);
 		Log("From %d to %d, Prime op is %c at tokens[%d]", s, t, tokens[op].type, op);
 		uint32_t val1 = eval(s,op-1,success);
-		if (!success) return 0;
+		if (!*success) return 0;
 		uint32_t val2 = eval(op+1,t,success);
-		if (!success) return 0;
+		if (!*success) return 0;
 		switch (tokens[op].type){
 			case '+': return val1+val2;
 			case '-': return val1-val2;
