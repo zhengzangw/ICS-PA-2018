@@ -98,7 +98,8 @@ static int cmd_x(char *args){
 
 static int cmd_p(char *args){
 	bool flag;
-	return expr(args,&flag);
+	printf("%d\n",expr(args,&flag));
+	return 0;
 }
 
 static struct {
