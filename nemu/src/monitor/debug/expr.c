@@ -154,8 +154,10 @@ int prime_op(int s,int t){
 }
 
 uint32_t eval(int s, int t, bool *success){
+	if (!success) return 0;
 	if (s>t){
-		assert(0);	
+		success = false;
+		return 0;	
 	} else if (s==t) {
 		char *tmp;
 		if (tokens[s].type!=TK_NOTYPE){
