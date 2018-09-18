@@ -164,17 +164,18 @@ uint32_t eval(int s, int t, bool *success){
 		if (tokens[s].type!=TK_NOTYPE){
 			success = false;
 			return 0;
+		} else {
+			long val = strtol(tokens[s].str,&tmp,10);
+			return val;
 		}
-		long val = strtol(tokens[s].str,&tmp,10);
-		return val;
 	} else if (check_parenthesis(s,t,success)){
 		Log("s=%d,t=%d",s,t);
-		if (!success) return 0;
 		return eval(s+1,t-1,success);
 	} else {
 		int op = prime_op(s,t);
-		Log("Prime op is %c at tokens[%d]", tokens[op].type, op);
+		Log("From %d to %d, Prime op is %c at tokens[%d]", s, t, tokens[op].type, op);
 		uint32_t val1 = eval(s,op-1,success);
+		if (!success) return 0;
 		uint32_t val2 = eval(op+1,t,success);
 		if (!success) return 0;
 		switch (tokens[op].type){
@@ -193,7 +194,7 @@ uint32_t expr(char *e, bool *success) {
     *success = false;
     return 0;
   } 
-
+  
   /* TODO: Insert codes to evaluate the expression. */
   return eval(0, nr_token-1, success);
 }
