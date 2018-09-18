@@ -117,14 +117,17 @@ static bool make_token(char *e) {
 }
 
 bool check_parenthesis(int s, int t, bool *success){
-	int count = 0;
+	int count = 0,flag = 1;
 	for (int i=s;i<t;++i){
 		if (tokens[i].type == '(') count++;
 		if (tokens[i].type == ')') count--;
-		if (count<1) return false;
+		if (count<1) flag = 0;
+		if (count<0) {
+			success = false;
+			return false;
+		}
 	}
-	Log("Before ruturn, count=%d, tokens[t].type=%c\n",count,tokens[t].type);
-	if (count==1 && tokens[t].type == ')') return true;
+	if (flag && count==1 && tokens[t].type == ')') return true;
 	return false;
 }
 
@@ -155,23 +158,28 @@ uint32_t eval(int s, int t, bool *success){
 		assert(0);	
 	} else if (s==t) {
 		char *tmp;
+		if (tokens[s].type!=TK_NOTYPE){
+			success = false;
+			return 0;
+		}
 		long val = strtol(tokens[s].str,&tmp,10);
-		Log("val = %ld", val);
 		return val;
 	} else if (check_parenthesis(s,t,success)){
+		if (!success) return 0;
 		return eval(s+1,t-1,success);
 	} else {
 		int op = prime_op(s,t);
-		Log("Prime op is %c at tokens[%d]", tokens[op].type, op);
+		//Log("Prime op is %c at tokens[%d]", tokens[op].type, op);
 		uint32_t val1 = eval(s,op-1,success);
 		uint32_t val2 = eval(op+1,t,success);
+		if (!success) return 0;
 		switch (tokens[op].type){
 			case '+': return val1+val2;
 			case '-': return val1-val2;
 			case '*': return val1*val2;
 			case '/': return val1/val2;
-			default: assert(0);
 		}
+		printf("Unknown Fault, STFC for help!\n"); 
 		return 0;
 	}	
 }

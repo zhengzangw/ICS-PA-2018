@@ -97,8 +97,11 @@ static int cmd_x(char *args){
 }
 
 static int cmd_p(char *args){
-	bool flag;
-	printf("%d\n",expr(args,&flag));
+	bool flag=true;
+	uint32_t val = expr(args,&flag);
+	if (flag)
+		printf("%d\n",val);
+	else printf("Invalid Input!\n");
 	return 0;
 }
 
