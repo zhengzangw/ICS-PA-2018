@@ -137,7 +137,7 @@ int prime_op(int s,int t){
 			default: break;
 		}
 	}
-	return pos;
+	return tokens[pos].type;
 }
 
 uint32_t eval(int s, int t){
