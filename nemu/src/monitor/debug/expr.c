@@ -172,7 +172,7 @@ uint32_t eval(int s, int t, bool *success){
 		return eval(s+1,t-1,success);
 	} else {
 		int op = prime_op(s,t);
-		//Log("Prime op is %c at tokens[%d]", tokens[op].type, op);
+		Log("Prime op is %c at tokens[%d]", tokens[op].type, op);
 		uint32_t val1 = eval(s,op-1,success);
 		uint32_t val2 = eval(op+1,t,success);
 		if (!success) return 0;
