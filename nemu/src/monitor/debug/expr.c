@@ -160,11 +160,11 @@ uint32_t eval(int s, int t, bool *success){
 		*success = false;
 		return 0;	
 	} else if (s==t) {
-		char *tmp;
-		if (tokens[s].type!=TK_NOTYPE){
+		if (tokens[s].type!=TK_NUM){
 			*success = false;
 			return 0;
 		} else {
+			char *tmp;
 			long val = strtol(tokens[s].str,&tmp,10);
 			return val;
 		}
