@@ -1,4 +1,5 @@
 #include "nemu.h"
+#include <stdlib.h>
 
 /* We use the POSIX regex functions to process regular expressions.
  * Type 'man regex' for more information about POSIX regex functions.
@@ -105,14 +106,70 @@ static bool make_token(char *e) {
   return true;
 }
 
+bool check_parenthesis(int s, int t){
+	int count = 0;
+	for (int i=s;i<t;++i){
+		if (tokens[i].type == '(') count++;
+		if (tokens[i].type == ')') count--;
+		if (count<1) return false;
+	}
+	if (count==1 && tokens[t].type == ')') return true;
+	return false;
+}
+
+int prime_op(int s,int t){
+	int count = 0, pos=-1, curop=256;
+	for (int i=s;i<=t;++i){
+		switch (tokens[i].type){
+			case '(': count++; break;
+			case ')': count--; break;
+			case '*':
+			case '/': if (count==0){
+						curop = tokens[pos=i].type;
+					  }
+			case '+':
+			case '-':
+					  if (count==0 && curop!='*' && curop!='/'){
+						curop = tokens[pos=i].type;
+					  }
+			default: break;
+		}
+	}
+	return pos;
+}
+
+uint32_t eval(int s, int t){
+	if (s>t){
+		assert(0);	
+	} else if (s==t) {
+		char *tmp;
+		long val = strtol(tokens[s].str,&tmp,10);
+		return val;
+	} else if (check_parenthesis(t,s)==true){
+		return eval(s+1,t-1);
+	} else {
+		int op = prime_op(s,t);
+		uint32_t val1 = eval(s,op-1);
+		uint32_t val2 = eval(op+1,t);
+		switch (op){
+			case '+': return val1+val2;
+			case '-': return val1-val2;
+			case '*': return val1*val2;
+			case '/': return val1/val2;
+			default: assert(0);
+		}
+		return 0;
+	}	
+}
+
 uint32_t expr(char *e, bool *success) {
   if (!make_token(e)) {
     *success = false;
     return 0;
-  }
+  } 
 
   /* TODO: Insert codes to evaluate the expression. */
-  TODO();
-
-  return 0;
+  return eval(0,nr_token-1);
 }
+
+
