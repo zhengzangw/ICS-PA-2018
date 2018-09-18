@@ -88,8 +88,8 @@ static bool make_token(char *e) {
 		
         switch (rules[i].token_type) {
 			case TK_NUM:
-				if (substr_len>32) {
-					printf("Input a number has more than 32 digits!\n");
+				if (substr_len>9) {
+					printf("Input a number too larger!\n");
 					return false;
 				}	
 				strncpy(tokens[nr_token].str,substr_start,substr_len);
@@ -118,16 +118,17 @@ static bool make_token(char *e) {
 
 bool check_parenthesis(int s, int t, bool *success){
 	int count = 0,flag = 1;
-	for (int i=s;i<t;++i){
+	for (int i=s;i<=t;++i){
 		if (tokens[i].type == '(') count++;
 		if (tokens[i].type == ')') count--;
-		if (count<1) flag = 0;
+		if (count<1 && i!=t) flag = 0;
 		if (count<0) {
 			success = false;
 			return false;
 		}
 	}
-	if (flag && count==1 && tokens[t].type == ')') return true;
+	
+	if (flag && count==0) return true;
 	return false;
 }
 
