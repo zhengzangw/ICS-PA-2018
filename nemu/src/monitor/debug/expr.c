@@ -128,7 +128,11 @@ bool check_parenthesis(int s, int t, bool *success){
 			return false;
 		}
 	}
-	
+	if (count>0) {
+		printf("Inclosed Brace!\n");
+		*success = false;
+		return false;
+	}	
 	if (flag && count==0) return true;
 	return false;
 }
@@ -172,7 +176,7 @@ uint32_t eval(int s, int t, bool *success){
 	} else if (check_parenthesis(s,t,success)){
 		Log("s=%d,t=%d",s,t);
 		return eval(s+1,t-1,success);
-	} else {
+	} else if (*success){
 		int op = prime_op(s,t);
 		Log("From %d to %d, Prime op is %c at tokens[%d]", s, t, tokens[op].type, op);
 		uint32_t val1 = eval(s,op-1,success);
@@ -184,10 +188,10 @@ uint32_t eval(int s, int t, bool *success){
 			case '-': return val1-val2;
 			case '*': return val1*val2;
 			case '/': return val1/val2;
+			default: *success = false;
 		}
-		printf("Unknown Fault, STFC for help!\n"); 
-		return 0;
-	}	
+	}
+	return 0;
 }
 
 uint32_t expr(char *e, bool *success) {
