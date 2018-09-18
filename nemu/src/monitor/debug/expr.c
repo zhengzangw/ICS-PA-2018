@@ -88,7 +88,10 @@ static bool make_token(char *e) {
 		
         switch (rules[i].token_type) {
 			case TK_NUM:
-				assert(substr_len<32); 
+				if (substr_len>32) {
+					printf("Input a number has more than 32 digits!\n");
+					return false;
+				}	
 				strncpy(tokens[nr_token].str,substr_start,substr_len);
 				tokens[nr_token++].type = rules[i].token_type;
 				break;
@@ -113,7 +116,7 @@ static bool make_token(char *e) {
   return true;
 }
 
-bool check_parenthesis(int s, int t){
+bool check_parenthesis(int s, int t, bool *success){
 	int count = 0;
 	for (int i=s;i<t;++i){
 		if (tokens[i].type == '(') count++;
@@ -147,7 +150,7 @@ int prime_op(int s,int t){
 	return pos;
 }
 
-uint32_t eval(int s, int t){
+uint32_t eval(int s, int t, bool *success){
 	if (s>t){
 		assert(0);	
 	} else if (s==t) {
@@ -155,13 +158,13 @@ uint32_t eval(int s, int t){
 		long val = strtol(tokens[s].str,&tmp,10);
 		Log("val = %ld", val);
 		return val;
-	} else if (check_parenthesis(s,t)){
-		return eval(s+1,t-1);
+	} else if (check_parenthesis(s,t,success)){
+		return eval(s+1,t-1,success);
 	} else {
 		int op = prime_op(s,t);
 		Log("Prime op is %c at tokens[%d]", tokens[op].type, op);
-		uint32_t val1 = eval(s,op-1);
-		uint32_t val2 = eval(op+1,t);
+		uint32_t val1 = eval(s,op-1,success);
+		uint32_t val2 = eval(op+1,t,success);
 		switch (tokens[op].type){
 			case '+': return val1+val2;
 			case '-': return val1-val2;
@@ -180,7 +183,7 @@ uint32_t expr(char *e, bool *success) {
   } 
 
   /* TODO: Insert codes to evaluate the expression. */
-  return eval(0,nr_token-1);
+  return eval(0, nr_token-1, success);
 }
 
 
