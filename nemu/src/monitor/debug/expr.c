@@ -92,7 +92,9 @@ static bool make_token(char *e) {
           default: break;
         }
 		tokens[nr_token++].type = rules[i].token_type;
-
+		
+		Log("tokens[%d].str=%s, tokens[%d].type=%d", nr_token-1,tokens[nr_token-1].str,
+				nr_token-1,tokens[nr_token-1].type);
         break;
       }
     }
@@ -144,6 +146,7 @@ uint32_t eval(int s, int t){
 	} else if (s==t) {
 		char *tmp;
 		long val = strtol(tokens[s].str,&tmp,10);
+		Log("val = %ld", val);
 		return val;
 	} else if (check_parenthesis(t,s)==true){
 		return eval(s+1,t-1);
