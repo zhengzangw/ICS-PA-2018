@@ -152,7 +152,7 @@ uint32_t eval(int s, int t){
 		return eval(s+1,t-1);
 	} else {
 		int op = prime_op(s,t);
-		Log("Prime op is %c", op);
+		Log("Prime op is %c at tokens[%d]", tokens[op].type, op);
 		uint32_t val1 = eval(s,op-1);
 		uint32_t val2 = eval(op+1,t);
 		switch (tokens[op].type){
