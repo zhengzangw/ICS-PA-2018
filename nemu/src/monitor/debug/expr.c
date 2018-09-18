@@ -155,7 +155,7 @@ uint32_t eval(int s, int t){
 		long val = strtol(tokens[s].str,&tmp,10);
 		Log("val = %ld", val);
 		return val;
-	} else if (check_parenthesis(t,s)){
+	} else if (check_parenthesis(s,t)){
 		return eval(s+1,t-1);
 	} else {
 		int op = prime_op(s,t);
