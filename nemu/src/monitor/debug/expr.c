@@ -101,8 +101,8 @@ static bool make_token(char *e) {
 				tokens[nr_token++].type = rules[i].token_type;
         }
 		
-		Log("tokens[%d].str=%s, tokens[%d].type=%d", nr_token-1,tokens[nr_token-1].str,
-				nr_token-1,tokens[nr_token-1].type);
+		//Log("tokens[%d].str=%s, tokens[%d].type=%d", nr_token-1,tokens[nr_token-1].str,
+		//		nr_token-1,tokens[nr_token-1].type);
         break;
       }
     }
