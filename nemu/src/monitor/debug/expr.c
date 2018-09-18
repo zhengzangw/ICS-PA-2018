@@ -137,7 +137,7 @@ int prime_op(int s,int t){
 			default: break;
 		}
 	}
-	return tokens[pos].type;
+	return pos;
 }
 
 uint32_t eval(int s, int t){
@@ -155,7 +155,7 @@ uint32_t eval(int s, int t){
 		Log("Prime op is %c", op);
 		uint32_t val1 = eval(s,op-1);
 		uint32_t val2 = eval(op+1,t);
-		switch (op){
+		switch (tokens[op].type){
 			case '+': return val1+val2;
 			case '-': return val1-val2;
 			case '*': return val1*val2;
