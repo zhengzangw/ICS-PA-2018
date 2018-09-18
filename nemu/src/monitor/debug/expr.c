@@ -168,6 +168,7 @@ uint32_t eval(int s, int t, bool *success){
 		long val = strtol(tokens[s].str,&tmp,10);
 		return val;
 	} else if (check_parenthesis(s,t,success)){
+		Log("s=%d,t=%d",s,t);
 		if (!success) return 0;
 		return eval(s+1,t-1,success);
 	} else {
