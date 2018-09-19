@@ -92,13 +92,7 @@ static bool make_token(char *e) {
 				for (int i=0;i<substr_len;++i)
 					val = val*10+substr_start[i]-'0';
 				Log("val=%u,len=%d",val,substr_len);
-				int h = 1;
-				while (val>0){
-					tokens[nr_token].str[substr_len-h] = val%10+'0';
-					val /= 10;
-					h++;
-				}
-				tokens[nr_token].str[substr_len] = '\0';
+				sprintf(tokens[nr_token].str,"%u",val);
 				Log("str=%s",tokens[nr_token].str);
 				tokens[nr_token++].type = rules[i].token_type;
 
