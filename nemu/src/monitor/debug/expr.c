@@ -26,7 +26,7 @@ static struct rule {
   {"\\(", '('},			// left brace
   {"/", '/'},			// divide
   {"\\*", '*'},			// multiply
-  {" +", TK_NOTYPE},    // spaces
+  {"[ \n]+", TK_NOTYPE},    // spaces
   {"\\+", '+'},         // plus
   {"\\-", '-'},			// minus
   {"==", TK_EQ},        // equal
