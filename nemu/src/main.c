@@ -20,7 +20,7 @@ int main(int argc, char *argv[]) {
 
   while (fgets(str,1000,fp)!=NULL){
 	ans = strtok(str," ");
-	arg = strtok(NULL," ");
+	arg = strtok(NULL,"");
 	uint32_t ret = expr(arg, &success);
 	uint32_t retans;
 	sscanf(ans,"%u", &retans);

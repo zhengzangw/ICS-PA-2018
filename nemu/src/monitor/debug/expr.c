@@ -153,7 +153,7 @@ int prime_op(int s,int t){
 uint32_t eval(int s, int t, bool *success, char *e){
 	if (!*success) return 0;
 	if (s>t){
-		printf("Empty brace at position %d\n%s\n%*.s^\n",s,e,s,"");
+		printf("Empty brace!\n");
 		*success = false;
 	} else if (s==t) {
 		if (tokens[s].type!=TK_NUM){
@@ -167,7 +167,7 @@ uint32_t eval(int s, int t, bool *success, char *e){
 	} else if (*success){
 		int op = prime_op(s,t);
 		if (op<s) {
-			printf("Lack of Operands\n");
+			printf("Lack of operands!\n");
 			*success = false;
 			return false;
 		}
