@@ -33,6 +33,7 @@ int main(int argc, char *argv[]) {
 		printf("%u!= %u",ret,retans);
 	}
   }
+  fclose(fp);
 
   /* Receive commands from user. */
   ui_mainloop(is_batch_mode);
