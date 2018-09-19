@@ -64,7 +64,7 @@ int nr_token;
 
 static bool make_token(char *e) {
   int position = 0;
-  int i,neg=1;
+  int i;
   regmatch_t pmatch;
   nr_token = 0;
 
@@ -83,23 +83,10 @@ static bool make_token(char *e) {
 			case TK_NUM:
 				for (int i=0;i<substr_len;++i)
 					val = val*10+substr_start[i]-'0';
-				val = neg*val;
-				neg = 1;
 				sprintf(tokens[nr_token].str,"%u", val);
 				tokens[nr_token++].type = rules[i].token_type;
 				break;
 
-			case '+':
-				if (nr_token!=0&&(tokens[nr_token-1].type==TK_NUM||tokens[nr_token-1].type==')'))
-					tokens[nr_token++].type = '+';
-				break;
-
-			case '-':
-				neg = -neg;
-				if (nr_token!=0&&(tokens[nr_token-1].type==TK_NUM||tokens[nr_token-1].type==')'))
-					tokens[nr_token++].type = '+';
-				break;
-				
 			case TK_NOTYPE:
 				break;
           default:
@@ -141,7 +128,7 @@ bool check_parenthesis(int s, int t, bool *success, char *e){
 }
 
 int prime_op(int s,int t){
-	int count = 0, pos=-1, curop=256;
+	int count = 0, pos=s-1, curop=256;
 	for (int i=s;i<=t;++i){
 		switch (tokens[i].type){
 			case '(': count++; break;
@@ -178,10 +165,13 @@ uint32_t eval(int s, int t, bool *success, char *e){
 		return eval(s+1,t-1,success,e);
 	} else if (*success){
 		int op = prime_op(s,t);
-		//Log("From %d to %d, Prime op is %c at tokens[%d]", s, t, tokens[op].type, op);
-		uint32_t val1 = eval(s,op-1,success,e);
-		if (!*success) return 0;
 		uint32_t val2 = eval(op+1,t,success,e);
+		while (op>s && tokens[op].type=='-'&&tokens[op].type!=')'&&tokens[op].type!=TK_NUM){
+			val2 = -val2;
+			op = prime_op(s,op-1);
+		}
+		//Log("From %d to %d, Prime op is %c at tokens[%d]", s, t, tokens[op].type, op);
+		uint32_t val1 = op>s?eval(s,op-1,success,e):0;
 		if (!*success) return 0;
 		switch (tokens[op].type){
 			case '+': return val1+val2;
