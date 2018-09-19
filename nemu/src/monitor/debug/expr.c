@@ -98,6 +98,7 @@ static bool make_token(char *e) {
 					val /= 10;
 					h++;
 				}
+				Log("str=%s",tokens[nr_token].str);
 				tokens[nr_token++].type = rules[i].token_type;
 
 			case TK_NOTYPE:
