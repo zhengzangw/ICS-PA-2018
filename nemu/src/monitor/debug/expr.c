@@ -97,7 +97,7 @@ static bool make_token(char *e) {
 
     if (i == NR_REGEX) {
 	  Log("%c",e[position]);
-      printf("no match at position %d\n%s\n%*.s^\n", position, e, position, "");
+      printf("No match at position %d\n%s\n%*.s^\n", position, e, position, "");
       return false;
     }
   }
@@ -112,13 +112,13 @@ bool check_parenthesis(int s, int t, bool *success, char *e){
 		if (tokens[i].type == ')') count--;
 		if (count<1 && i!=t) flag = 0;
 		if (count<0) {
-			printf("no match at position %d\n%s\n%*.s^\n",i,e,i,"");
+			printf("Barce no match at position %d\n%s\n%*.s^\n",i,e,i,"");
 			*success = false;
 			return false;
 		}
 	}
 	if (count>0) {
-		printf("no match at position %d\n%s\n%*.s^\n",t,e,t,"");
+		printf("Brace no match at position %d\n%s\n%*.s^\n",t,e,t,"");
 		*success = false;
 		return false;
 	}	
@@ -151,6 +151,7 @@ int prime_op(int s,int t){
 uint32_t eval(int s, int t, bool *success, char *e){
 	if (!*success) return 0;
 	if (s>t){
+		printf("Empty brace at position %d\n%s\n%*.s^\n",s,e,s,"");
 		*success = false;
 	} else if (s==t) {
 		if (tokens[s].type!=TK_NUM){
