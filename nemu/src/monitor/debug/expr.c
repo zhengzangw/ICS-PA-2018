@@ -93,6 +93,7 @@ static bool make_token(char *e) {
 					return false;
 				}	
 				uint32_t val = 0,len = strlen(tokens[nr_token].str);
+				Log("%d",len);
 				for (int i=0;i<len;++i)
 					val = val*10+tokens[nr_token].str[len-i-1]-'0';
 				tokens[nr_token++].type = rules[i].token_type;
