@@ -98,7 +98,6 @@ static bool make_token(char *e) {
     if (i == NR_REGEX) {
 	  Log("%c",e[position]);
       printf("no match at position %d\n%s\n%*.s^\n", position, e, position, "");
-	  assert(0);
       return false;
     }
   }
@@ -115,14 +114,12 @@ bool check_parenthesis(int s, int t, bool *success, char *e){
 		if (count<0) {
 			printf("no match at position %d\n%s\n%*.s^\n",i,e,i,"");
 			*success = false;
-			assert(0);
 			return false;
 		}
 	}
 	if (count>0) {
 		printf("no match at position %d\n%s\n%*.s^\n",t,e,t,"");
 		*success = false;
-		assert(0);
 		return false;
 	}	
 	if (flag && count==0) return true;
