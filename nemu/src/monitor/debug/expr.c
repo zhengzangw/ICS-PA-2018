@@ -166,6 +166,11 @@ uint32_t eval(int s, int t, bool *success, char *e){
 		return eval(s+1,t-1,success,e);
 	} else if (*success){
 		int op = prime_op(s,t);
+		if (op<s) {
+			printf("Lack of Operands\n");
+			*success = false;
+			return false;
+		}
 		uint32_t val2 = eval(op+1,t,success,e);
 		while (op>s && tokens[op].type=='-'&&tokens[op-1].type!=')'&&tokens[op-1].type!=TK_NUM){
 			val2 = -val2;
