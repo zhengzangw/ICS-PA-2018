@@ -33,6 +33,7 @@ static inline void gen_rand_num(){
 }
 
 static inline void gen_rand_expr() {
+	while (choose(3)==0) strcat(buf," ");
 	switch (choose(3)){
 		case 0: gen_rand_num(); break;
 		case 1: strcat(buf,"("); gen_rand_num(); strcat(buf,")"); break;
