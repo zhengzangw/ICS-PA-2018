@@ -59,7 +59,7 @@ typedef struct token {
   char str[32];
 } Token;
 
-Token tokens[32];
+Token tokens[1000];
 int nr_token;
 
 static bool make_token(char *e) {
@@ -113,13 +113,13 @@ bool check_parenthesis(int s, int t, bool *success, char *e){
 		if (tokens[i].type == ')') count--;
 		if (count<1 && i!=t) flag = 0;
 		if (count<0) {
-			printf("Barce no match at position %d\n%s\n%*.s^\n",i,e,i,"");
+			printf("Barce no match!\n");
 			*success = false;
 			return false;
 		}
 	}
 	if (count>0) {
-		printf("Brace no match at position %d\n%s\n%*.s^\n",t,e,t,"");
+		printf("Brace no match!\n");
 		*success = false;
 		return false;
 	}	

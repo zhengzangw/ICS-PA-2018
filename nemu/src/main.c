@@ -20,7 +20,7 @@ int main(int argc, char *argv[]) {
   bool success = true;
 
   Log("Before Enter");
-  while (fgets(str,100,fp)!=NULL){
+  while (fgets(str,1000,fp)!=NULL){
 	ans = strtok(str," ");
 	arg = strtok(NULL," ");
 	uint32_t ret = expr(arg, &success);
