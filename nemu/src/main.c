@@ -27,8 +27,8 @@ int main(int argc, char *argv[]) {
 	uint32_t retans;
 	sscanf(ans,"%u", &retans);
 	if (ret!=retans){
-		Log("str = %s", str);
-		printf("%u!= %u",ret,retans);
+		Log("str = %s, real ans=%s \n", arg, ans);
+		printf("%u!= %u\n",ret,retans);
 	}
   }
   fclose(fp);
