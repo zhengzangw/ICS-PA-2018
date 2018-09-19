@@ -19,6 +19,7 @@ int main(int argc, char *argv[]) {
   char *ans,*arg;
   bool success = true;
   while (fgets(str,1000,fp)!=NULL){
+	Log("New Turn");
 	ans = strtok(str," ");
 	arg = strtok(NULL," ");
 	uint32_t ret = expr(arg, &success);
