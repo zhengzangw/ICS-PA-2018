@@ -8,7 +8,7 @@
 #include <regex.h>
 
 enum {
-  TK_NOTYPE = 256, TK_EQ, TK_NUM, TK_NEGNUM
+  TK_NOTYPE = 256, TK_EQ, TK_NUM
 
   /* TODO: Add more token types */
 
@@ -90,13 +90,13 @@ static bool make_token(char *e) {
 				break;
 
 			case '+':
-				if (nr_token!=0&&tokens[nr_token-1].type!='+'&&tokens[nr_token-1].type!='(')
+				if (nr_token!=0&&(tokens[nr_token-1].type==TK_NUM||tokens[nr_token-1].type==')'))
 					tokens[nr_token++].type = rules[i].token_type;
 				break;
 
 			case '-':
 				neg = -neg;
-				if (nr_token!=0&&tokens[nr_token-1].type!='+'&&tokens[nr_token-1].type!='(')
+				if (nr_token!=0&&(tokens[nr_token-1].type==TK_NUM||tokens[nr_token-1].type==')'))
 					tokens[nr_token++].type = rules[i].token_type;
 				break;
 				
