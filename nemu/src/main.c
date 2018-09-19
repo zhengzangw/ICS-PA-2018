@@ -27,6 +27,7 @@ int main(int argc, char *argv[]) {
 	if (ret!=retans){
 		Log("str = %s, real ans=%s \n", arg, ans);
 		printf("%u!= %u\n",ret,retans);
+		Assert(0,"Fail!");
 	}
   }
   fclose(fp);
