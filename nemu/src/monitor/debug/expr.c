@@ -8,7 +8,7 @@
 #include <regex.h>
 
 enum {
-  TK_NOTYPE = 256, TK_EQ, TK_NUM
+  TK_NOTYPE = 256, TK_EQ, TK_NUM, TK_NEGNUM
 
   /* TODO: Add more token types */
 
@@ -64,7 +64,7 @@ int nr_token;
 
 static bool make_token(char *e) {
   int position = 0;
-  int i;
+  int i,neg=1;
   regmatch_t pmatch;
   nr_token = 0;
 
@@ -83,9 +83,23 @@ static bool make_token(char *e) {
 			case TK_NUM:
 				for (int i=0;i<substr_len;++i)
 					val = val*10+substr_start[i]-'0';
-				sprintf(tokens[nr_token].str,"%u",val);
+				val = neg*val;
+				neg = 1;
+				sprintf(tokens[nr_token].str,"%u", val);
 				tokens[nr_token++].type = rules[i].token_type;
+				break;
 
+			case '+':
+				if (nr_token!=0&&tokens[nr_token-1].type!='+'&&tokens[nr_token-1].type!='(')
+					tokens[nr_token++].type = rules[i].token_type;
+				break;
+
+			case '-':
+				neg = -neg;
+				if (nr_token!=0&&tokens[nr_token-1].type!='+'&&tokens[nr_token-1].type!='(')
+					tokens[nr_token++].type = rules[i].token_type;
+				break;
+				
 			case TK_NOTYPE:
 				break;
           default:
