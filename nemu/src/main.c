@@ -12,6 +12,7 @@ int main(int argc, char *argv[]) {
   int is_batch_mode = init_monitor(argc, argv);
 
   /* Test */
+  Log("Begin Test");
   FILE *fp = fopen("~/ics2018/nemu/tools/input","r");
   assert(fp==NULL);
   char str[1000];
