@@ -104,7 +104,7 @@ static int cmd_p(char *args){
 	}
 	uint32_t val = expr(args,&flag);
 	if (flag)
-		printf("%d\n",val);
+		printf("%u\n",val);
 	else printf("Invalid Input!\n");
 	return 0;
 }
