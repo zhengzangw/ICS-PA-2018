@@ -18,8 +18,9 @@ static inline void gen_rand_op(){
 }
 
 static inline void gen_rand_num(){
-	char tmp[32];
+	char tmp[33];
    	sprintf(tmp, "%u", rand());
+	strcat(tmp,"u");
 	switch(choose(2)){
 		case 0:
 		   	strcat(buf, tmp);
