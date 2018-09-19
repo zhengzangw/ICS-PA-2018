@@ -14,7 +14,7 @@ int main(int argc, char *argv[]) {
   /* Test */
   Log("Begin Test");
   FILE *fp = fopen("~/ics2018/nemu/tools/input","r");
-  assert(fp==NULL);
+  assert(fp!=NULL);
   char str[1000];
   char *ans,*arg;
   bool success = true;
