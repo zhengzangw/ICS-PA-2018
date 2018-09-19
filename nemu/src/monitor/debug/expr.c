@@ -91,7 +91,7 @@ static bool make_token(char *e) {
 			case TK_NUM:
 				for (int i=0;i<substr_len;++i)
 					val = val*10+substr_start[i]-'0';
-				Log("%d",val);
+				Log("val=%u,len=%d",val,substr_len);
 				int h = 1;
 				while (val>0){
 					tokens[nr_token].str[substr_len-h] = val%10+'0';
