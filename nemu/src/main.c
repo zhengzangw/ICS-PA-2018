@@ -21,16 +21,13 @@ int main(int argc, char *argv[]) {
 
   Log("Before Enter");
   while (fgets(str,100,fp)!=NULL){
-	Log("str = %s", str);
-	Log("New Turn");
 	ans = strtok(str," ");
 	arg = strtok(NULL," ");
 	uint32_t ret = expr(arg, &success);
 	uint32_t retans;
 	sscanf(ans,"%u", &retans);
-	if (ret==retans){
-		printf("Right\n");
-	} else {
+	if (ret!=retans){
+		Log("str = %s", str);
 		printf("%u!= %u",ret,retans);
 	}
   }
