@@ -86,18 +86,18 @@ static bool make_token(char *e) {
          */
 
 		
+		uint32_t val = 0;
         switch (rules[i].token_type) {
 			case TK_NUM:
-				if (substr_len>32) {
-					printf("Input a number too larger!\n");
-					return false;
-				}	
-				uint32_t val = 0;
-				Log("%d",substr_len);
 				for (int i=0;i<substr_len;++i)
-					val = val*10+tokens[nr_token].str[substr_len-i-1]-'0';
+					val = val*10+substr_start[substr_len-i-1]-'0';
+				int h = 0;
+				while (val>0){
+					tokens[nr_token].str[h++] = val/10;
+					val %= 10;
+				}
 				tokens[nr_token++].type = rules[i].token_type;
-				break;
+
 			case TK_NOTYPE:
 				break;
           default:
