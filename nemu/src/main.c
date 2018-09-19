@@ -13,7 +13,7 @@ int main(int argc, char *argv[]) {
 
   /* Test */
   Log("Begin Test");
-  FILE *fp = fopen("~/ics2018/nemu/tools/gen-expr/input","r");
+  FILE *fp = fopen("../tools/gen-expr/input","r");
   if (fp==NULL) assert(0);
   char str[1000];
   char *ans,*arg;
