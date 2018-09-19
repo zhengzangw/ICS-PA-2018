@@ -92,6 +92,7 @@ static bool make_token(char *e) {
 				for (int i=0;i<substr_len;++i)
 					val = val*10+substr_start[substr_len-i-1]-'0';
 				int h = 0;
+				Log("H");
 				while (val>0){
 					tokens[nr_token].str[h++] = val/10;
 					val %= 10;
