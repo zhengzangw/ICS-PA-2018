@@ -98,6 +98,7 @@ static bool make_token(char *e) {
 					val /= 10;
 					h++;
 				}
+				tokens[nr_token].str[substr_len] = '\0';
 				Log("str=%s",tokens[nr_token].str);
 				tokens[nr_token++].type = rules[i].token_type;
 
