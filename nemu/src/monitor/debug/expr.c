@@ -166,7 +166,7 @@ uint32_t eval(int s, int t, bool *success, char *e){
 	} else if (*success){
 		int op = prime_op(s,t);
 		uint32_t val2 = eval(op+1,t,success,e);
-		while (op>s && tokens[op].type=='-'&&tokens[op].type!=')'&&tokens[op].type!=TK_NUM){
+		while (op>s && tokens[op].type=='-'&&tokens[op-1].type!=')'&&tokens[op-1].type!=TK_NUM){
 			val2 = -val2;
 			op = prime_op(s,op-1);
 		}
