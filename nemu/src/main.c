@@ -30,6 +30,7 @@ int main(int argc, char *argv[]) {
 	}
   }
   fclose(fp);
+  Log("Test Done!");
 
   /* Receive commands from user. */
   ui_mainloop(is_batch_mode);
