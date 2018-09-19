@@ -66,11 +66,9 @@ static bool make_token(char *e) {
   int position = 0;
   int i;
   regmatch_t pmatch;
-
   nr_token = 0;
 
   while (e[position] != '\0') {
-    /* Try all rules one by one. */
     for (i = 0; i < NR_REGEX; i ++) {
       if (regexec(&re[i], e + position, 1, &pmatch, 0) == 0 && pmatch.rm_so == 0) {
         char *substr_start = e + position;
@@ -80,20 +78,12 @@ static bool make_token(char *e) {
             i, rules[i].regex, position, substr_len, substr_len, substr_start);
         position += substr_len;
 
-        /* TODO: Now a new token is recognized with rules[i]. Add codes
-         * to record the token in the array `tokens'. For certain types
-         * of tokens, some extra actions should be performed.
-         */
-
-		
 		uint32_t val = 0;
         switch (rules[i].token_type) {
 			case TK_NUM:
 				for (int i=0;i<substr_len;++i)
 					val = val*10+substr_start[i]-'0';
-				Log("val=%u,len=%d",val,substr_len);
 				sprintf(tokens[nr_token].str,"%u",val);
-				Log("str=%s",tokens[nr_token].str);
 				tokens[nr_token++].type = rules[i].token_type;
 
 			case TK_NOTYPE:
@@ -101,10 +91,6 @@ static bool make_token(char *e) {
           default:
 				tokens[nr_token++].type = rules[i].token_type;
         }
-		
-		//Log("tokens[%d].str=%s, tokens[%d].type=%d", nr_token-1,tokens[nr_token-1].str,
-		//		nr_token-1,tokens[nr_token-1].type);
-        break;
       }
     }
 
@@ -117,14 +103,14 @@ static bool make_token(char *e) {
   return true;
 }
 
-bool check_parenthesis(int s, int t, bool *success){
+bool check_parenthesis(int s, int t, bool *success, char *e){
 	int count = 0,flag = 1;
 	for (int i=s;i<=t;++i){
 		if (tokens[i].type == '(') count++;
 		if (tokens[i].type == ')') count--;
 		if (count<1 && i!=t) flag = 0;
 		if (count<0) {
-			printf("Inclosed Brace!\n");
+			printf("no match at position %d\n%s\n%*.s^\n",i,e,i,"");
 			*success = false;
 			return false;
 		}
@@ -160,7 +146,7 @@ int prime_op(int s,int t){
 	return pos;
 }
 
-uint32_t eval(int s, int t, bool *success){
+uint32_t eval(int s, int t, bool *success, char *e){
 	if (!*success) return 0;
 	if (s>t){
 		*success = false;
@@ -171,14 +157,14 @@ uint32_t eval(int s, int t, bool *success){
 			uint32_t val = strtol(tokens[s].str,NULL,10);
 			return val;
 		}
-	} else if (check_parenthesis(s,t,success)){
-		return eval(s+1,t-1,success);
+	} else if (check_parenthesis(s,t,success,e)){
+		return eval(s+1,t-1,success,e);
 	} else if (*success){
 		int op = prime_op(s,t);
 		//Log("From %d to %d, Prime op is %c at tokens[%d]", s, t, tokens[op].type, op);
-		uint32_t val1 = eval(s,op-1,success);
+		uint32_t val1 = eval(s,op-1,success,e);
 		if (!*success) return 0;
-		uint32_t val2 = eval(op+1,t,success);
+		uint32_t val2 = eval(op+1,t,success,e);
 		if (!*success) return 0;
 		switch (tokens[op].type){
 			case '+': return val1+val2;
@@ -198,7 +184,7 @@ uint32_t expr(char *e, bool *success) {
   } 
   
   /* TODO: Insert codes to evaluate the expression. */
-  return eval(0, nr_token-1, success);
+  return eval(0, nr_token-1, success, e);
 }
 
 
