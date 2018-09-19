@@ -91,13 +91,13 @@ static bool make_token(char *e) {
 
 			case '+':
 				if (nr_token!=0&&(tokens[nr_token-1].type==TK_NUM||tokens[nr_token-1].type==')'))
-					tokens[nr_token++].type = rules[i].token_type;
+					tokens[nr_token++].type = '+';
 				break;
 
 			case '-':
 				neg = -neg;
 				if (nr_token!=0&&(tokens[nr_token-1].type==TK_NUM||tokens[nr_token-1].type==')'))
-					tokens[nr_token++].type = rules[i].token_type;
+					tokens[nr_token++].type = '+';
 				break;
 				
 			case TK_NOTYPE:
