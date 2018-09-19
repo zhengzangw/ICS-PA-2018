@@ -90,7 +90,7 @@ static bool make_token(char *e) {
         switch (rules[i].token_type) {
 			case TK_NUM:
 				for (int i=0;i<substr_len;++i)
-					val = val*10+substr_start[substr_len-i-1]-'0';
+					val = val*10+substr_start[i]-'0';
 				Log("%d",val);
 				int h = 0;
 				while (val>0){
