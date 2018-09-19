@@ -18,8 +18,9 @@ int main(int argc, char *argv[]) {
   char str[1000];
   char *ans,*arg;
   bool success = true;
-  Log("Before Enter");
+
   char test = fgetc(fp);
+  Log("Before Enter");
   Log("%c",test);
   while (fgets(str,100,fp)!=NULL){
 	Log("str = %s", str);
