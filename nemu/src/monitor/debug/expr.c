@@ -88,11 +88,13 @@ static bool make_token(char *e) {
 		
         switch (rules[i].token_type) {
 			case TK_NUM:
-				if (substr_len>9) {
+				if (substr_len>32) {
 					printf("Input a number too larger!\n");
 					return false;
 				}	
-				strncpy(tokens[nr_token].str,substr_start,substr_len);
+				uint32_t val = 0,len = strlen(tokens[nr_token].str);
+				for (int i=0;i<len;++i)
+					val = val*10+tokens[nr_token].str[len-i-1]-'0';
 				tokens[nr_token++].type = rules[i].token_type;
 				break;
 			case TK_NOTYPE:
@@ -163,13 +165,11 @@ uint32_t eval(int s, int t, bool *success){
 	if (!*success) return 0;
 	if (s>t){
 		*success = false;
-		return 0;	
 	} else if (s==t) {
 		if (tokens[s].type!=TK_NUM){
 			*success = false;
-			return 0;
 		} else {
-			long val = strtol(tokens[s].str,NULL,10);
+			uint32_t val = strtol(tokens[s].str,NULL,10);
 			return val;
 		}
 	} else if (check_parenthesis(s,t,success)){
