@@ -18,6 +18,7 @@ int main(int argc, char *argv[]) {
   char str[1000];
   char *ans,*arg;
   bool success = true;
+  Log("Before Enter");
   while (fgets(str,1000,fp)!=NULL){
 	Log("New Turn");
 	ans = strtok(str," ");
