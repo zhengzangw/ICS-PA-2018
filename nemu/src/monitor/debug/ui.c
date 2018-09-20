@@ -94,10 +94,11 @@ static int cmd_x(char *args){
 			printf("Out of range 0x8000000, not availabel!\n");
 			break;
 		  }
-		  if (x_pos==0){
+/*		  if (x_pos==0){
 			printf("Address 0 cannot be reached!\n");
 			break;
 		  }
+		  */
 	      printf("%#x:%#20x\n",(uint32_t)x_pos+i*size,vaddr_read(x_pos+i*size,4));
 	}
 	}
