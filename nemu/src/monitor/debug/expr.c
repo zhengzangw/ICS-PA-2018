@@ -148,7 +148,7 @@ bool check_parenthesis(int s, int t, bool *success){
 		if (tokens[i].type == ')') count--;
 		if (count<1 && i!=t) flag = 0;
 		if (count<0) {
-			printf("Barce no match!\n");
+			printf("-Barce no match!\n");
 			*success = false;
 			return false;
 		}
