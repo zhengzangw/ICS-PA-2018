@@ -84,8 +84,7 @@ static bool make_token(char *e) {
         char *substr_start = e + position;
         int substr_len = pmatch.rm_eo;
 
-        Log("match rules[%d] = \"%s\" at position %d with len %d: %.*s",
-            i, rules[i].regex, position, substr_len, substr_len, substr_start);
+		//Log("match rules[%d] = \"%s\" at position %d with len %d: %.*s", i, rules[i].regex, position, substr_len, substr_len, substr_start);
         position += substr_len;
 
 		uint32_t val = 0,cnt=0;
@@ -122,7 +121,7 @@ static bool make_token(char *e) {
     }
 
     if (i == NR_REGEX) {
-	  Log("%d",e[position]);
+	  //Log("%d",e[position]);
       printf("No match at position %d\n%s\n%*.s^\n", position, e, position, "");
       return false;
     }
@@ -131,11 +130,11 @@ static bool make_token(char *e) {
 	for (int i=0;i<nr_token;i++){
 		if (tokens[i].type=='*' && singlecheck(i)){
 			tokens[i].type = TK_DEREF;
-			Log("Change Tokens: At %d, to DEREF", i);
+			//Log("Change Tokens: At %d, to DEREF", i);
 		}
 		if (tokens[i].type=='-' && singlecheck(i)){
 			tokens[i].type = TK_NEG;
-			Log("Change Tokens: At %d, to NEG", i);
+			//Log("Change Tokens: At %d, to NEG", i);
 		}
 	}
   
@@ -144,7 +143,7 @@ static bool make_token(char *e) {
 
 bool check_parenthesis(int s, int t, bool *success){
 	int count = 0,flag = 1;
-	Log("s=%d,t=%d",s,t);
+	//Log("s=%d,t=%d",s,t);
 	for (int i=s;i<=t;++i){
 		if (tokens[i].type == '(') count++;
 		if (tokens[i].type == ')') count--;
@@ -198,7 +197,7 @@ static int prime_op(int s,int t){
 }
 
 static uint32_t eval(int s, int t, bool *success){
-	Log("s=%d,t=%d",s,t);
+	//Log("s=%d,t=%d",s,t);
 	if (!*success) return 0;
 	if (s>t){ //Error
 		printf("Empty brace!\n");
