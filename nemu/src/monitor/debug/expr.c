@@ -162,29 +162,35 @@ bool check_parenthesis(int s, int t, bool *success){
 	return false; 
 }
 
-int prime_op(int s,int t){
-	int count = 0, pos=s-1, curop=256;
-	for (int i=s;i<=t;++i){
+static int prime_op(int s,int t){
+	int pos=s-1, curop=256;
+	for (int i=t;i>=s;--i){
 		switch (tokens[i].type){
-			case '(': count++; break;
-			case ')': count--; break;
 			case '*':
-			case '/': if (count==0 && curop!='+' && curop!='-'){
+			case '/': 
+					  if (curop==256){
 						curop = tokens[pos=i].type;
 					  }
 					  break;
 			case '+':
 			case '-':
-					  if (count==0){
+					  if (curop!=TK_EQ&&curop!=TK_NEQ){
 						curop = tokens[pos=i].type;
 					  }
+					  break;
+			case TK_EQ:
+			case TK_NEQ:
+					  pos = i; curop = tokens[pos=i].type;
+					  break;
+			case TK_AND:
+					  return i;
 			default: break;
 		}
 	}
 	return pos;
 }
 
-uint32_t eval(int s, int t, bool *success){
+static uint32_t eval(int s, int t, bool *success){
 	if (!*success) return 0;
 	if (s>t){ //Error
 		printf("Empty brace!\n");
@@ -232,6 +238,12 @@ uint32_t eval(int s, int t, bool *success){
 							return false;
 						  }
 						  return val1/val2;
+					case TK_EQ:
+						  return val1==val2;
+					case TK_NEQ:
+						  return val1!=val2;
+					case TK_AND:
+						  return val1&&val2;
 					default: *success = false;
 				}
 			}
