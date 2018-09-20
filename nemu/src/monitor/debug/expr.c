@@ -61,7 +61,9 @@ typedef struct token {
 Token tokens[1000];
 int nr_token;
 
-static inline bool singlecheck(int type){
+static inline bool singlecheck(int pos){
+	if (pos==0) return true;
+	int type = tokens[pos-1].type;
 	if (type==')') return false;
 	if (type==TK_DNUM) return false;
 	if (type==TK_HNUM) return false;
@@ -126,9 +128,9 @@ static bool make_token(char *e) {
   }
 
 	for (int i=0;i<nr_token;i++){
-		if (tokens[i].type=='*' && (i==0||!singlecheck(tokens[i-1].type)))
+		if (tokens[i].type=='*' && singlecheck(i))
 			tokens[i].type = TK_DEREF;
-		if (tokens[i].type=='-' && (i==0||!singlecheck(tokens[i-1].type)))
+		if (tokens[i].type=='-' && singlecheck(i))
 			tokens[i].type = TK_NEG;
 		Log("Change Tokens: At %d, to %d", i, tokens[i].type);
 	}
