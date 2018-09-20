@@ -8,7 +8,6 @@
 #include <sys/types.h>
 #include <regex.h>
 
-extern CPU_state cpu;
 enum {
   TK_NOTYPE = 256, TK_EQ, TK_DNUM, TK_U, TK_HNUM, TK_REG, TK_NEQ, TK_AND, TK_DEREF, TK_NEG
 };
@@ -201,12 +200,11 @@ static uint32_t eval(int s, int t, bool *success){
 		*success = false;
 	} else //Number
 		if (s==t) {
-			if (tokens[s].type!=TK_DNUM){
-				*success = false;
-			} else {
-				uint32_t val = strtol(tokens[s].str,NULL,10);
-				return val;
-			}
+			if (tokens[s].type==TK_DNUM){
+				return strtol(tokens[s].str,NULL,10);
+			} else if (tokens[s].type==TK_REG) {
+				return 0; 
+			} else *success = false;
 	} else //Brace
 		if (check_parenthesis(s,t,success)){
 			return eval(s+1,t-1,success);
@@ -214,10 +212,10 @@ static uint32_t eval(int s, int t, bool *success){
 		if (*success){
 			int op = prime_op(s,t);
 			if (op<s) {
-				if (tokens[s].type==TK_NEG){
+				if (tokens[s].type==TK_NEG){//Neg
 					return -eval(s+1,t,success);
 				} else 
-				if (tokens[s].type==TK_DEREF){
+				if (tokens[s].type==TK_DEREF){//Deref
 					uint32_t size = 4;
 					uint32_t x_pos = eval(s+1,t,success);
 					if (x_pos>=0x8000000){
