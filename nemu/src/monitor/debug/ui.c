@@ -91,7 +91,11 @@ static int cmd_x(char *args){
 		uint32_t size = 4;
 		for (uint32_t i=0;i<x_num;++i){
 		  if (x_pos+i*size>=0x8000000) {
-			printf("Out of range 0x8000000, not displayed!\n");
+			printf("Out of range 0x8000000, not availabel!\n");
+			break;
+		  }
+		  if (x_pos==0){
+			printf("Address 0 cannot be reached!\n");
 			break;
 		  }
 	      printf("%#x:%#20x\n",(uint32_t)x_pos+i*size,vaddr_read(x_pos+i*size,4));
