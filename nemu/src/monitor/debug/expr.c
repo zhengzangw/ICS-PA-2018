@@ -138,7 +138,7 @@ static bool make_token(char *e) {
 	return true;
 }
 
-bool check_parenthesis(int s, int t, bool *success, char *e){
+bool check_parenthesis(int s, int t, bool *success){
 	int count = 0,flag = 1;
 	for (int i=s;i<=t;++i){
 		if (tokens[i].type == '(') count++;
@@ -181,7 +181,7 @@ int prime_op(int s,int t){
 	return pos;
 }
 
-uint32_t eval(int s, int t, bool *success, char *e){
+uint32_t eval(int s, int t, bool *success){
 	if (!*success) return 0;
 	if (s>t){
 		printf("Empty brace!\n");
@@ -193,8 +193,8 @@ uint32_t eval(int s, int t, bool *success, char *e){
 			uint32_t val = strtol(tokens[s].str,NULL,10);
 			return val;
 		}
-	} else if (check_parenthesis(s,t,success,e)){
-		return eval(s+1,t-1,success,e);
+	} else if (check_parenthesis(s,t,success)){
+		return eval(s+1,t-1,success);
 	} else if (*success){
 		int op = prime_op(s,t);
 		if (op<s) {
@@ -202,13 +202,13 @@ uint32_t eval(int s, int t, bool *success, char *e){
 			*success = false;
 			return false;
 		}
-		uint32_t val2 = eval(op+1,t,success,e);
+		uint32_t val2 = eval(op+1,t,success);
 		while (op>s && tokens[op].type=='-'&&tokens[op-1].type!=')'&&tokens[op-1].type!=TK_DNUM){
 			val2 = -val2;
 			op = prime_op(s,op-1);
 		}
 		//Log("From %d to %d, Prime op is %c at tokens[%d]", s, t, tokens[op].type, op);
-		uint32_t val1 = op>s?eval(s,op-1,success,e):0;
+		uint32_t val1 = op>s?eval(s,op-1,success):0;
 		if (!*success) return 0;
 		switch (tokens[op].type){
 			case '+': return val1+val2;
@@ -231,8 +231,7 @@ uint32_t expr(char *e, bool *success) {
     *success = false;
     return 0;
   } 
-//	assert(0);
-  return eval(0, nr_token-1, success, e);
+  return eval(0, nr_token-1, success);
 }
 
 
