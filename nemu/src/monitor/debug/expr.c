@@ -9,7 +9,7 @@
 #include <regex.h>
 
 enum {
-  TK_NOTYPE = 256, TK_EAX, TK_EBX, TK_ECX, TK_EDX, TK_ESI, TK_EDI, TK_EBP, TK_ESP, TK_EQ, TK_DNUM, TK_U, TK_HNUM , TK_NEQ, TK_AND, TK_DEREF, TK_NEG
+  TK_NOTYPE = 256, TK_EAX, TK_EBX, TK_ECX, TK_EDX, TK_ESI, TK_EDI, TK_EBP, TK_ESP, TK_EIP, TK_EQ, TK_DNUM, TK_U, TK_HNUM , TK_NEQ, TK_AND, TK_DEREF, TK_NEG
 };
 
 static struct rule {
@@ -29,10 +29,10 @@ static struct rule {
   {"0[xX][0-9a-fA-F]+", TK_HNUM},// hexical number
   {"[0-9]+", TK_DNUM},	// demical number
   {"u", TK_U},			// u sign
-  {"\\$eax", TK_EAX}, {"\\$ebx", TK_EBX}, {"\\$ecx", TK_ECX}, {"\\$edx", TK_EDX}, {"\\$esi", TK_ESI}, {"\\$edi", TK_EDI}, {"\\$ebp", TK_EBP}, {"\\$esp", TK_ESP}				// register
+  {"\\$eax", TK_EAX}, {"\\$ebx", TK_EBX}, {"\\$ecx", TK_ECX}, {"\\$edx", TK_EDX}, {"\\$esi", TK_ESI}, {"\\$edi", TK_EDI}, {"\\$ebp", TK_EBP}, {"\\$esp", TK_ESP}, {"\\$eip", TK_EIP}		// register
 };
 
-#define IS_REG(x) (TK_EAX<=(x)&&(x)<=TK_NEG)
+#define IS_REG(x) (TK_EAX<=(x)&&(x)<=TK_EIP)
 #define NR_REGEX (sizeof(rules) / sizeof(rules[0]) )
 
 static regex_t re[NR_REGEX];

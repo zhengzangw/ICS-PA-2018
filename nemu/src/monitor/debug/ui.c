@@ -66,6 +66,7 @@ static int cmd_info(char *args){
 		printf("edi%#20x%20u\n",cpu.edi,cpu.edi);
 		printf("ebp%#20x%#20x\n",cpu.ebp,cpu.ebp);	
 		printf("esp%#20x%#20x\n",cpu.esp,cpu.esp);
+		printf("eip%#20x%#20x\n",cpu.eip,cpu.eip);
 	} else printf("Invalid input!\n");
 	return 0;
 }
