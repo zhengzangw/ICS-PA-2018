@@ -128,11 +128,14 @@ static bool make_token(char *e) {
   }
 
 	for (int i=0;i<nr_token;i++){
-		if (tokens[i].type=='*' && singlecheck(i))
+		if (tokens[i].type=='*' && singlecheck(i)){
 			tokens[i].type = TK_DEREF;
-		if (tokens[i].type=='-' && singlecheck(i))
+			Log("Change Tokens: At %d, to DEREF", i);
+		}
+		if (tokens[i].type=='-' && singlecheck(i)){
 			tokens[i].type = TK_NEG;
-		Log("Change Tokens: At %d, to %d", i, tokens[i].type);
+			Log("Change Tokens: At %d, to NEG", i);
+		}
 	}
   
 	return true;
