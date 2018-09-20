@@ -8,6 +8,7 @@
 #include <sys/types.h>
 #include <regex.h>
 
+extern CPU_state cpu;
 enum {
   TK_NOTYPE = 256, TK_EQ, TK_DNUM, TK_U, TK_HNUM, TK_REG, TK_NEQ, TK_AND, TK_DEREF, TK_NEG
 };
@@ -206,21 +207,6 @@ static uint32_t eval(int s, int t, bool *success){
 				uint32_t val = strtol(tokens[s].str,NULL,10);
 				return val;
 			}
-	} else //Neg
-		if (tokens[s].type==TK_NEG){
-			if (tokens[s+1].type == TK_DNUM){
-				uint32_t val = strtol(tokens[s+1].str,NULL,10);
-				Log("val= %u",val);
-				sprintf(tokens[s+1].str,"%u", -val);
-				return eval(s+1,t,success);
-			} else if (tokens[s+1].type == '('){
-				return -eval(s+1,t,success);
-			} else {
-				*success = false;
-			}
-	} else //Deref 
-		if (tokens[s].type==TK_DEREF){
-			return 1;
 	} else //Brace
 		if (check_parenthesis(s,t,success)){
 			return eval(s+1,t-1,success);
@@ -228,8 +214,22 @@ static uint32_t eval(int s, int t, bool *success){
 		if (*success){
 			int op = prime_op(s,t);
 			if (op<s) {
-				printf("Lack of operands!\n");
-				*success = false;
+				if (tokens[s].type==TK_NEG){
+					return -eval(s+1,t,success);
+				} else 
+				if (tokens[s].type==TK_DEREF){
+					uint32_t size = 4;
+					uint32_t x_pos = eval(s+1,t,success);
+					if (x_pos>=0x8000000){
+						printf("Out of range 0x8000000, not available!\n");
+						*success = false;
+					} else {
+						return vaddr_read(x_pos,size);
+					}
+				} else {
+					printf("Lack of operands!\n");
+					*success = false;
+				}
 			} else {	
 				uint32_t val2 = eval(op+1,t,success);
 				uint32_t val1 = eval(s,op-1,success);
