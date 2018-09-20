@@ -143,6 +143,7 @@ static bool make_token(char *e) {
 
 bool check_parenthesis(int s, int t, bool *success){
 	int count = 0,flag = 1;
+	Log("s=%d,t=%d",s,t);
 	for (int i=s;i<=t;++i){
 		if (tokens[i].type == '(') count++;
 		if (tokens[i].type == ')') count--;
