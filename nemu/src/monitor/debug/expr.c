@@ -165,29 +165,32 @@ bool check_parenthesis(int s, int t, bool *success){
 }
 
 static int prime_op(int s,int t){
-	int pos=s-1, curop=256;
+	int pos=s-1, curop=256, count = 0;
 	for (int i=t;i>=s;--i){
 		switch (tokens[i].type){
+			case '(': count++; break;
+			case ')': count--; break;
 			case '*':
 			case '/': 
-					  if (curop==256){
+					  if (count==0 && curop==256){
 						curop = tokens[pos=i].type;
 					  }
 					  break;
 			case '+':
 			case '-':
-					  if (curop!=TK_EQ&&curop!=TK_NEQ&&curop!='+'&&curop!='-'){
+					  if (count==0 && curop!=TK_EQ&&curop!=TK_NEQ&&curop!='+'&&curop!='-'){
 						curop = tokens[pos=i].type;
 					  }
 					  break;
 			case TK_EQ:
 			case TK_NEQ:
-					  if (curop!=TK_EQ&&curop!=TK_NEQ){
+					  if (count == 0 && curop!=TK_EQ&&curop!=TK_NEQ){
 					    pos = i; curop = tokens[pos=i].type;
 					  }
 					  break;
 			case TK_AND:
-					  return i;
+					  if (count == 0)
+						return i;
 			default: break;
 		}
 	}
