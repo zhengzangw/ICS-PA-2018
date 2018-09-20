@@ -194,9 +194,9 @@ static int prime_op(int s,int t){
 }
 
 static uint32_t eval(int s, int t, bool *success){
+	Log("s=%d,t=%d",s,t);
 	if (!*success) return 0;
 	if (s>t){ //Error
-		Log("s=%d,t=%d",s,t);
 		printf("Empty brace!\n");
 		*success = false;
 	} else //Number
