@@ -1,5 +1,6 @@
 #include "nemu.h"
 #include <stdlib.h>
+#include <stdarg.h>
 
 /* We use the POSIX regex functions to process regular expressions.
  * Type 'man regex' for more information about POSIX regex functions.
@@ -8,30 +9,27 @@
 #include <regex.h>
 
 enum {
-  TK_NOTYPE = 256, TK_EQ, TK_NUM, TK_U
-
-  /* TODO: Add more token types */
-
+  TK_NOTYPE = 256, TK_EQ, TK_DNUM, TK_U, TK_HNUM, TK_REG, TK_NEQ, TK_AND, TK_DEREF, TK_NEG
 };
 
 static struct rule {
   char *regex;
   int token_type;
 } rules[] = {
-
-  /* TODO: Add more rules.
-   * Pay attention to the precedence level of different rules.
-   */
   {"\\)", ')'},			// right brace
   {"\\(", '('},			// left brace
   {"/", '/'},			// divide
   {"\\*", '*'},			// multiply
-  {"[ \n]+", TK_NOTYPE},    // spaces
+  {"[ \n]+", TK_NOTYPE},// spaces
   {"\\+", '+'},         // plus
   {"\\-", '-'},			// minus
+  {"&&", TK_AND},		// and
   {"==", TK_EQ},        // equal
-  {"[0-9]+", TK_NUM},	// number
-  {"u", TK_U}
+  {"!=", TK_NEQ},		// unequal
+  {"$[0-9]+", TK_REG},	// register
+  {"0[xX][0-9a-fA-F]+", TK_HNUM},// hexical number
+  {"[0-9]+", TK_DNUM},	// demical number
+  {"u", TK_U}			// u sign
 };
 
 #define NR_REGEX (sizeof(rules) / sizeof(rules[0]) )
@@ -63,6 +61,14 @@ typedef struct token {
 Token tokens[1000];
 int nr_token;
 
+static inline bool singlecheck(int type){
+	if (type==')') return false;
+	if (type==TK_DNUM) return false;
+	if (type==TK_HNUM) return false;
+	if (type==TK_REG)  return false;
+	return true;
+}
+
 static bool make_token(char *e) {
   int position = 0;
   int i;
@@ -75,18 +81,33 @@ static bool make_token(char *e) {
         char *substr_start = e + position;
         int substr_len = pmatch.rm_eo;
 
-        //Log("match rules[%d] = \"%s\" at position %d with len %d: %.*s",
-        //    i, rules[i].regex, position, substr_len, substr_len, substr_start);
+        Log("match rules[%d] = \"%s\" at position %d with len %d: %.*s",
+            i, rules[i].regex, position, substr_len, substr_len, substr_start);
         position += substr_len;
 
-		uint32_t val = 0;
+		uint32_t val = 0,cnt=0;
         switch (rules[i].token_type) {
-			case TK_NUM:
+			case TK_DNUM:
 				for (int i=0;i<substr_len;++i)
 					val = val*10+substr_start[i]-'0';
 				sprintf(tokens[nr_token].str,"%u", val);
-				tokens[nr_token++].type = rules[i].token_type;
+				tokens[nr_token++].type = TK_DNUM;
+				break;
 
+			case TK_HNUM:
+				for (int i=2;i<substr_len;++i){
+					if ('0'<=substr_start[i]&&substr_start[i]<='9')
+						cnt = substr_start[i]-'0';
+					else if ('a'<=substr_start[i]
+							&&substr_start[i]<='f')
+						cnt = substr_start[i]-'a'+10;
+					else cnt = substr_start[i]-'A'+10;
+					val = val*10+cnt;
+				}
+				sprintf(tokens[nr_token].str, "%u", val);
+				tokens[nr_token++].type = TK_DNUM;
+
+			case TK_REG:
 			case TK_U:
 			case TK_NOTYPE:
 				break;
@@ -104,7 +125,15 @@ static bool make_token(char *e) {
     }
   }
 
-  return true;
+	for (int i=0;i<nr_token;i++){
+		if (tokens[i].type=='*' && (i==0||!singlecheck(tokens[i-1].type)))
+			tokens[i].type = TK_DEREF;
+		if (tokens[i].type=='-' && (i==0||!singlecheck(tokens[i-1].type)))
+			tokens[i].type = TK_NEG;
+		Log("Change Tokens: At %d, to %d", i, tokens[i].type);
+	}
+  
+	return true;
 }
 
 bool check_parenthesis(int s, int t, bool *success, char *e){
@@ -125,7 +154,7 @@ bool check_parenthesis(int s, int t, bool *success, char *e){
 		return false;
 	}	
 	if (flag && count==0) return true;
-	return false;
+	return false; 
 }
 
 int prime_op(int s,int t){
@@ -156,7 +185,7 @@ uint32_t eval(int s, int t, bool *success, char *e){
 		printf("Empty brace!\n");
 		*success = false;
 	} else if (s==t) {
-		if (tokens[s].type!=TK_NUM){
+		if (tokens[s].type!=TK_DNUM){
 			*success = false;
 		} else {
 			uint32_t val = strtol(tokens[s].str,NULL,10);
@@ -172,7 +201,7 @@ uint32_t eval(int s, int t, bool *success, char *e){
 			return false;
 		}
 		uint32_t val2 = eval(op+1,t,success,e);
-		while (op>s && tokens[op].type=='-'&&tokens[op-1].type!=')'&&tokens[op-1].type!=TK_NUM){
+		while (op>s && tokens[op].type=='-'&&tokens[op-1].type!=')'&&tokens[op-1].type!=TK_DNUM){
 			val2 = -val2;
 			op = prime_op(s,op-1);
 		}
@@ -200,7 +229,7 @@ uint32_t expr(char *e, bool *success) {
     *success = false;
     return 0;
   } 
-  
+	assert(0);
   return eval(0, nr_token-1, success, e);
 }
 

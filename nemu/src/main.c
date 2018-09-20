@@ -12,6 +12,7 @@ int main(int argc, char *argv[]) {
   int is_batch_mode = init_monitor(argc, argv);
 
   /* Test */
+  /*
   FILE *fp = fopen("/home/fermat/ics2018/nemu/tools/gen-expr/input","r");
   if (fp==NULL) assert(0);
   char str[1000];
@@ -32,6 +33,7 @@ int main(int argc, char *argv[]) {
   }
   fclose(fp);
   Log("Test Done!");
+  */
 
   /* Receive commands from user. */
   ui_mainloop(is_batch_mode);
