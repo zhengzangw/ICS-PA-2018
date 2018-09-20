@@ -216,6 +216,7 @@ static uint32_t eval(int s, int t, bool *success){
 					case TK_EDI: return cpu.edi;
 					case TK_EBP: return cpu.ebp;
 					case TK_ESP: return cpu.esp;
+					case TK_EIP: return cpu.eip;
 				}
 			} else *success = false;
 	} else //Brace
