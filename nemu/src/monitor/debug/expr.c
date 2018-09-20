@@ -218,7 +218,7 @@ static uint32_t eval(int s, int t, bool *success){
 			} else {
 				*success = false;
 			}
-	} else 
+	} else //Deref 
 		if (tokens[s].type==TK_DEREF){
 			return 1;
 	} else //Brace
