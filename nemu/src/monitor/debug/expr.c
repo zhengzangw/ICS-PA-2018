@@ -29,7 +29,7 @@ static struct rule {
   {"0[xX][0-9a-fA-F]+", TK_HNUM},// hexical number
   {"[0-9]+", TK_DNUM},	// demical number
   {"u", TK_U},			// u sign
-  {"$eax", TK_EAX}, {"$ebx", TK_EBX}, {"$ecx", TK_ECX}, {"$edx", TK_EDX}, {"$esi", TK_ESI}, {"$edi", TK_EDI}, {"$ebp", TK_EBP}, {"$esp", TK_ESP}				// register
+  {"\\$eax", TK_EAX}, {"\\$ebx", TK_EBX}, {"\\$ecx", TK_ECX}, {"\\$edx", TK_EDX}, {"\\$esi", TK_ESI}, {"\\$edi", TK_EDI}, {"\\$ebp", TK_EBP}, {"\\$esp", TK_ESP}				// register
 };
 
 #define IS_REG(x) (TK_EAX<=(x)&&(x)<=TK_NEG)
