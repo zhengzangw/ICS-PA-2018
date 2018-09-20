@@ -201,6 +201,7 @@ uint32_t eval(int s, int t, bool *success){
 		if (tokens[s].type==TK_NEG){
 			if (tokens[s+1].type == TK_DNUM){
 				uint32_t val = strtol(tokens[s+1].str,NULL,10);
+				Log("val= %u",val);
 				sprintf(tokens[s+1].str,"%u", -val);
 			} else if (tokens[s+1].type == '('){
 				return -eval(s+1,t,success);
