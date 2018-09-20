@@ -108,8 +108,12 @@ static bool make_token(char *e) {
 				}
 				sprintf(tokens[nr_token].str, "%u", val);
 				tokens[nr_token++].type = TK_DNUM;
+				break;
 
 			case TK_REG:
+				strncpy(tokens[nr_token].str,substr_start+1,3);
+				tokens[nr_token++].type = TK_REG;
+				Log("%s",tokens[nr_token-1].str);
 			case TK_U:
 			case TK_NOTYPE:
 				break;
