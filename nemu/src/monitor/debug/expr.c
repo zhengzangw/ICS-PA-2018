@@ -175,13 +175,15 @@ static int prime_op(int s,int t){
 					  break;
 			case '+':
 			case '-':
-					  if (curop!=TK_EQ&&curop!=TK_NEQ){
+					  if (curop!=TK_EQ&&curop!=TK_NEQ&&curop!='+'&&curop!='-'){
 						curop = tokens[pos=i].type;
 					  }
 					  break;
 			case TK_EQ:
 			case TK_NEQ:
-					  pos = i; curop = tokens[pos=i].type;
+					  if (curop!=TK_EQ&&curop!=TK_NEQ){
+					    pos = i; curop = tokens[pos=i].type;
+					  }
 					  break;
 			case TK_AND:
 					  return i;
