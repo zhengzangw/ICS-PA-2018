@@ -9,7 +9,7 @@
 #include <regex.h>
 
 enum {
-  TK_NOTYPE = 256, TK_EQ, TK_DNUM, TK_U, TK_HNUM, TK_REG, TK_NEQ, TK_AND, TK_DEREF, TK_NEG
+  TK_NOTYPE = 256, TK_EAX, TK_EBX, TK_ECX, TK_EDX, TK_ESI, TK_EDI, TK_EBP, TK_ESP, TK_EQ, TK_DNUM, TK_U, TK_HNUM , TK_NEQ, TK_AND, TK_DEREF, TK_NEG
 };
 
 static struct rule {
@@ -26,12 +26,13 @@ static struct rule {
   {"&&", TK_AND},		// and
   {"==", TK_EQ},        // equal
   {"!=", TK_NEQ},		// unequal
-  {"\\$(e[a-d]x|e[sd]i|e[bs]p)", TK_REG}, // register
   {"0[xX][0-9a-fA-F]+", TK_HNUM},// hexical number
   {"[0-9]+", TK_DNUM},	// demical number
-  {"u", TK_U}			// u sign
+  {"u", TK_U},			// u sign
+  {"$eax", TK_EAX}, {"$ebx", TK_EBX}, {"$ecx", TK_ECX}, {"$edx", TK_EDX}, {"$esi", TK_ESI}, {"$edi", TK_EDI}, {"$ebp", TK_EBP}, {"$esp", TK_ESP}				// register
 };
 
+#define IS_REG(x) (TK_EAX<=(x)&&(x)<=TK_NEG)
 #define NR_REGEX (sizeof(rules) / sizeof(rules[0]) )
 
 static regex_t re[NR_REGEX];
@@ -67,7 +68,7 @@ static inline bool singlecheck(int pos){
 	if (type==')') return false;
 	if (type==TK_DNUM) return false;
 	if (type==TK_HNUM) return false;
-	if (type==TK_REG)  return false;
+	if (IS_REG(type))  return false;
 	return true;
 }
 
@@ -110,10 +111,6 @@ static bool make_token(char *e) {
 				tokens[nr_token++].type = TK_DNUM;
 				break;
 
-			case TK_REG:
-				strncpy(tokens[nr_token].str,substr_start+1,3);
-				tokens[nr_token++].type = TK_REG;
-				Log("%s",tokens[nr_token-1].str);
 			case TK_U:
 			case TK_NOTYPE:
 				break;
@@ -207,8 +204,17 @@ static uint32_t eval(int s, int t, bool *success){
 		if (s==t) {
 			if (tokens[s].type==TK_DNUM){
 				return strtol(tokens[s].str,NULL,10);
-			} else if (tokens[s].type==TK_REG) {
-				return cpu.eax; 
+			} else if (IS_REG(tokens[s].type)) {
+				switch (tokens[s].type){
+					case TK_EAX: return cpu.eax;
+					case TK_EBX: return cpu.ebx;
+					case TK_ECX: return cpu.ecx;
+					case TK_EDX: return cpu.edx;
+					case TK_ESI: return cpu.esi;
+					case TK_EDI: return cpu.edi;
+					case TK_EBP: return cpu.ebp;
+					case TK_ESP: return cpu.esp;
+				}
 			} else *success = false;
 	} else //Brace
 		if (check_parenthesis(s,t,success)){
