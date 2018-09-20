@@ -26,7 +26,7 @@ static struct rule {
   {"&&", TK_AND},		// and
   {"==", TK_EQ},        // equal
   {"!=", TK_NEQ},		// unequal
-  {"$e[a-d]x|e[sd]i|e[bs]", TK_REG}, // register
+  {"\\$e[a-d]x|e[sd]i|e[bs]", TK_REG}, // register
   {"0[xX][0-9a-fA-F]+", TK_HNUM},// hexical number
   {"[0-9]+", TK_DNUM},	// demical number
   {"u", TK_U}			// u sign
