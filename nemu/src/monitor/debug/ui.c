@@ -71,14 +71,18 @@ static int cmd_info(char *args){
 }
 
 static int cmd_x(char *args){
+	char *pos1, *pos2;
     char *arg1 = strtok(NULL," ");
 	char *arg2 = strtok(NULL," ");
-	if (arg1==NULL || arg2==NULL) { 
+	if (arg1==NULL && arg2==NULL) { 
 		printf("Invalid input!\n");
 		return 0;
 	}
-	char *pos1, *pos2;
-	long x_num = strtol(arg1,&pos1,10);
+	if (arg2==NULL) {
+		arg2 = arg1;
+		arg1 = NULL;
+	}
+	long x_num = arg1==NULL? 1:strtol(arg1,&pos1,10);
 	long x_pos = strtol(arg2,&pos2,16);
 	if (*pos1!='\0'||*pos2!='\0'||x_num<0||x_pos<0){
 	   	printf("Invalid input!\n");
