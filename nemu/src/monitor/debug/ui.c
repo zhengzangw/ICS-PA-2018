@@ -84,7 +84,7 @@ static int cmd_x(char *args){
 	}
 	long x_num = arg1==NULL? 1:strtol(arg1,&pos1,10);
 	long x_pos = strtol(arg2,&pos2,16);
-	if (*pos1!='\0'||*pos2!='\0'||x_num<0||x_pos<0){
+	if ((arg1!=NULL&&*pos1!='\0')||*pos2!='\0'||x_num<0||x_pos<0){
 	   	printf("Invalid input!\n");
 	}
 	else {
