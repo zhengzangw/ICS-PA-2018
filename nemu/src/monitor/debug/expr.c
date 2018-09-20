@@ -26,7 +26,7 @@ static struct rule {
   {"&&", TK_AND},		// and
   {"==", TK_EQ},        // equal
   {"!=", TK_NEQ},		// unequal
-  {"\\$e[a-d]x|e[sd]i|e[bs]", TK_REG}, // register
+  {"\\$(e[a-d]x|e[sd]i|e[bs]p)", TK_REG}, // register
   {"0[xX][0-9a-fA-F]+", TK_HNUM},// hexical number
   {"[0-9]+", TK_DNUM},	// demical number
   {"u", TK_U}			// u sign
@@ -196,6 +196,7 @@ static int prime_op(int s,int t){
 static uint32_t eval(int s, int t, bool *success){
 	if (!*success) return 0;
 	if (s>t){ //Error
+		Log("s=%d,t=%d",s,t);
 		printf("Empty brace!\n");
 		*success = false;
 	} else //Number
