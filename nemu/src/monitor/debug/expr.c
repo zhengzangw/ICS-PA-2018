@@ -26,7 +26,7 @@ static struct rule {
   {"&&", TK_AND},		// and
   {"==", TK_EQ},        // equal
   {"!=", TK_NEQ},		// unequal
-  {"$[0-9]+", TK_REG},	// register
+  {"$e[a-d]x|e[sd]i|e[bs]", TK_REG}, // register
   {"0[xX][0-9a-fA-F]+", TK_HNUM},// hexical number
   {"[0-9]+", TK_DNUM},	// demical number
   {"u", TK_U}			// u sign
@@ -203,7 +203,7 @@ static uint32_t eval(int s, int t, bool *success){
 			if (tokens[s].type==TK_DNUM){
 				return strtol(tokens[s].str,NULL,10);
 			} else if (tokens[s].type==TK_REG) {
-				return 0; 
+				return cpu.eax; 
 			} else *success = false;
 	} else //Brace
 		if (check_parenthesis(s,t,success)){
