@@ -105,7 +105,7 @@ static bool make_token(char *e) {
 							&&substr_start[i]<='f')
 						cnt = substr_start[i]-'a'+10;
 					else cnt = substr_start[i]-'A'+10;
-					val = val*10+cnt;
+					val = val*16+cnt;
 				}
 				sprintf(tokens[nr_token].str, "%u", val);
 				tokens[nr_token++].type = TK_DNUM;
