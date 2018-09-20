@@ -218,6 +218,9 @@ static uint32_t eval(int s, int t, bool *success){
 			} else {
 				*success = false;
 			}
+	} else 
+		if (tokens[s].type==TK_DEREF){
+			return 1;
 	} else //Brace
 		if (check_parenthesis(s,t,success)){
 			return eval(s+1,t-1,success);
