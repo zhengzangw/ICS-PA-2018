@@ -58,14 +58,14 @@ static int cmd_si(char *args){
 static int cmd_info(char *args){
 	char *arg = strtok(NULL, " ");
 	if (strcmp(arg,"r")==0){
-		printf("rax%#20x%20u\n",cpu.eax,cpu.eax);
-		printf("rax%#20x%20u\n",cpu.ebx,cpu.ebx);
-		printf("rax%#20x%20u\n",cpu.ecx,cpu.ecx);
-		printf("rax%#20x%20u\n",cpu.edx,cpu.edx);
-		printf("rax%#20x%20u\n",cpu.esi,cpu.esi);
-		printf("rax%#20x%20u\n",cpu.edi,cpu.edi);
-		printf("rax%#20x%#20x\n",cpu.ebp,cpu.ebp);	
-		printf("rax%#20x%#20x\n",cpu.esp,cpu.esp);
+		printf("eax%#20x%20u\n",cpu.eax,cpu.eax);
+		printf("ebx%#20x%20u\n",cpu.ebx,cpu.ebx);
+		printf("ecx%#20x%20u\n",cpu.ecx,cpu.ecx);
+		printf("edx%#20x%20u\n",cpu.edx,cpu.edx);
+		printf("esi%#20x%20u\n",cpu.esi,cpu.esi);
+		printf("edi%#20x%20u\n",cpu.edi,cpu.edi);
+		printf("ebp%#20x%#20x\n",cpu.ebp,cpu.ebp);	
+		printf("esp%#20x%#20x\n",cpu.esp,cpu.esp);
 	} else printf("Invalid input!\n");
 	return 0;
 }
