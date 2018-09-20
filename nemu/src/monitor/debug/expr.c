@@ -183,46 +183,54 @@ int prime_op(int s,int t){
 
 uint32_t eval(int s, int t, bool *success){
 	if (!*success) return 0;
-	if (s>t){
+	if (s>t){ //Error
 		printf("Empty brace!\n");
 		*success = false;
-	} else if (s==t) {
-		if (tokens[s].type!=TK_DNUM){
-			*success = false;
-		} else {
-			uint32_t val = strtol(tokens[s].str,NULL,10);
-			return val;
-		}
-	} else if (check_parenthesis(s,t,success)){
-		return eval(s+1,t-1,success);
-	} else if (*success){
-		int op = prime_op(s,t);
-		if (op<s) {
-			printf("Lack of operands!\n");
-			*success = false;
-			return false;
-		}
-		uint32_t val2 = eval(op+1,t,success);
-		while (op>s && tokens[op].type=='-'&&tokens[op-1].type!=')'&&tokens[op-1].type!=TK_DNUM){
-			val2 = -val2;
-			op = prime_op(s,op-1);
-		}
-		//Log("From %d to %d, Prime op is %c at tokens[%d]", s, t, tokens[op].type, op);
-		uint32_t val1 = op>s?eval(s,op-1,success):0;
-		if (!*success) return 0;
-		switch (tokens[op].type){
-			case '+': return val1+val2;
-			case '-': return val1-val2;
-			case '*': return val1*val2;
-			case '/': if (val2==0) {
-						printf("Divided by zero!\n");
-						*success = false;
-						return 0;
-					  }
-					  return val1/val2;
-			default: *success = false;
-		}
-	}
+	} else //Number
+		if (s==t) {
+			if (tokens[s].type!=TK_DNUM){
+				*success = false;
+			} else {
+				uint32_t val = strtol(tokens[s].str,NULL,10);
+				return val;
+			}
+	} else //Neg
+		if (tokens[s].type==TK_NEG){
+			if (tokens[s+1].type == TK_DNUM){
+				uint32_t val = strtol(tokens[s+1].str,NULL,10);
+				sprintf(tokens[s+1].str,"%u", -val);
+			} else if (tokens[s+1].type == '('){
+				return -eval(s+1,t,success);
+			} else {
+				*success = false;
+			}
+	} else //Brace
+		if (check_parenthesis(s,t,success)){
+			return eval(s+1,t-1,success);
+	} else
+		if (*success){
+			int op = prime_op(s,t);
+			if (op<s) {
+				printf("Lack of operands!\n");
+				*success = false;
+			} else {	
+				uint32_t val2 = eval(op+1,t,success);
+				uint32_t val1 = eval(s,op-1,success);
+				if (!*success) return false;
+				switch (tokens[op].type){
+					case '+': return val1+val2;
+					case '-': return val1-val2;
+					case '*': return val1*val2;
+					case '/': if (val2==0) {
+							printf("Divided by zero!\n");
+							*success = false;
+							return false;
+						  }
+						  return val1/val2;
+					default: *success = false;
+				}
+			}
+		}	
 	return 0;
 }
 
