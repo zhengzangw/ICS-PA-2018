@@ -197,7 +197,7 @@ void ui_mainloop(int is_batch_mode) {
     return;
   }
 
-  char store_cmd[256];
+  //char store_cmd[256];
   while (1) {
     char *str = rl_gets();
 	
@@ -207,7 +207,7 @@ void ui_mainloop(int is_batch_mode) {
 
     /* extract the first token as the command */
     char *cmd = strtok(str, " ");
-    strcpy(store_cmd,cmd);
+    //strcpy(store_cmd,cmd);
 
 	if (cmd == NULL) {continue;}
 
