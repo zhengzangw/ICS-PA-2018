@@ -35,7 +35,6 @@ static WP* new_wp_() {
 		head = ret;
 		return ret;
 	}
-	assert(free_!=NULL);
 	return NULL;	
 }
 
@@ -58,8 +57,9 @@ static void free_wp_(WP *wp){
 }
 
 void free_wp(uint32_t num){
-	if (wp_pool[num].enable){
+	if (num>=0&&num<NR_WP&&wp_pool[num].enable){
 		free_wp_(wp_pool+num);
+		printf("Delete Watchpoint NO.%d successfully!\n", wp_pool[num].NO);
 	} else {
 		printf("No such watchpoint!\n");
 	}
@@ -70,6 +70,10 @@ void new_wp(char *arg){
 	uint32_t val = expr(arg,&success);
 	if (success) {
 		WP* tmp = new_wp_();
+		if (tmp==NULL) {
+			printf("Create FAILED!\n");
+			return;
+		}
 		strcpy(tmp->expression,arg);
 		printf("Create Watchpoint successfully! NO.%d: %s = %u\n", tmp->NO, tmp->expression, val);
 	} else {
