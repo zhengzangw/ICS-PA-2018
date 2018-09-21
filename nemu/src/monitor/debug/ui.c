@@ -205,6 +205,7 @@ void ui_mainloop(int is_batch_mode) {
   while (1) {
     char *str = rl_gets();
 	char *tmp = str;
+	Log("%s\n",tmp);
     char *str_end = str + strlen(str);
 	
 	/* Empty command means repetition of previous command*/
@@ -219,6 +220,7 @@ void ui_mainloop(int is_batch_mode) {
 		if (cmd==NULL)
 			continue;
 	} else {
+	Log("%s\n",tmp);
 		strcpy(store_str,tmp);
 	}
     /* treat the remaining string as the arguments,
