@@ -201,7 +201,7 @@ void ui_mainloop(int is_batch_mode) {
     return;
   }
 
-  char store_str[256];
+  char store_str[256] = "\0";
   while (1) {
     char *str = rl_gets();
 	char *tmp = str;
