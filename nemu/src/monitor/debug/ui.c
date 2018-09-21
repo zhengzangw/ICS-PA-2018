@@ -197,20 +197,25 @@ void ui_mainloop(int is_batch_mode) {
     return;
   }
 
-  //char store_cmd[256];
+  char store_cmd[256];
   while (1) {
     char *str = rl_gets();
+    char *str_end = str + strlen(str);
 	
 	/* Empty command means repetition of previous command*/
-	Log("%s\n,%d",str,str==NULL);
-    char *str_end = str + strlen(str);
 
     /* extract the first token as the command */
     char *cmd = strtok(str, " ");
-    //strcpy(store_cmd,cmd);
 
-	if (cmd == NULL) {continue;}
-
+	if (cmd == NULL) {
+		str = store_cmd;
+		str_end = str+strlen(str);
+		cmd = strtok(str, " ");
+		if (cmd==NULL)
+			continue;
+	}
+	strcpy(store_cmd,cmd);
+	
     /* treat the remaining string as the arguments,
      * which may need further parsing
      */
