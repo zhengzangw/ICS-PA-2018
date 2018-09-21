@@ -56,7 +56,11 @@ static int cmd_si(char *args){
 	return 0;
 }
 
-static int cmd_info(char *args){
+static int cmd_info(char *args){ 
+	if (args==NULL){
+		printf("info must have parameters\n");
+		return 0;
+	}
 	char *arg = strtok(NULL, " ");
 	if (strcmp(arg,"r")==0){
 		printf("eax%#20x%20u\n",cpu.eax,cpu.eax);
@@ -200,6 +204,7 @@ void ui_mainloop(int is_batch_mode) {
   char store_str[256];
   while (1) {
     char *str = rl_gets();
+	char *tmp = str;
     char *str_end = str + strlen(str);
 	
 	/* Empty command means repetition of previous command*/
@@ -214,7 +219,7 @@ void ui_mainloop(int is_batch_mode) {
 		if (cmd==NULL)
 			continue;
 	}
-	strcpy(store_str,str);
+	strcpy(store_str,tmp);
 	
     /* treat the remaining string as the arguments,
      * which may need further parsing
