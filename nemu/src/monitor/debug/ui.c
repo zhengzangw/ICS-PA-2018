@@ -67,7 +67,10 @@ static int cmd_info(char *args){
 		printf("ebp%#20x%#20x\n",cpu.ebp,cpu.ebp);	
 		printf("esp%#20x%#20x\n",cpu.esp,cpu.esp);
 		printf("eip%#20x%#20x\n",cpu.eip,cpu.eip);
-	} else printf("Invalid input!\n");
+	} else if (strcmp(arg,"w")==0){
+		wp_info();
+	} else 
+		printf("Invalid input!\n");
 	return 0;
 }
 
@@ -110,9 +113,41 @@ static int cmd_p(char *args){
 	uint32_t val = expr(args,&flag);
 	if (flag)
 		printf("%u%#20x\n",val,val);
-	else printf("Invalid Input!\n");
+ 	else printf("Invalid Input!\n");
+	return 0;
+} 
+
+static int cmd_w(char *args){
+	if (args==NULL) {
+		printf("w must have parameter which is an expression!\n");
+	} else
+		new_wp(args);
 	return 0;
 }
+
+static int cmd_d(char *args){
+	if (args==NULL) {
+		printf("d must have parameter which is NO of watchpoint!\n");
+	} else {
+		int i=0;
+		char *arg1;
+		do {
+			i++;
+			arg1 = strtok(NULL," ");
+			if (arg1!=NULL){
+				char *tmp;
+				uint32_t num = strtol(arg1,&tmp,10);
+				if (*tmp!='\0'){
+					printf("Invalid input: %d parameter",i);
+					return 0;
+				}
+				free_wp(num);
+			}
+		} while (arg1!=NULL);
+	}
+	return 0;
+}
+
 
 static struct {
   char *name;
@@ -126,8 +161,8 @@ static struct {
   { "info", "Examine specific area in machine", cmd_info },
   { "x", "Examine memory", cmd_x },
   { "p", "Expression Calculation", cmd_p },
-  /* TODO: Add more commands */
-
+  { "w", "Add a watchpoint", cmd_w },
+  { "d", "Delete a watchpoint", cmd_d }
 };
 
 #define NR_CMD (sizeof(cmd_table) / sizeof(cmd_table[0]))
