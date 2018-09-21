@@ -197,7 +197,7 @@ void ui_mainloop(int is_batch_mode) {
     return;
   }
 
-  char store_cmd[256];
+  char store_str[256];
   while (1) {
     char *str = rl_gets();
     char *str_end = str + strlen(str);
@@ -208,13 +208,13 @@ void ui_mainloop(int is_batch_mode) {
     char *cmd = strtok(str, " ");
 
 	if (cmd == NULL) {
-		str = store_cmd;
+		str = store_str;
 		str_end = str+strlen(str);
 		cmd = strtok(str, " ");
 		if (cmd==NULL)
 			continue;
 	}
-	strcpy(store_cmd,cmd);
+	strcpy(store_str,str);
 	
     /* treat the remaining string as the arguments,
      * which may need further parsing
