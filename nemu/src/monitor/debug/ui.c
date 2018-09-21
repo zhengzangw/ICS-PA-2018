@@ -218,9 +218,9 @@ void ui_mainloop(int is_batch_mode) {
 		cmd = strtok(str, " ");
 		if (cmd==NULL)
 			continue;
+	} else {
+		strcpy(store_str,tmp);
 	}
-	strcpy(store_str,tmp);
-	
     /* treat the remaining string as the arguments,
      * which may need further parsing
      */
