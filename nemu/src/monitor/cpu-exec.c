@@ -34,6 +34,11 @@ void cpu_exec(uint64_t n) {
   bool print_flag = n < MAX_INSTR_TO_PRINT;
 
   for (; n > 0; n --) {
+	if (nemu_state == NEMU_STOP){
+		printf("STOP at %d\n", cpu.eip);
+		break;
+	}
+
     /* Execute one instruction, including instruction fetch,
      * instruction decode, and the actual execution. */
     exec_wrapper(print_flag);
