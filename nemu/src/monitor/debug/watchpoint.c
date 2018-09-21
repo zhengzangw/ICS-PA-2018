@@ -11,6 +11,7 @@ void init_wp_pool() {
   for (i = 0; i < NR_WP; i ++) {
     wp_pool[i].NO = i;
 	wp_pool[i].enable = false;
+	wp_pool[i].valid  = true;
     wp_pool[i].next = &wp_pool[i + 1];
 	wp_pool[i].pre  = i==0?NULL:&wp_pool[i - 1];
   }
@@ -75,6 +76,7 @@ void new_wp(char *arg){
 			return;
 		}
 		strcpy(tmp->expression,arg);
+		tmp->val = val;
 		printf("Watchpoint %d: %s = %u\n", tmp->NO, tmp->expression, val);
 	} else {
 		printf("Invalid expression. Create FAILDED!\n");
@@ -84,15 +86,42 @@ void new_wp(char *arg){
 void wp_info(){
 	printf("%s  %20s  %30s\n","NO.","Value","Expression");
 	for (WP *p=head;p!=NULL;p=p->next){
-		bool flag = true;
 		printf("%d  ", p->NO);
-		uint32_t val = expr(p->expression,&flag);
-		if (flag) {
-			printf("%20u", val);
+		if (p->valid) {
+			printf("%20u", p->val);
 		} else {
 			printf("%20s", "Error");
 		}
-		printf("  %40s\n", p->expression);
+		printf("  %30s\n", p->expression);
 	}
 }
 
+bool wp_check()
+{
+	bool flag = false;
+	for (WP *p=head;p!=NULL;p=p->next){
+		bool suc = true,change = false;
+		uint32_t val = expr(p->expression,&suc);
+		if (suc) {
+			if (!p->valid){
+				printf("Hit watchpoint %d: %s", p->NO, p->expression);
+				printf("\nOld value = ERROR\nNew value = %u",val);
+				p->valid = true; p->val = val;
+				change =true;
+			}
+			else if (val!=p->val){
+				printf("Hit watchpoint %d: %s", p->NO, p->expression);
+				printf("\nOld value = %u\nNew value = %u", p->val, val);
+				p->val = val;
+				change = true;
+			}
+		} else {	
+			printf("Hit watchpoint %d: %s", p->NO, p->expression);
+			printf("\nOld value = %u\nNew value = ERROR", p->val);
+			p->valid = false;
+			change = true;
+		}
+		if (change) flag =true;
+	}			
+	return flag;
+}
