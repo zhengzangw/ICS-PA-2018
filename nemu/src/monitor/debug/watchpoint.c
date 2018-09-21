@@ -27,6 +27,10 @@ static WP* new_wp_() {
 		WP* ret = free_;
 		free_ = free_->next;
 		ret -> enable = true;
+		if (head!=NULL){
+			head -> next = ret;
+		}
+		head = ret;
 		return ret;
 	}
 	assert(free_!=NULL);
