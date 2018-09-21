@@ -27,9 +27,10 @@ static WP* new_wp_() {
 		WP* ret = free_;
 		free_ = free_->next;
 		ret -> enable = true;
-		ret -> next = NULL;
+		ret -> next = head;
+		ret -> pre  = NULL;
 		if (head!=NULL){
-			head -> next = ret;
+			head -> pre = ret;
 		}
 		head = ret;
 		return ret;
@@ -48,7 +49,11 @@ static void free_wp_(WP *wp){
 		wp->next->pre = wp->pre;
 	}
 	wp->enable = false;
-	free_->next = wp;
+	wp->pre    = NULL;
+	wp->next   = free_;
+	if (free_!=NULL){
+		free_->pre = wp;
+	}
 	free_ = wp;	
 }
 
