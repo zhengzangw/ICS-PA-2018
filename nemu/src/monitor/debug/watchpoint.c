@@ -59,7 +59,7 @@ static void free_wp_(WP *wp){
 void free_wp(uint32_t num){
 	if (num>=0&&num<NR_WP&&wp_pool[num].enable){
 		free_wp_(wp_pool+num);
-		printf("Delete Watchpoint NO.%d successfully!\n", wp_pool[num].NO);
+		printf("Delete Watchpoint NO.%d \n", wp_pool[num].NO);
 	} else {
 		printf("No such watchpoint!\n");
 	}
@@ -75,27 +75,24 @@ void new_wp(char *arg){
 			return;
 		}
 		strcpy(tmp->expression,arg);
-		printf("Create Watchpoint successfully! NO.%d: %s = %u\n", tmp->NO, tmp->expression, val);
+		printf("Watchpoint %d: %s = %u\n", tmp->NO, tmp->expression, val);
 	} else {
-		printf("Invalid expression. Create failed for %s", arg);
+		printf("Invalid expression. Create FAILDED!\n");
 	}
 }
 
 void wp_info(){
-	Log("head->NO=%d\n",head->NO);
-	if (head==NULL){
-		printf("No watchpoint in the pool!\n");
-	} else {
-		for (WP *p=head;p!=NULL;p=p->next){
-			bool flag = true;
-			printf("Watchpoint No.%d: ", p->NO);
-			uint32_t val = expr(p->expression,&flag);
-			if (flag) {
-				printf("%s = %u\n", p->expression, val);
-			} else {
-				printf("Error in calculating %s\n", p->expression);
-			}
+	printf("20%s20%s20%s","NO.","Value","Expression");
+	for (WP *p=head;p!=NULL;p=p->next){
+		bool flag = true;
+		printf("20%d", p->NO);
+		uint32_t val = expr(p->expression,&flag);
+		if (flag) {
+			printf("20%d", val);
+		} else {
+			printf("20%s", "Error");
 		}
+		printf("20%s", p->expression);
 	}
 }
 
