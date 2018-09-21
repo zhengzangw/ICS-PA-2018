@@ -90,9 +90,9 @@ void wp_info(){
 		if (flag) {
 			printf("%20d", val);
 		} else {
-			printf("%40s", "Error");
+			printf("%20s", "Error");
 		}
-		printf("%20s\n", p->expression);
+		printf("%40s\n", p->expression);
 	}
 }
 
