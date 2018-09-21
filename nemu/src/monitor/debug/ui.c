@@ -202,9 +202,10 @@ void ui_mainloop(int is_batch_mode) {
   }
 
   char store_str[256] = "\0";
+  char tmp[256] = "\0";
   while (1) {
     char *str = rl_gets();
-	char *tmp = str;
+	strcpy(tmp,str);
 	Log("%s\n",tmp);
     char *str_end = str + strlen(str);
 	
