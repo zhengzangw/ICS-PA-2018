@@ -33,6 +33,7 @@ static int cmd_c(char *args) {
 }
 
 static int cmd_q(char *args) {
+  printf("Continuing.\n");
   return -1;
 }
 
@@ -196,13 +197,19 @@ void ui_mainloop(int is_batch_mode) {
     return;
   }
 
+  char store_cmd[256];
   while (1) {
     char *str = rl_gets();
+	
+	/* Empty command means repetition of previous command*/
+	Log("%s\n",str);
     char *str_end = str + strlen(str);
 
     /* extract the first token as the command */
     char *cmd = strtok(str, " ");
-    if (cmd == NULL) { continue; }
+    strcpy(store_cmd,cmd);
+
+	if (cmd == NULL) {continue;}
 
     /* treat the remaining string as the arguments,
      * which may need further parsing

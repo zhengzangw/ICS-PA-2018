@@ -104,20 +104,20 @@ bool wp_check()
 		uint32_t val = expr(p->expression,&suc);
 		if (suc) {
 			if (!p->valid){
-				printf("Hit watchpoint %d: %s", p->NO, p->expression);
-				printf("\nOld value = ERROR\nNew value = %u",val);
+				printf("Hit watchpoint %d: %s\n", p->NO, p->expression);
+				printf("Old value = ERROR\nNew value = %u\n",val);
 				p->valid = true; p->val = val;
 				change =true;
 			}
 			else if (val!=p->val){
-				printf("Hit watchpoint %d: %s", p->NO, p->expression);
-				printf("\nOld value = %u\nNew value = %u", p->val, val);
+				printf("Hit watchpoint %d: %s\n", p->NO, p->expression);
+				printf("Old value = %u\nNew value = %u\n", p->val, val);
 				p->val = val;
 				change = true;
 			}
 		} else {	
-			printf("Hit watchpoint %d: %s", p->NO, p->expression);
-			printf("\nOld value = %u\nNew value = ERROR", p->val);
+			printf("Hit watchpoint %d: %s\n", p->NO, p->expression);
+			printf("Old value = %u\nNew value = ERROR\n", p->val);
 			p->valid = false;
 			change = true;
 		}
