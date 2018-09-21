@@ -28,12 +28,12 @@ char* rl_gets() {
 }
 
 static int cmd_c(char *args) {
+  printf("Continuing.\n");
   cpu_exec(-1);
   return 0;
 }
 
 static int cmd_q(char *args) {
-  printf("Continuing.\n");
   return -1;
 }
 
