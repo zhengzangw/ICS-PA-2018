@@ -202,7 +202,7 @@ void ui_mainloop(int is_batch_mode) {
     char *str = rl_gets();
 	
 	/* Empty command means repetition of previous command*/
-	Log("%s\n",str);
+	Log("%s\n,%d",str,str==NULL);
     char *str_end = str + strlen(str);
 
     /* extract the first token as the command */
