@@ -82,17 +82,17 @@ void new_wp(char *arg){
 }
 
 void wp_info(){
-	printf("%s%20s%40s\n","NO.","Value","Expression");
+	printf("%s  %20s  %30s\n","NO.","Value","Expression");
 	for (WP *p=head;p!=NULL;p=p->next){
 		bool flag = true;
-		printf("%d", p->NO);
+		printf("%d  ", p->NO);
 		uint32_t val = expr(p->expression,&flag);
 		if (flag) {
-			printf("%20d", val);
+			printf("%20u", val);
 		} else {
 			printf("%20s", "Error");
 		}
-		printf("%40s\n", p->expression);
+		printf("  %40s\n", p->expression);
 	}
 }
 
