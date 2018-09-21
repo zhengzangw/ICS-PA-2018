@@ -78,6 +78,7 @@ void new_wp(char *arg){
 }
 
 void wp_info(){
+	Log("head->NO=%d\n",head->NO);
 	if (head==NULL){
 		printf("No watchpoint in the pool!\n");
 	} else {
