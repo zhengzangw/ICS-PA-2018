@@ -45,7 +45,7 @@ static int cmd_si(char *args){
 		cpu_exec(1);
 	} else {
 		char *pos;
-		long exec_num = strtol(arg, &pos, 10);
+		long exec_num = strtol(arg, &pos, 0);
 		if (exec_num<=0 || *pos!='\0'){
 		   	printf("Invalid input!\n");
 		}
@@ -91,8 +91,8 @@ static int cmd_x(char *args){
 		arg2 = arg1;
 		arg1 = NULL;
 	}
-	long x_num = arg1==NULL? 1:strtol(arg1,&pos1,10);
-	long x_pos = strtol(arg2,&pos2,16);
+	long x_num = arg1==NULL? 1:strtol(arg1,&pos1,0);
+	long x_pos = strtol(arg2,&pos2,0);
 	if ((arg1!=NULL&&*pos1!='\0')||*pos2!='\0'||x_num<0||x_pos<0){
 	   	printf("Invalid input!\n");
 	}
@@ -141,7 +141,7 @@ static int cmd_d(char *args){
 			arg1 = strtok(NULL," ");
 			if (arg1!=NULL){
 				char *tmp;
-				uint32_t num = strtol(arg1,&tmp,10);
+				uint32_t num = strtol(arg1,&tmp,0);
 				if (*tmp!='\0'){
 					printf("Invalid input: %d parameter",i);
 					return 0;
