@@ -121,6 +121,7 @@ bool wp_check()
 			p->valid = false;
 			change = true;
 		}
+		puts("\n");
 		if (change) flag =true;
 	}			
 	return flag;
