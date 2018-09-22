@@ -105,19 +105,19 @@ bool wp_check()
 		if (suc) {
 			if (!p->valid){
 				printf("Hit watchpoint %d: %s\n", p->NO, p->expression);
-				printf("Old value = ERROR\nNew value = %u\n",val);
+				printf("Old value = ERROR\nNew value = %u%#20x\n",val,val);
 				p->valid = true; p->val = val;
 				change =true;
 			}
 			else if (val!=p->val){
 				printf("Hit watchpoint %d: %s\n", p->NO, p->expression);
-				printf("Old value = %u\nNew value = %u\n", p->val, val);
+				printf("Old value = %u%#20x\nNew value = %u%#20x\n", p->val, p->val, val, val);
 				p->val = val;
 				change = true;
 			}
 		} else {	
 			printf("Hit watchpoint %d: %s\n", p->NO, p->expression);
-			printf("Old value = %u\nNew value = ERROR\n", p->val);
+			printf("Old value = %u%#20x\nNew value = ERROR\n", p->val,p->val);
 			p->valid = false;
 			change = true;
 		}

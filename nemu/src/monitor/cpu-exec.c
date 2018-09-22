@@ -35,7 +35,7 @@ void cpu_exec(uint64_t n) {
 
   for (; n > 0; n --) {
 	if (nemu_state == NEMU_STOP){
-		printf("STOP at %d\n", cpu.eip);
+		printf("STOP at %#x\n", cpu.eip);
 		break;
 	}
 
