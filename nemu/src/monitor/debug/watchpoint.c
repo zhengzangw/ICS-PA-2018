@@ -122,7 +122,7 @@ bool wp_check()
 			change = true;
 		}
 		if (change) {
-			puts("\n");
+			//puts("\n");
 			flag =true;
 		}
 	}			
