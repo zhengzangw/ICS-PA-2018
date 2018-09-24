@@ -38,7 +38,7 @@ $(OBJ_DIR)/%.o: src/%.c
 
 # Some convinient rules
 
-.PHONY: app run clean
+.PHONY: app run clean count
 app: $(BINARY)
 
 override ARGS ?= -l $(BUILD_DIR)/nemu-log.txt
@@ -64,3 +64,6 @@ clean:
 	-rm -rf $(BUILD_DIR)
 	$(MAKE) -C tools/gen-expr clean
 	$(MAKE) -C tools/qemu-diff clean
+
+count:
+	find -regex ".*\.\(h\|c\)" | xargs cat | grep -v "^$$" | wc -l
