@@ -43,6 +43,7 @@ static inline make_DopHelper(SI) {
    *
    op->simm = ???
    */
+  Log("eip=%u",*eip);
   TODO();
 
   rtl_li(&op->val, op->simm);
