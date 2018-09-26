@@ -327,7 +327,7 @@ make_DHelper(out_a2dx) {
 
 make_DHelper(call){
   decode_op_I(eip, id_src, true); 
-  decoding.jmp_eip = id_src->val;
+  decoding.jmp_eip = *eip + id_src->val;
 }
 
 void operand_write(Operand *op, rtlreg_t* src) {
