@@ -35,6 +35,7 @@ static inline make_DopHelper(SI) {
   assert(op->width == 1 || op->width == 4);
 
   op->type = OP_TYPE_IMM;
+  op->simm = (int32_t)instr_fetch(eip,op->width);
 
   /* TODO: Use instr_fetch() to read `op->width' bytes of memory
    * pointed by `eip'. Interpret the result as a signed immediate,
@@ -322,6 +323,11 @@ make_DHelper(out_a2dx) {
 #ifdef DEBUG
   sprintf(id_dest->str, "(%%dx)");
 #endif
+}
+
+make_DHelper(call){
+  decode_op_I(eip, id_src, true); 
+  decoding.jmp_eip = id_src->val;
 }
 
 void operand_write(Operand *op, rtlreg_t* src) {
