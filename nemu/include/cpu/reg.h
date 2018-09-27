@@ -32,6 +32,28 @@ typedef struct {
 
   vaddr_t eip;
 
+  union{
+	  uint32_t EFlags;
+	  struct {
+		  int CF : 1;
+	      int : 1;
+		  int PF : 1;
+		  int : 1;
+		  int AF : 1;
+		  int : 1;
+		  int ZF : 1;
+		  int SF : 1;
+		  int TF : 1;
+		  int IF : 1;
+		  int DF : 1;
+		  int OF : 1;
+		  int IOPL : 2;
+		  int NT : 1;
+          int : 1;
+		  int RF : 1;
+		  int VM : 1;
+	  };
+  };
 } CPU_state;
 
 extern CPU_state cpu;
