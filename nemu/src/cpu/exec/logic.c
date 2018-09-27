@@ -17,7 +17,7 @@ make_EHelper(xor) {
 	
   Log("Before xor:%u id_dest %u id_src %u",id_dest->reg, id_dest->val, id_src->val);
   rtl_xor(&id_dest->reg, &id_dest->val, &id_src->val);
-  Log("xor:%u id_dest %u id_src %u",id_dest->reg, id_dest->val, id_src->val);
+  Log("xor:%u %u id_dest %u id_src %u",id_dest->reg,id_src->reg, id_dest->val, id_src->val);
   print_asm_template2(xor);
 }
 
