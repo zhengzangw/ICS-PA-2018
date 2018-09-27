@@ -116,4 +116,5 @@ make_DHelper(out_a2dx);
 make_DHelper(call);
 make_DHelper(push_r);
 make_DHelper(xor_E);
+make_DHelper(pop_r);
 #endif
