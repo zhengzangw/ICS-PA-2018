@@ -127,6 +127,7 @@ make_DHelper(mov_G2E) {
  */
 make_DHelper(E2G) {
   decode_op_rm(eip, id_src, true, id_dest, true);
+  Log("E2G: %u",id_src->reg);
 }
 
 make_DHelper(mov_E2G) {
@@ -208,6 +209,7 @@ make_DHelper(test_I) {
 make_DHelper(SI2E) {
   assert(id_dest->width == 2 || id_dest->width == 4);
   decode_op_rm(eip, id_dest, true, NULL, false);
+  Log("SI2E: %u",id_dest->reg);
   id_src->width = 1;
   decode_op_SI(eip, id_src, true);
   if (id_dest->width == 2) {
