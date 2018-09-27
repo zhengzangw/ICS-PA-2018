@@ -6,9 +6,8 @@ make_EHelper(add) {
   print_asm_template2(add);
 }
 
-make_EHelper(sub) {
-  
-
+make_EHelper(sub) { 
+  rtl_sub(&id_dest->reg,&id_dest->val,&id_src->val);
   print_asm_template2(sub);
 }
 
