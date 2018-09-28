@@ -37,12 +37,6 @@ static inline make_DopHelper(SI) {
   op->type = OP_TYPE_IMM;
   op->simm = (int32_t)instr_fetch(eip,op->width);
 
-  /* TODO: Use instr_fetch() to read `op->width' bytes of memory
-   * pointed by `eip'. Interpret the result as a signed immediate,
-   * and assign it to op->simm.
-   *
-   op->simm = ???
-   */
   Log("eip=%#x",*eip);
 
   rtl_li(&op->val, op->simm);
@@ -332,16 +326,8 @@ make_DHelper(call){
   decoding.jmp_eip = *eip + id_src->val;
 }
 
-make_DHelper(push_r){
-  decode_op_r(eip, id_src, true); 
-}
-
 make_DHelper(xor_E){
   decode_op_rm(eip, id_dest, true, id_src, true);
-}
-
-make_DHelper(pop_r){
-	decode_op_r(eip, id_src, true);
 }
 
 void operand_write(Operand *op, rtlreg_t* src) {
