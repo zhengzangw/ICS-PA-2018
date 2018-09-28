@@ -14,10 +14,11 @@ make_EHelper(and) {
 }
 
 make_EHelper(xor) {
-	
-  Log("Before xor:%u id_dest %u id_src %u",id_dest->reg, id_dest->val, id_src->val);
-  rtl_xor(&id_dest->reg, &id_dest->val, &id_src->val);
-  Log("xor:%u %u id_dest %u id_src %u",id_dest->reg,id_src->reg, id_dest->val, id_src->val);
+  rtlreg_t t1;	
+  rtl_xor(&t1, &id_dest->val, &id_src->val);
+  rtl_sr(id_dest->reg, &t1, id_dest->width);
+  Log("t1: %u, width: %u",t1, id_dest->width);
+
   print_asm_template2(xor);
 }
 
