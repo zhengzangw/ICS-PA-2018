@@ -7,9 +7,9 @@ make_EHelper(add) {
 }
 
 make_EHelper(sub) { 
-  Log("sub! %u",id_dest->reg);
+  Log("sub! %u, id_dest->val %u, id_src->val %u",id_dest->reg,id_dest->val,id_src->val);
   rtl_sub(&id_dest->reg,&id_dest->val,&id_src->val);
-  Log("sub! %u",id_dest->reg);
+  Log("sub! %u, id_dest->val %u, id_src->val %u",id_dest->reg,id_dest->val,id_src->val);
   print_asm_template2(sub);
 }
 
