@@ -3,6 +3,7 @@
 
 #define DEBUG
 //#define DIFF_TEST
+#undef DEBUG
 
 #if _SHARE
 // do not enable these features while building a reference design
