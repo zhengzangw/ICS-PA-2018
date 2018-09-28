@@ -326,10 +326,6 @@ make_DHelper(call){
   decoding.jmp_eip = *eip + id_src->val;
 }
 
-make_DHelper(xor_E){
-  decode_op_rm(eip, id_dest, true, id_src, true);
-}
-
 void operand_write(Operand *op, rtlreg_t* src) {
   if (op->type == OP_TYPE_REG) { rtl_sr(op->reg, src, op->width); }
   else if (op->type == OP_TYPE_MEM) { rtl_sm(&op->addr, src, op->width); }
