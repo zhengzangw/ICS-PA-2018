@@ -12,10 +12,10 @@ make_EHelper(push) {
 }
 
 make_EHelper(pop) {
-  rtlreg_t t1;
-  rtl_pop(&t1);
-  rtl_sr(id_dest->reg, &t1, id_dest->width);
+  rtl_pop(&t0);
+  rtl_sr(id_dest->reg, &t0, id_dest->width);
   //Log("Pop");
+  
   print_asm_template1(pop);
 }
 
