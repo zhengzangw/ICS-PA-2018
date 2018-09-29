@@ -199,9 +199,9 @@ make_rtl_setget_eflags(SF)
 static inline void rtl_update_ZF(const rtlreg_t* result, int width) {
   // eflags.ZF <- is_zero(result[width * 8 - 1 .. 0])
   switch (width) {
-	  case 4: cpu.ZF = *(uint32_t *)result==0 ? 1:0;
-	  case 2: cpu.ZF = *(uint16_t *)result == 0 ? 1:0;
-	  case 1: cpu.ZF = *(uint8_t *)result == 0 ? 1:0;
+	  case 4: cpu.ZF = *(uint32_t *)result==0 ? 1:0; break;
+	  case 2: cpu.ZF = *(uint16_t *)result == 0 ? 1:0; break;
+	  case 1: cpu.ZF = *(uint8_t *)result == 0 ? 1:0; break;
 	default: assert(0);
   }
 }
