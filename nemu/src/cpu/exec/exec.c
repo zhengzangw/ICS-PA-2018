@@ -234,7 +234,7 @@ void exec_wrapper(bool print_flag) {
 
   decoding.seq_eip = ori_eip;
   exec_real(&decoding.seq_eip);
-
+  Log("ori=%u, seq_eip=%u, eip=%u", ori_eip, decoding.seq_eip, cpu.eip);
 #ifdef DEBUG
   int instr_len = decoding.seq_eip - ori_eip;
   sprintf(decoding.p, "%*.s", 50 - (12 + 3 * instr_len), "");
