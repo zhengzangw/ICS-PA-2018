@@ -37,7 +37,7 @@ make_EHelper(ret) {
   rtl_pop(eip);
   //Log("ret");
 
-  print_asm("ret");
+  print_asm("ret why");
 }
 
 make_EHelper(call_rm) {
