@@ -7,7 +7,11 @@
  * This is useful when you use the `si' command.
  * You can modify this value as you want.
  */
+#ifdef DEBUG
+#define MAX_INSTR_TO_PRINT 100
+#else
 #define MAX_INSTR_TO_PRINT 10
+#endif
 
 int nemu_state = NEMU_STOP;
 

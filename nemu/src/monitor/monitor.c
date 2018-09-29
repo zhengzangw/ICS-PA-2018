@@ -26,9 +26,9 @@ static inline void init_log() {
 static inline void welcome() {
 #ifdef DEBUG
   Log("Debug: \33[1;32m%s\33[0m", "ON");
-  Log("If debug mode is on, A log file will be generated to record every instruction NEMU executes. "
-      "This may lead to a large log file. "
-      "If it is not necessary, you can turn it off in include/common.h.");
+  //Log("If debug mode is on, A log file will be generated to record every instruction NEMU executes. "
+  //    "This may lead to a large log file. "
+  //    "If it is not necessary, you can turn it off in include/common.h.");
 #else
   Log("Debug: \33[1;32m%s\33[0m", "OFF");
 #endif
@@ -107,7 +107,7 @@ static inline void parse_args(int argc, char *argv[]) {
 
 int init_monitor(int argc, char *argv[]) {
   /* Perform some global initialization. */
-  Log("%s",log_file);
+
   /* Parse arguments. */
   parse_args(argc, argv);
 
