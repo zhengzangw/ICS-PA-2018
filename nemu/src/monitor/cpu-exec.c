@@ -7,10 +7,11 @@
  * This is useful when you use the `si' command.
  * You can modify this value as you want.
  */
-#ifdef DEBUG
-#define MAX_INSTR_TO_PRINT 100
-#else
 #define MAX_INSTR_TO_PRINT 10
+#ifdef DEBUG
+#define print_flag 1
+#else
+#define print_flag (n<MAX_INSTR_TO_PRINT)
 #endif
 
 int nemu_state = NEMU_STOP;
@@ -35,7 +36,7 @@ void cpu_exec(uint64_t n) {
   }
   nemu_state = NEMU_RUNNING;
 
-  bool print_flag = n < MAX_INSTR_TO_PRINT;
+  //bool print_flag = n < MAX_INSTR_TO_PRINT;
 
   for (; n > 0; n --) {
 	if (nemu_state == NEMU_STOP){
