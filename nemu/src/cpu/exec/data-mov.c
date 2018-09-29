@@ -7,15 +7,12 @@ make_EHelper(mov) {
 
 make_EHelper(push) {
   rtl_push(&id_dest->val);
-  //Log("Push");
   print_asm_template1(push);
 }
 
 make_EHelper(pop) {
   rtl_pop(&t0);
   rtl_sr(id_dest->reg, &t0, id_dest->width);
-  //Log("Pop");
-  
   print_asm_template1(pop);
 }
 

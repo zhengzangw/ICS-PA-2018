@@ -18,6 +18,7 @@ static int is_batch_mode = false;
 static inline void init_log() {
 #ifdef DEBUG
   if (log_file == NULL) return;
+  Log("H!");
   log_fp = fopen(log_file, "w");
   Assert(log_fp, "Can not open '%s'", log_file);
 #endif

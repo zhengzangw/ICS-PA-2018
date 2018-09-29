@@ -9,7 +9,6 @@ make_EHelper(add) {
 make_EHelper(sub) { 
   rtl_subi(&t0,&id_dest->val,id_src->val);
   rtl_sr(id_dest->reg, &t0, id_dest->width);
-  //Log("%u", id_dest->width);
   rtl_update_ZFSF(&t0, id_dest->width);
 
   print_asm_template2(sub);
