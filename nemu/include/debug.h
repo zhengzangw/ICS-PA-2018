@@ -44,5 +44,6 @@ extern FILE* log_fp;
   Assert(0, format, ## __VA_ARGS__)
 
 #define TODO() panic("please implement me")
+#define FIXME() panic("please fix me")
 
 #endif
