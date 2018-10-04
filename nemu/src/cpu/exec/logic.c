@@ -8,7 +8,8 @@ make_EHelper(test) {
 }
 
 make_EHelper(and) {
-  TODO();
+  rtl_and(&t0, &id_dest->val, &id_src->val);
+  rtl_sr(id_dest->reg, &t0, id_dest->width);
 
   print_asm_template2(and);
 }
@@ -21,7 +22,8 @@ make_EHelper(xor) {
 }
 
 make_EHelper(or) {
-  TODO();
+  rtl_or(&t0, &id_dest->val, &id_src->val);
+  rtl_sr(id_dest->reg, &t0, id_dest->width);
 
   print_asm_template2(or);
 }
