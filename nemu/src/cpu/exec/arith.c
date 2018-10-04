@@ -1,14 +1,23 @@
 #include "cpu/exec.h"
 
 make_EHelper(add) {
-  TODO();
+  rtl_addi(&t0,&id_dest->val,id_src->val);
+  switch(id_dest->type){
+  		case OP_TYPE_REG: rtl_sr(id_dest->reg, &t0, id_dest->width); break;
+  		case OP_TYPE_MEM: rtl_sm(&id_dest->addr, &t0, id_dest->width); break;
+  		default: assert(0);
+    }
 
   print_asm_template2(add);
 }
 
 make_EHelper(sub) { 
   rtl_subi(&t0,&id_dest->val,id_src->val);
-  rtl_sr(id_dest->reg, &t0, id_dest->width);
+	switch(id_dest->type){
+		case OP_TYPE_REG: rtl_sr(id_dest->reg, &t0, id_dest->width); break;
+		case OP_TYPE_MEM: rtl_sm(&id_dest->addr, &t0, id_dest->width); break;
+		default: assert(0);
+  }
   rtl_update_ZFSF(&t0, id_dest->width);
 
   print_asm_template2(sub);
