@@ -107,6 +107,7 @@ Log("Hi");
   }
   else {
     load_addr(eip, &m, rm);
+		Log("HHHi");
     if (load_rm_val) {
       rtl_lm(&rm->val, &rm->addr, rm->width);
     }
