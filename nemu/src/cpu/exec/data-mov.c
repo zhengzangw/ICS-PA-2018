@@ -70,7 +70,7 @@ make_EHelper(movzx) {
 }
 
 make_EHelper(lea) {
-		Log("%u",id_src->addr);
+		Log("%u",id_src->type);
   operand_write(id_dest, &id_src->addr);
   print_asm_template2(lea);
 }
