@@ -93,7 +93,7 @@ void read_ModR_M(vaddr_t *eip, Operand *rm, bool load_rm_val, Operand *reg, bool
     snprintf(reg->str, OP_STR_SIZE, "%%%s", reg_name(reg->reg, reg->width));
 #endif
   }
-
+Log("Hi");
   if (m.mod == 3) {
     rm->type = OP_TYPE_REG;
     rm->reg = m.R_M;
