@@ -202,7 +202,9 @@ make_rtl_setget_eflags(SF)
 static inline void rtl_update_ZF(const rtlreg_t* result, int width) {
   // eflags.ZF <- is_zero(result[width * 8 - 1 .. 0])
 	rtl_host_lm(&at, result, width);
+	Log("at=%u",at);
 	rtl_setrelopi(RELOP_EQ, &at, &at, 0);
+	Log("at=%u",at);
   rtl_set_ZF(&at);
 }
 
