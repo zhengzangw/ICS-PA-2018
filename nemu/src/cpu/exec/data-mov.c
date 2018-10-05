@@ -30,7 +30,7 @@ make_EHelper(popa) {
 
 make_EHelper(leave) {
   rtl_sr(R_ESP, &reg_l(R_EBP), 4);
-	rtl_pop(&reg_l(R_ESP));
+	rtl_pop(&reg_l(R_EBP));
 
   print_asm("leave");
 }
