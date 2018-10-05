@@ -131,6 +131,7 @@ void interpret_rtl_exit(int state);
 /* RTL pseudo instructions */
 
 static inline void rtl_lr(rtlreg_t* dest, int r, int width) {
+		Log("%u",width);
   switch (width) {
     case 4: rtl_mv(dest, &reg_l(r)); return;
     case 1: rtl_host_lm(dest, &reg_b(r), 1); return;
