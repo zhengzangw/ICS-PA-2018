@@ -19,3 +19,4 @@ make_EHelper(or);
 make_EHelper(add);
 make_EHelper(inc);
 make_EHelper(cmp);
+make_EHelper(jcc);
