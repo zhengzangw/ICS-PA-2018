@@ -30,14 +30,23 @@ make_EHelper(cmp) {
 }
 
 make_EHelper(inc) {
-  Log("%u",id_dest->val);
-  rtl_addi(&id_dest->reg, &id_dest->val, 1);
+  rtl_addi(&t0,&id_dest->val,1);
+  switch(id_dest->type){
+  		case OP_TYPE_REG: rtl_sr(id_dest->reg, &t0, id_dest->width); break;
+  		case OP_TYPE_MEM: rtl_sm(&id_dest->addr, &t0, id_dest->width); break;
+  		default: assert(0);
+    }
 
   print_asm_template1(inc);
 }
 
 make_EHelper(dec) {
-  TODO();
+  rtl_subi(&t0,&id_dest->val,1);
+  switch(id_dest->type){
+  		case OP_TYPE_REG: rtl_sr(id_dest->reg, &t0, id_dest->width); break;
+  		case OP_TYPE_MEM: rtl_sm(&id_dest->addr, &t0, id_dest->width); break;
+  		default: assert(0);
+    }
 
   print_asm_template1(dec);
 }
