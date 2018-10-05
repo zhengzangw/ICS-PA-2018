@@ -159,17 +159,13 @@ static inline void rtl_sext(rtlreg_t* dest, const rtlreg_t* src1, int width) {
 }
 
 static inline void rtl_push(const rtlreg_t* src1) {
-  // esp <- esp - 4
-  // M[esp] <- src1
 	rtl_subi(&reg_l(R_ESP),&reg_l(R_ESP),4);
 	rtl_sm(&reg_l(R_ESP), src1, 4);
 }
 
 static inline void rtl_pop(rtlreg_t* dest) {
-  // dest <- M[esp]
-  // esp <- esp + 4
-  *dest = paddr_read(cpu.esp, 4);
-  cpu.esp += 4;
+	rtl_lm(dest, &reg_l(R_ESP), 4);
+	rtl_addi(&reg_l(R_ESP), &reg_l(R_ESP), 4);
 }
 
 static inline void rtl_setrelopi(uint32_t relop, rtlreg_t *dest,
