@@ -41,6 +41,7 @@ static WP* new_wp_() {
 
 static void free_wp_(WP *wp){
 	assert(wp!=NULL);
+	assert(0);
 	if (wp==head){
 		head = wp->next;
 		wp->next->pre = NULL;
