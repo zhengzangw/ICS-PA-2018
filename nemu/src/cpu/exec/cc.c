@@ -23,6 +23,7 @@ void rtl_setcc(rtlreg_t* dest, uint8_t subcode) {
 				rtl_setrelopi(RELOP_EQ, dest, &t0, 1);
 				return;
     case CC_E:
+				Log("Hi");
 				rtl_get_ZF(&t0);
 				rtl_setrelopi(RELOP_EQ, dest, &t0, 1);
 				return;
