@@ -74,7 +74,13 @@ static int cmd_info(char *args){
 		printf("eip%#20x%#20x\n",cpu.eip,cpu.eip);
 	} else if (strcmp(arg,"w")==0){
 		wp_info();
-	} else 
+	} else if (strcmp(arg,"e")==0){
+		printf("CF=%u\n",cpu.CF);
+		printf("OF=%u\n",cpu.OF);
+		printf("ZF=%u\n",cpu.ZF);
+		printf("SF=%u\n",cpu.SF);
+		printf("IF=%u\n",cpu.IF);
+	} else	
 		printf("Invalid input!\n");
 	return 0;
 }
