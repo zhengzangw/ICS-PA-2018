@@ -18,3 +18,4 @@ make_EHelper(and);
 make_EHelper(or);
 make_EHelper(add);
 make_EHelper(inc);
+make_EHelper(cmp);
