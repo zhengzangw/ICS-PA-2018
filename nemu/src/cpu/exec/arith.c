@@ -1,52 +1,92 @@
 #include "cpu/exec.h"
 
 make_EHelper(add) {
-  rtl_addi(&t0,&id_dest->val,id_src->val);
-  switch(id_dest->type){
-  		case OP_TYPE_REG: rtl_sr(id_dest->reg, &t0, id_dest->width); break;
-  		case OP_TYPE_MEM: rtl_sm(&id_dest->addr, &t0, id_dest->width); break;
-  		default: assert(0);
-    }
+  rtl_add(&t2, &id_dest->val, &id_src->val);
+  rtl_setrelop(RELOP_LTU, &t0, &t2, &id_dest->val);
+  operand_write(id_dest, &t2);
+
+  rtl_update_ZFSF(&t2, id_dest->width);
+
+  rtl_set_CF(&t0);
+
+  rtl_xor(&t0, &id_dest->val, &id_src->val);
+  rtl_not(&t0, &t0);
+  rtl_xor(&t1, &id_dest->val, &t2);
+  rtl_and(&t0, &t0, &t1);
+  rtl_msb(&t0, &t0, id_dest->width);
+  rtl_set_OF(&t0);
 
   print_asm_template2(add);
 }
 
 make_EHelper(sub) { 
-  rtl_subi(&t0,&id_dest->val,id_src->val);
-	switch(id_dest->type){
-		case OP_TYPE_REG: rtl_sr(id_dest->reg, &t0, id_dest->width); break;
-		case OP_TYPE_MEM: rtl_sm(&id_dest->addr, &t0, id_dest->width); break;
-		default: assert(0);
-  }
-  rtl_update_ZFSF(&t0, id_dest->width);
+  rtl_sub(&t2, &id_dest->val, &id_src->val);
+  rtl_setrelop(RELOP_LTU, &t0, &id_dest->val, &t2);
+  operand_write(id_dest, &t2);
+
+  rtl_update_ZFSF(&t2, id_dest->width);
+
+  rtl_set_CF(&t0);
+
+  rtl_xor(&t0, &id_dest->val, &id_src->val);
+  rtl_xor(&t1, &id_dest->val, &t2);
+  rtl_and(&t0, &t0, &t1);
+  rtl_msb(&t0, &t0, id_dest->width);
+  rtl_set_OF(&t0);
 
   print_asm_template2(sub);
 }
 
 make_EHelper(cmp) {
-  
+  rtl_sub(&t2, &id_dest->val, &id_src->val);
+  rtl_setrelop(RELOP_LTU, &t0, &id_dest->val, &t2);
+
+  rtl_update_ZFSF(&t2, id_dest->width);
+
+  rtl_set_CF(&t0);
+
+  rtl_xor(&t0, &id_dest->val, &id_src->val);
+  rtl_xor(&t1, &id_dest->val, &t2);
+  rtl_and(&t0, &t0, &t1);
+  rtl_msb(&t0, &t0, id_dest->width);
+  rtl_set_OF(&t0);
 
   print_asm_template2(cmp);
 }
 
 make_EHelper(inc) {
-  rtl_addi(&t0,&id_dest->val,1);
-  switch(id_dest->type){
-  		case OP_TYPE_REG: rtl_sr(id_dest->reg, &t0, id_dest->width); break;
-  		case OP_TYPE_MEM: rtl_sm(&id_dest->addr, &t0, id_dest->width); break;
-  		default: assert(0);
-    }
+  rtl_addi(&t2, &id_dest->val, 1);
+  rtl_setrelop(RELOP_LTU, &t0, &t2, &id_dest->val);
+  operand_write(id_dest, &t2);
+
+  rtl_update_ZFSF(&t2, id_dest->width);
+
+  rtl_set_CF(&t0);
+
+  rtl_xor(&t0, &id_dest->val, &id_src->val);
+  rtl_not(&t0, &t0);
+  rtl_xor(&t1, &id_dest->val, &t2);
+  rtl_and(&t0, &t0, &t1);
+  rtl_msb(&t0, &t0, id_dest->width);
+  rtl_set_OF(&t0);
 
   print_asm_template1(inc);
 }
 
 make_EHelper(dec) {
-  rtl_subi(&t0,&id_dest->val,1);
-  switch(id_dest->type){
-  		case OP_TYPE_REG: rtl_sr(id_dest->reg, &t0, id_dest->width); break;
-  		case OP_TYPE_MEM: rtl_sm(&id_dest->addr, &t0, id_dest->width); break;
-  		default: assert(0);
-    }
+  rtl_subi(&t2, &id_dest->val, 1);
+  rtl_setrelop(RELOP_LTU, &t0, &id_dest->val, &t2);
+  operand_write(id_dest, &t2);
+
+  rtl_update_ZFSF(&t2, id_dest->width);
+
+  rtl_set_CF(&t0);
+
+  rtl_xor(&t0, &id_dest->val, &id_src->val);
+  rtl_xor(&t1, &id_dest->val, &t2);
+  rtl_and(&t0, &t0, &t1);
+  rtl_msb(&t0, &t0, id_dest->width);
+  rtl_set_OF(&t0);
 
   print_asm_template1(dec);
 }
