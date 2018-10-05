@@ -201,17 +201,15 @@ make_rtl_setget_eflags(SF)
 
 static inline void rtl_update_ZF(const rtlreg_t* result, int width) {
   // eflags.ZF <- is_zero(result[width * 8 - 1 .. 0])
-	rtl_host_lm(&at, result, width);
-	Log("at=%u",at);
-	rtl_setrelopi(RELOP_EQ, &at, &at, 0);
-	Log("at=%u",at);
-  rtl_set_ZF(&at);
+	rtlreg_t at2;
+	rtl_host_lm(&at2, result, width);
+	rtl_setrelopi(RELOP_EQ, &at2, &at2, 0);
+  rtl_set_ZF(&at2);
 }
 
 static inline void rtl_update_SF(const rtlreg_t* result, int width) {
   // eflags.SF <- is_sign(result[width * 8 - 1 .. 0])
-	rtl_sext(&at, result, width);
-	rtl_setrelopi(RELOP_LT, &at, &at, 0);
+	rtl_shri(&at, result, 8*width-1);
 	rtl_set_SF(&at);
 }
 
