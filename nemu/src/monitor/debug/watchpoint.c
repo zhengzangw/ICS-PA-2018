@@ -47,9 +47,9 @@ static void free_wp_(WP *wp){
 		  wp->next->pre = NULL;
 	} else {
 		wp->pre->next = wp->next;
-		wp->next->pre = wp->pre;
+		if (wp->next!=NULL)
+		  wp->next->pre = wp->pre;
 	}
-	assert(0);
 	wp->enable = false;
 	wp->pre    = NULL;
 	wp->next   = free_;
