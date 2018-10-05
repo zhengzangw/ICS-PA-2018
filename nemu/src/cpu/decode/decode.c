@@ -35,8 +35,10 @@ static inline make_DopHelper(SI) {
   assert(op->width == 1 || op->width == 4);
 
   op->type = OP_TYPE_IMM;
-  op->simm = (int32_t)instr_fetch(eip,op->width);
-
+	switch (op->width) {
+			case 4: op->simm = (int32_t)instr_fetch(eip,op->width);
+		  case 1: op->simm = (int8_t )instr_fetch(eip,op->width);
+  }
   rtl_li(&op->val, op->simm);
 
 #ifdef DEBUG
