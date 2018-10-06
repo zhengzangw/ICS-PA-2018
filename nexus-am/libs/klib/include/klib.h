@@ -55,7 +55,7 @@ int sscanf(const char *str, const char *format, ...);
 void qsort(void *base, size_t nmemb, size_t size, int (*compar)(const void *, const void *));
 
 #define printk printf
-
+#define NDEBUG
 // assert.h
 #ifdef NDEBUG
   #define assert(ignore) ((void)0)
