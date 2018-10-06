@@ -4,7 +4,6 @@
 void load_addr(vaddr_t *eip, ModR_M *m, Operand *rm) {
   assert(m->mod != 3);
 
-	Log("Hi");
   int32_t disp = 0;
   int disp_size = 4;
   int base_reg = -1, index_reg = -1, scale = 0;
@@ -31,6 +30,7 @@ void load_addr(vaddr_t *eip, ModR_M *m, Operand *rm) {
 
   if (disp_size != 0) {
     /* has disp */
+		Log("%u",disp_size);
     disp = instr_fetch(eip, disp_size);
     if (disp_size == 1) { disp = (int8_t)disp; }
 
