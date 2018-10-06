@@ -13,6 +13,9 @@ make_EHelper(xor);
 make_EHelper(or);
 make_EHelper(setcc);
 make_EHelper(not);
+make_EHelper(sar);
+make_EHelper(shr);
+make_EHelper(shl);
 
 /* arith */
 make_EHelper(sub);
