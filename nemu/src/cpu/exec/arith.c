@@ -2,9 +2,7 @@
 
 make_EHelper(add) {
   rtl_add(&t2, &id_dest->val, &id_src->val);
-	Log("%u+%u=%u",id_dest->val, id_src->val, t2);
   rtl_setrelop(RELOP_LTU, &t0, &t2, &id_dest->val);
-	Log("reg:%u",id_dest->reg);
   operand_write(id_dest, &t2);
 
   rtl_update_ZFSF(&t2, id_dest->width);
