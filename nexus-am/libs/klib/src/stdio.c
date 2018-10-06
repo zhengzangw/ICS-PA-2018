@@ -40,17 +40,17 @@ int sprintf(char *out, const char *fmt, ...) {
 	char *p;
 
 	va_start(ap, fmt);
-	while (c=*format++){
+	while ((c=*fmt++)){
 			if (c!='%') *(out++)=c;
 			else {
-					c=*format++;
+					c=*fmt++;
 					switch(c){
 							case 'c':
 									ch = va_arg(ap, int);
 								  *(out++)=ch;
 									break;
 							case 's':
-									*p = va_arg(ap, char *);
+									p = va_arg(ap, char *);
 									strcpy(out,p);
 									out += strlen(p);
 									break;
