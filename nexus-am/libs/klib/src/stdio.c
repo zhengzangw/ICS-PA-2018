@@ -22,6 +22,9 @@ static unsigned int out_d(char *out, int value){
 		length--;
 		out++;
 	}
+
+	_putc('\n');
+	_putc('T');
 	return out - tmp;
 }
 
