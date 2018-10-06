@@ -4,6 +4,7 @@
 void load_addr(vaddr_t *eip, ModR_M *m, Operand *rm) {
   assert(m->mod != 3);
 
+	Log("Hi");
   int32_t disp = 0;
   int disp_size = 4;
   int base_reg = -1, index_reg = -1, scale = 0;
@@ -82,7 +83,6 @@ void read_ModR_M(vaddr_t *eip, Operand *rm, bool load_rm_val, Operand *reg, bool
   ModR_M m;
   m.val = instr_fetch(eip, 1);
   decoding.ext_opcode = m.opcode;
-	Log("Hi");
   if (reg != NULL) {
     reg->type = OP_TYPE_REG;
     reg->reg = m.reg;
