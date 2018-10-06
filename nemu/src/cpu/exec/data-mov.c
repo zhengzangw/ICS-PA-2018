@@ -44,7 +44,7 @@ make_EHelper(cltd) {
 				rtl_li(&t1, 0xFFFF);
 				rtl_sr(R_EDX, &t1, 2);
 		} else {
-				rtl_li(&t0, 0);
+				rtl_li(&t1, 0);
 				rtl_sr(R_EDX, &t1, 2);
 		}
   }
@@ -55,7 +55,7 @@ make_EHelper(cltd) {
 				rtl_li(&t1, 0xFFFFFFFF);
 				rtl_sr(R_EDX, &t1, 4);
 		} else {
-				rtl_li(&t0, 0);
+				rtl_li(&t1, 0);
 				rtl_sr(R_EDX, &t1, 4);
 		}
   }
