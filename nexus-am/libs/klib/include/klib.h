@@ -74,7 +74,7 @@ void qsort(void *base, size_t nmemb, size_t size, int (*compar)(const void *, co
 #endif
 
 #define TODO() do {\
-		assert(0); \
+		 \
 } while (0)
 
 #endif
