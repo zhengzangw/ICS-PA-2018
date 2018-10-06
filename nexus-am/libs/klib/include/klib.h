@@ -74,9 +74,11 @@ void qsort(void *base, size_t nmemb, size_t size, int (*compar)(const void *, co
 #endif
 
 #define TODO() do {\
-		printf("\33m[1;34m[%s, %d, %s] " "please implement me" "\33[0m\n", \
-						__FILE__, __LINE__, __func__); \
 		assert(0); \
 } while (0)
 
 #endif
+
+		/* printf("\33m[1;34m[%s, %d, %s] " "please implement me" "\33[0m\n", \
+							__FILE__, __LINE__, __func__); \
+		*/
