@@ -75,7 +75,7 @@ void load_addr(vaddr_t *eip, ModR_M *m, Operand *rm) {
   }
 #endif
 
-Log("%u",rm->addr);
+Log("%x",rm->addr);
   rm->type = OP_TYPE_MEM;
 }
 
