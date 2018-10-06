@@ -123,7 +123,6 @@ make_DHelper(mov_G2E) {
  */
 make_DHelper(E2G) {
   decode_op_rm(eip, id_src, true, id_dest, true);
-  //Log("E2G: %u",id_src->reg);
 }
 
 make_DHelper(mov_E2G) {
@@ -159,8 +158,6 @@ make_DHelper(I2E) {
 }
 
 make_DHelper(mov_I2E) {
-		Log("%u",id_dest->width);
-		Log("%u",id_src->width);
   decode_op_rm(eip, id_dest, false, NULL, false);
   decode_op_I(eip, id_src, true);
 }
@@ -207,7 +204,6 @@ make_DHelper(test_I) {
 make_DHelper(SI2E) {
   assert(id_dest->width == 2 || id_dest->width == 4);
   decode_op_rm(eip, id_dest, true, NULL, false);
-  //Log("SI2E: %u",id_dest->reg);
   id_src->width = 1;
   decode_op_SI(eip, id_src, true);
   if (id_dest->width == 2) {
@@ -326,7 +322,7 @@ make_DHelper(out_a2dx) {
 }
 
 void operand_write(Operand *op, rtlreg_t* src) {
-  if (op->type == OP_TYPE_REG) { rtl_sr(op->reg, src, op->width); Log("Hi");}
+  if (op->type == OP_TYPE_REG) { rtl_sr(op->reg, src, op->width); }
   else if (op->type == OP_TYPE_MEM) { rtl_sm(&op->addr, src, op->width); }
   else { assert(0); }
 }

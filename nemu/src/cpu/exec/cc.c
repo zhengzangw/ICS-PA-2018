@@ -11,7 +11,6 @@ void rtl_setcc(rtlreg_t* dest, uint8_t subcode) {
     CC_L, CC_NL, CC_LE, CC_NLE
   };
 
-  // TODO: Query EFLAGS to determine whether the condition code is satisfied.
   // dest <- ( cc is satisfied ? 1 : 0)
   switch (subcode & 0xe) {
     case CC_O:
@@ -23,7 +22,6 @@ void rtl_setcc(rtlreg_t* dest, uint8_t subcode) {
 				rtl_setrelopi(RELOP_EQ, dest, &t0, 1);
 				break;
     case CC_E:
-				Log("Hi");
 				rtl_get_ZF(&t0);
 				rtl_setrelopi(RELOP_EQ, dest, &t0, 1);
 				break;

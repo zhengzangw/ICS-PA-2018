@@ -32,6 +32,7 @@ make_EHelper(leave);
 /* special */
 make_EHelper(nemu_trap);
 make_EHelper(inv);
+make_EHelper(nop);
 
 /* prefix */
 make_EHelper(operand_size);
