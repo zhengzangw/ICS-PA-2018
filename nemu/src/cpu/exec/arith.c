@@ -92,7 +92,12 @@ make_EHelper(dec) {
 }
 
 make_EHelper(neg) {
-  TODO();
+  rtl_setrelopi(RELOP_EQ, &t0, &id_dest->val, 0);
+	rtl_set_CF(&t0);
+  
+	rtl_not(&t0, &t0);
+	rtl_addi(&t0, &t0, 1);
+	operand_write(id_dest, &t0);
 
   print_asm_template1(neg);
 }

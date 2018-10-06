@@ -4,6 +4,7 @@
 make_EHelper(call);
 make_EHelper(ret);
 make_EHelper(jcc);
+make_EHelper(jmp);
 
 /* logic */
 make_EHelper(test);
@@ -11,6 +12,7 @@ make_EHelper(and);
 make_EHelper(xor);
 make_EHelper(or);
 make_EHelper(setcc);
+make_EHelper(not);
 
 /* arith */
 make_EHelper(sub);
@@ -20,6 +22,11 @@ make_EHelper(sbb);
 make_EHelper(inc);
 make_EHelper(dec);
 make_EHelper(cmp);
+make_EHelper(mul);
+make_EHelper(imul1);
+make_EHelper(div);
+make_EHelper(idiv);
+make_EHelper(neg);
 
 /* data-mov */
 make_EHelper(mov);
