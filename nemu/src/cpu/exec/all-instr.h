@@ -41,6 +41,8 @@ make_EHelper(movsx);
 make_EHelper(lea);
 make_EHelper(push);
 make_EHelper(pop);
+make_EHelper(pusha);
+make_EHelper(popa);
 make_EHelper(leave);
 make_EHelper(cltd);
 
