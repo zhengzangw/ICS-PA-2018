@@ -30,7 +30,6 @@ void load_addr(vaddr_t *eip, ModR_M *m, Operand *rm) {
 
   if (disp_size != 0) {
     /* has disp */
-		Log("%u",disp_size);
     disp = instr_fetch(eip, disp_size);
     if (disp_size == 1) { disp = (int8_t)disp; }
 
@@ -76,6 +75,7 @@ void load_addr(vaddr_t *eip, ModR_M *m, Operand *rm) {
   }
 #endif
 
+Log("%u",rm->addr);
   rm->type = OP_TYPE_MEM;
 }
 
