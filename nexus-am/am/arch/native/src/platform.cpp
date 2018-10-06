@@ -9,6 +9,7 @@
 #define PMEM_MAP_START (uintptr_t)0x100000
 #define PMEM_MAP_END   (uintptr_t)PMEM_SIZE
 #define PMEM_MAP_SIZE  (PMEM_MAP_END - PMEM_MAP_START)
+#define _unused(x) ((void)(x))
 
 static int pmem_fd;
 static ucontext_t uc_example;
@@ -21,6 +22,7 @@ static void init_platform() {
   void *ret = mmap((void *)PMEM_MAP_START, PMEM_MAP_SIZE, PROT_READ | PROT_WRITE | PROT_EXEC,
       MAP_SHARED | MAP_FIXED, pmem_fd, PMEM_MAP_START);
   assert(ret != (void *)-1);
+	_unused(ret);
 
   _heap.start = (void *)(PMEM_MAP_START + 4096);  // this is to skip the trap entry
   _heap.end = (void *)PMEM_MAP_END;
@@ -31,9 +33,11 @@ static void init_platform() {
 static void exit_platform() {
   int ret = munmap((void *)PMEM_MAP_START, PMEM_MAP_SIZE);
   assert(ret == 0);
+	_unused(ret);
   close(pmem_fd);
   ret = shm_unlink(PMEM_SHM_FILE);
   assert(ret == 0);
+	_unused(ret);
 }
 
 class _Init {
@@ -53,11 +57,13 @@ void shm_mmap(void *va, void *pa, int prot) {
   void *ret = mmap(va, 4096, PROT_READ | PROT_WRITE | PROT_EXEC,
       MAP_SHARED | MAP_FIXED, pmem_fd, (uintptr_t)pa);
   assert(ret != (void *)-1);
+	_unused(ret);
 }
 
 void shm_munmap(void *va) {
   int ret = munmap(va, 4096);
   assert(ret == 0);
+	_unused(ret);
 }
 
 void get_example_uc(_Context *r) {

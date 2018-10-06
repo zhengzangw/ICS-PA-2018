@@ -1,7 +1,7 @@
 #include "klib.h"
 #include <stdarg.h>
 
-#ifndef __ISA_NATIVE__
+#if !defined(__ISA_NATIVE__) || defined(__NATIVE_USE_KLIB__)
 
 static unsigned int out_d(char *out, int value){
   unsigned char stack[10];
@@ -12,19 +12,15 @@ static unsigned int out_d(char *out, int value){
 			value *= -1;
 	}
 	do {
-		stack[length] = '0' + (value%10);
+		stack[length++] = '0' + (value%10);
 		value/=10;
-		length++;
 	} while (value);
 
 	while (length){
-		*out = stack[length-1];
+		*out++ = stack[length-1];
 		length--;
-		out++;
 	}
 
-	_putc('\n');
-	_putc('T');
 	return out - tmp;
 }
 
@@ -66,6 +62,7 @@ int sprintf(char *out, const char *fmt, ...) {
 					}
 			}
 	}
+	*out = '\0';
 	va_end(ap);
   return 0;
 }
