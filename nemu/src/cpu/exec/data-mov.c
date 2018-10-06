@@ -80,10 +80,14 @@ make_EHelper(cltd) {
 
 make_EHelper(cwtl) {
   if (decoding.is_operand_size_16) {
-    TODO();
+		rtl_lr(&t0, R_EAX, 1);
+		rtl_sext(&t0, &t0, 2);
+		rtl_sr(R_EAX, &t0, 2);
   }
   else {
-    TODO();
+		rtl_lr(&t0, R_EAX, 2);
+		rtl_sext(&t0, &t0, 4);
+		rtl_sr(R_EAX, &t0, 4);
   }
 
   print_asm(decoding.is_operand_size_16 ? "cbtw" : "cwtl");

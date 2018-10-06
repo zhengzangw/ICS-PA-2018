@@ -45,6 +45,7 @@ make_EHelper(pusha);
 make_EHelper(popa);
 make_EHelper(leave);
 make_EHelper(cltd);
+make_EHelper(cwtl);
 
 /* special */
 make_EHelper(nemu_trap);
