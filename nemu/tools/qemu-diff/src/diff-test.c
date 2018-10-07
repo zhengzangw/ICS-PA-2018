@@ -93,6 +93,7 @@ void difftest_init(void) {
     assert(0);
   }
   else {
+		printf("%d\n",pid);
     // father
 
     gdb_connect_qemu();
