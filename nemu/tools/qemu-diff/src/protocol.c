@@ -101,6 +101,7 @@ struct gdb_conn* gdb_begin_inet(const char *addr, uint16_t port) {
   };
   if (inet_aton(addr, &sa.sin_addr) == 0)
     errx(1, "Invalid address: %s", addr);
+  printf("Once\n");
 
   // open the socket and start the tcp connection
   int fd = socket(AF_INET, SOCK_STREAM, 0);
@@ -110,7 +111,6 @@ struct gdb_conn* gdb_begin_inet(const char *addr, uint16_t port) {
     close(fd);
     return NULL;
   }
-  printf("Once\n");
 
   socklen_t tmp;
   tmp = 1;
