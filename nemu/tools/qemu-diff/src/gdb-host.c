@@ -7,7 +7,7 @@ bool gdb_connect_qemu(void) {
   while ((conn = gdb_begin_inet("127.0.0.1", 1234)) == NULL) {
     usleep(1);
   }
-
+	printf("Hi\n");
   return true;
 }
 
