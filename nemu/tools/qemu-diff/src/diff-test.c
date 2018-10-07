@@ -67,7 +67,6 @@ static uint8_t mbr[] = {
 void difftest_init(void) {
   int ppid_before_fork = getpid();
   int pid = fork();
-	Log("%d",pid);
   if (pid == -1) {
     perror("fork");
     assert(0);
@@ -90,7 +89,6 @@ void difftest_init(void) {
     close(STDIN_FILENO);
     execlp("qemu-system-i386", "qemu-system-i386", "-S", "-s", "-nographic", NULL);
     perror("exec");
-		Log("Here");
     assert(0);
   }
   else {
