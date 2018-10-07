@@ -4,7 +4,6 @@ static struct gdb_conn *conn;
 
 bool gdb_connect_qemu(void) {
   // connect to gdbserver on localhost port 1234
-	printf("Enter\n");
   while ((conn = gdb_begin_inet("127.0.0.1", 1234)) == NULL) {
     usleep(1);
   }
