@@ -45,14 +45,13 @@ void init_difftest(char *ref_so_file, long img_size) {
   Log("The result of every instruction will be compared with %s. "
       "This will help you a lot for debugging, but also significantly reduce the performance. "
       "If it is not necessary, you can turn it off in include/common.h.", ref_so_file);
-
+  Log("Hi");
   ref_difftest_init();
   ref_difftest_memcpy_from_dut(ENTRY_START, guest_to_host(ENTRY_START), img_size);
   ref_difftest_setregs(&cpu);
 }
 
 void difftest_step(uint32_t eip) {
-  Log("Hi");
   CPU_state ref_r;
 
   if (is_skip_dut) {
