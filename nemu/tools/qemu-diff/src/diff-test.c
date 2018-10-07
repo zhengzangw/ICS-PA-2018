@@ -67,6 +67,7 @@ static uint8_t mbr[] = {
 void difftest_init(void) {
   int ppid_before_fork = getpid();
   int pid = fork();
+	Log("%d",pid);
   if (pid == -1) {
     perror("fork");
     assert(0);
