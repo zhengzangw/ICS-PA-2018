@@ -46,11 +46,8 @@ void init_difftest(char *ref_so_file, long img_size) {
       "This will help you a lot for debugging, but also significantly reduce the performance. "
       "If it is not necessary, you can turn it off in include/common.h.", ref_so_file);
   ref_difftest_init();
-  Log("Hi");
   ref_difftest_memcpy_from_dut(ENTRY_START, guest_to_host(ENTRY_START), img_size);
-  Log("Hi");
   ref_difftest_setregs(&cpu);
-  Log("Hi");
 }
 
 void difftest_step(uint32_t eip) {
