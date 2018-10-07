@@ -94,7 +94,6 @@ static struct gdb_conn* gdb_begin(int fd) {
 }
 
 struct gdb_conn* gdb_begin_inet(const char *addr, uint16_t port) {
-  printf("Once\n");
   // fill the socket information
   struct sockaddr_in sa = {
     .sin_family = AF_INET,
@@ -111,6 +110,7 @@ struct gdb_conn* gdb_begin_inet(const char *addr, uint16_t port) {
     close(fd);
     return NULL;
   }
+  printf("Once\n");
 
   socklen_t tmp;
   tmp = 1;
