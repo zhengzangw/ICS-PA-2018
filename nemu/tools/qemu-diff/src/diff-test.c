@@ -74,7 +74,7 @@ void difftest_init(void) {
   }
   else if (pid == 0) {
     // child
-    assert(0);
+		
     // install a parent death signal in the chlid
     int r = prctl(PR_SET_PDEATHSIG, SIGTERM);
     if (r == -1) {
