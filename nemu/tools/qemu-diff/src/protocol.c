@@ -104,14 +104,13 @@ struct gdb_conn* gdb_begin_inet(const char *addr, uint16_t port) {
 
   // open the socket and start the tcp connection
   int fd = socket(AF_INET, SOCK_STREAM, 0);
-  printf("Once\n");
   if (fd < 0)
     err(1, "socket");
   if (connect(fd, (const struct sockaddr *)&sa, sizeof(sa)) != 0) {
     close(fd);
+  printf("Once\n");
     return NULL;
   }
-  printf("iOnce\n");
 
   socklen_t tmp;
   tmp = 1;
