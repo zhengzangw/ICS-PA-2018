@@ -70,9 +70,7 @@ void difftest_step(uint32_t eip) {
 
   // TODO: Check the registers state with the reference design.
   // Set `nemu_state` to `NEMU_ABORT` if they are not the same.
-	CPU_state *ref_reg = NULL;
-	ref_difftest_getregs(ref_reg);
-	assert(0);
-	assert(ref_reg!=NULL);
-  printf("%u=%u",ref_reg->eax,cpu.eax);
+	CPU_state ref_reg;
+	ref_difftest_getregs(&ref_reg);
+  printf("%u=%u\n",ref_reg.eax,cpu.eax);
 }
