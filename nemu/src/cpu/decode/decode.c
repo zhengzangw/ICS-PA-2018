@@ -297,8 +297,6 @@ make_DHelper(in_dx2a) {
   id_src->type = OP_TYPE_REG;
   id_src->reg = R_DX;
   rtl_lr(&id_src->val, R_DX, 2);
-	printf("%x\n",id_src->val);
-	assert(0);
 #ifdef DEBUG
   sprintf(id_src->str, "(%%dx)");
 #endif
