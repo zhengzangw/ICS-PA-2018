@@ -25,6 +25,4 @@ void init_serial() {
   serial_ch_base = add_pio_map(SERIAL_PORT + CH_OFFSET, 1, serial_ch_io_handler);
   serial_lsr_base = add_pio_map(SERIAL_PORT + LSR_OFFSET, 1, NULL);
   serial_lsr_base[0] = 0x20; /* the status is always free */
-	printf("serial_lsr_base[0]=%u\n",serial_lsr_base[0]);
-	assert(0);
 }
