@@ -8,10 +8,12 @@
  * You can modify this value as you want.
  */
 #define MAX_INSTR_TO_PRINT 10
-#ifdef DEBUG
+#ifdef ALL_LOG
 #define print_flag 1
 #else
+#ifdef DEBUG
 #define print_flag (n<MAX_INSTR_TO_PRINT)
+#endif
 #endif
 
 int nemu_state = NEMU_STOP;

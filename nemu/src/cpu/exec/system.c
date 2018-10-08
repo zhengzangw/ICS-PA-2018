@@ -43,15 +43,12 @@ make_EHelper(iret) {
 }
 
 make_EHelper(in) {
-  printf("%u,%x\n",id_dest->width, id_src->val);
   switch (id_dest->width) {
 		case 1: t0 = pio_read_b(id_src->val); break;
 		case 2: t0 = pio_read_w(id_src->val); break;
 		case 4: t0 = pio_read_l(id_src->val); break;
 		default: assert(0);
   }
-	printf("%x\n",pio_read_b(0x3fd));
-  //assert(0);
 	operand_write(id_dest, &t0);
 
   print_asm_template2(in);
