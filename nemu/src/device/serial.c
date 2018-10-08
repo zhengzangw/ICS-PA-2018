@@ -5,7 +5,7 @@
 
 #define SERIAL_PORT 0x3F8
 #define CH_OFFSET 0
-#define LSR_OFFSET 4		/* line status register */
+#define LSR_OFFSET 5		/* line status register */
 
 static uint8_t *serial_ch_base;
 static uint8_t *serial_lsr_base;
