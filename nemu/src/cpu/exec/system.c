@@ -49,7 +49,6 @@ make_EHelper(in) {
 		case 4: t0 = pio_read_l(id_src->val); break;
 		default: assert(0);
   }
-	assert(t0!=0);
 	operand_write(id_dest, &t0);
 
   print_asm_template2(in);
