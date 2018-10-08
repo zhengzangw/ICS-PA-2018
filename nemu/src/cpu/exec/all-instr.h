@@ -55,3 +55,6 @@ make_EHelper(nop);
 /* prefix */
 make_EHelper(operand_size);
 
+/* system */
+make_EHelper(in);
+make_EHelper(out);
