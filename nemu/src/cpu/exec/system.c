@@ -50,7 +50,7 @@ make_EHelper(in) {
 		default: assert(0);
   }
 	printf("%x\n",pio_read_b(0x3fd));
-  assert(0);
+  //assert(0);
 	operand_write(id_dest, &t0);
 
   print_asm_template2(in);
