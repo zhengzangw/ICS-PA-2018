@@ -8,6 +8,12 @@ size_t strlen(const char *s) {
   return ptr-s;
 }
 
+size_t strnlen(const char *s, size_t n){
+  const char *ptr;
+	for (ptr=s; *ptr!='\0'&&(ptr-s)<n;++ptr);
+	return ptr-s;
+}
+
 char *strcpy(char* dst,const char* src) {
   char *ret = dst;
   while ((*dst++=*src++)!='\0');	
