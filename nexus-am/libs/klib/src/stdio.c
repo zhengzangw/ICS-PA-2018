@@ -25,7 +25,19 @@ static unsigned int out_d(char *out, int value){
 }
 
 int printf(const char *fmt, ...) {
-  return 0;
+  char buf[1024];
+	va_list args;
+	int ret;
+
+	va_start(args, fmt);
+  ret = sprintf(buf, fmt, args);
+	va_end(args);
+
+	int len = strlen(buf);
+  for (int i=0;i<len;++i)
+			_putc(buf[i]);
+
+  return ret;
 }
 
 int vsprintf(char *out, const char *fmt, va_list ap) {
