@@ -16,6 +16,7 @@ static inline int my_atoi(const char **s){
 		int i=0;
 		while (isdigit(**s))
 				i = i*10+*((*s)++) - '0';
+		(*s)--;
 		return i;
 }
 static inline int div(long *n, unsigned base){	
@@ -165,7 +166,6 @@ repeat:
 					goto repeat;
 			}
 			else if (*fmt == '*') {
-					++fmt;
 					field_width = va_arg(args, int);
 					if (field_width < 0){
 							field_width = -field_width;
@@ -179,7 +179,6 @@ repeat:
 					if (isdigit(*fmt))
 							precision = my_atoi(&fmt);
 				  else if (*fmt=='*') {
-						  ++fmt;
 							precision = va_arg(args, int);
 					}
 					if (precision < 0)
@@ -189,7 +188,6 @@ repeat:
 
 			if (*fmt == 'h' || *fmt == 'l' || *fmt == 'L') {
 					qualifier = *fmt;
-					++fmt;
 					goto repeat;
 			}
 
