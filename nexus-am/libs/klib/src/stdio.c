@@ -19,8 +19,9 @@ static inline int my_atoi(const char **s){
 		return i;
 }
 static inline int div(long *n, unsigned base){	
+		int ret = ((unsigned long)*n)%(unsigned)base;
 		*n = ((unsigned long)*n) / (unsigned) base;
-		return ((unsigned long)*n)%(unsigned)base;
+		return ret;
 }
 
 static char *get_number(char *str, long num, int base, int size, int precision, int type){
@@ -64,6 +65,7 @@ static char *get_number(char *str, long num, int base, int size, int precision, 
 		else {
 				while (num!=0){
 						tmp[i++] = digits[div(&num,base)];
+						//_putc(tmp[i-1]); _putc('\n');
 				}
 		}
 
@@ -129,7 +131,10 @@ int sprintf(char *out, const char *fmt, ...) {
 	uint32_t num;
 
 	va_start(args, fmt);
+			//_putc('R'); _putc('\n');
+
   for (str=out; *fmt; ++fmt){
+		//	_putc('T'); _putc('\n');
 			if (*fmt != '%') {
 					*str++ = *fmt;
 					continue;
@@ -270,8 +275,10 @@ repeat:
 					num = (unsigned short)va_arg(args, int);
 					if (flags & SIGN)
 							num = (short)num;
-			} else if (flags & SIGN)
+			} else if (flags & SIGN){
+			//_putc('D'); _putc('\n');
 					num = va_arg(args, int);
+			}
 			else
 					num = va_arg(args, unsigned int);
 

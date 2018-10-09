@@ -1,6 +1,7 @@
 #include <am.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdarg.h>
 
 extern void platform_dummy();
 void _trm_init() {
