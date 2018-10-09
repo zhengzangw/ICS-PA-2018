@@ -2,7 +2,6 @@
 #include <x86.h>
 #include <amdev.h>
 
-
 size_t timer_read(uintptr_t reg, void *buf, size_t size) {
   switch (reg) {
     case _DEVREG_TIMER_UPTIME: {
