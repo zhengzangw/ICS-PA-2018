@@ -96,7 +96,9 @@ make_EHelper(neg) {
 	rtl_set_CF(&t0);
   
 	rtl_not(&t1, &t0);
+	Log("%u",t1);
 	rtl_addi(&t0, &t1, 1);
+	Log("%u",t0);
 	operand_write(id_dest, &t0);
 
   print_asm_template1(neg);
