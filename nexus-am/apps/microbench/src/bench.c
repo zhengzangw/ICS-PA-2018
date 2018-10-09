@@ -61,6 +61,7 @@ int main() {
   int pass = 1;
 
   for (int i = 0; i < ARR_SIZE(benchmarks); i ++) {
+		printf("Once");
     Benchmark *bench = &benchmarks[i];
     current = bench;
     setting = &bench->settings[SETTING];
