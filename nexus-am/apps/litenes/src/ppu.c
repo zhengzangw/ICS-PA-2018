@@ -26,7 +26,6 @@ static word ppu_ram_map[0x4000];
 
 static inline void draw(int col, int row, int idx) {
   canvas[row][col + 0xff] = idx;
-  printf("row:%d, col:%d, idx:%d, canvas:%d\n", row, col, idx, canvas[row][col+0xff]);
   if(idx != 0) {
 	  log("row:%d, col:%d, idx:%d\n", row, col, idx);
   }
@@ -284,6 +283,7 @@ void ppu_draw_sprite_scanline()
                 if (do_update) {
 					log("call ppu_ram_read\n");
                     int idx = ppu_ram_read(palette_address + color);
+										printf("%d ",idx);
                     if (PPU_SPRRAM[n + 2] & 0x20) {
                         draw(screen_x, sprite_y + y_in_tile + 1, idx); // bbg
                     }
