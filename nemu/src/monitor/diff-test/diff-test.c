@@ -75,7 +75,6 @@ void difftest_step(uint32_t eip) {
 
   ref_difftest_exec(1);
   ref_difftest_getregs(&ref_r);
-	qemu_total_instr++;
 
   // TODO: Check the registers state with the reference design.
   // Set `nemu_state` to `NEMU_ABORT` if they are not the same.
@@ -94,6 +93,8 @@ void difftest_step(uint32_t eip) {
   if (ref_cpu.eip!=cpu.eip) diff_error(eip);
 	if (!all_same) nemu_state = NEMU_ABORT;
 	if (qemu_total_instr!=g_nr_guest_instr) {
-			printf("total instr different: %ld!=%ld", qemu_total_instr, g_nr_guest_instr);
+			printf("total instr different: %ld!=%ld", g_nr_guest_instr, qemu_total_instr);
+			assert(0);
 	}
+	qemu_total_instr++;
 }
