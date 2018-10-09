@@ -66,7 +66,6 @@ int main() {
     setting = &bench->settings[SETTING];
     const char *msg = bench_check(bench);
     printk("[%s] %s: ", bench->name, bench->desc);
-		printf("T\n");
     if (msg != NULL) {
       printk("Ignored %s\n", msg);
     } else {
@@ -74,12 +73,13 @@ int main() {
       int succ = 1;
       for (int i = 0; i < REPEAT; i ++) {
         Result res;
+		  printf("T\n");
         run_once(bench, &res);
+		  printf("E\n");
         printk(res.pass ? "*" : "X");
         succ &= res.pass;
         if (res.msec < msec) msec = res.msec;
       }
-		  printf("Second\n");
 
       if (succ) printk(" Passed.");
       else printk(" Failed.");
