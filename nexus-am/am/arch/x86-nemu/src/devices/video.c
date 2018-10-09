@@ -22,7 +22,7 @@ size_t video_write(uintptr_t reg, void *buf, size_t size) {
   switch (reg) {
     case _DEVREG_VIDEO_FBCTL: {
       _FBCtlReg *ctl = (_FBCtlReg *)buf;
-			uint32_t w = screen_width();
+			uint32_t w = screen_height();
 			for (int i=0;i<ctl->h;++i)
 					for (int j=0;j<ctl->w;++j)
 							fb[(i+ctl->x)*w+j+ctl->y] = ctl->pixels[i*ctl->w+j];
