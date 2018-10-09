@@ -28,7 +28,7 @@ void paddr_write(paddr_t addr, uint32_t data, int len) {
 	else 
 	{
 		mmio_write(addr, len, data, ind);
-		//printf("%u\n",data);
+		printf("%u\n",data);
 	}
 }
 
