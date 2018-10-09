@@ -61,6 +61,7 @@ int main() {
   int pass = 1;
 
   for (int i = 0; i < ARR_SIZE(benchmarks); i ++) {
+			printf("T\n");
     Benchmark *bench = &benchmarks[i];
     current = bench;
     setting = &bench->settings[SETTING];
@@ -92,7 +93,6 @@ int main() {
       }
 
       bench_score += cur;
-			printf("T\n");
     }
   }
 
