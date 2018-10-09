@@ -136,11 +136,11 @@ int vsprintf(char *out, const char *fmt, va_list args) {
 			precision = -1;
 			qualifier = -1;
 			base = 10;
-			_putc('O'); _putc('\n');
+			//_putc('O'); _putc('\n');
 repeat:
-			_putc('I'); _putc('\n');
+			//_putc('I'); _putc('\n');
 		  ++fmt;
-			_putc(*fmt); _putc('\n');
+			//_putc(*fmt); _putc('\n');
 			if (*fmt==':') _halt(0);
 			switch(*fmt){
 					case '-':
@@ -160,7 +160,7 @@ repeat:
 							goto repeat;
 			}
 
-			_putc('D'); _putc('\n');
+			//_putc('D'); _putc('\n');
 			if (isdigit(*fmt)){
 					field_width = my_atoi(&fmt);
 					goto repeat;
