@@ -61,11 +61,12 @@ int main() {
   int pass = 1;
 
   for (int i = 0; i < ARR_SIZE(benchmarks); i ++) {
-			printf("T\n");
     Benchmark *bench = &benchmarks[i];
     current = bench;
     setting = &bench->settings[SETTING];
+			printf("T\n");
     const char *msg = bench_check(bench);
+			printf("R\n");
     printk("[%s] %s: ", bench->name, bench->desc);
     if (msg != NULL) {
       printk("Ignored %s\n", msg);
