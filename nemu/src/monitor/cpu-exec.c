@@ -22,7 +22,7 @@ int nemu_state = NEMU_STOP;
 
 void exec_wrapper(bool);
 
-static uint64_t g_nr_guest_instr = 0;
+uint64_t g_nr_guest_instr = 0;
 
 void nr_guest_instr_add(uint32_t n) {
   g_nr_guest_instr += n;
