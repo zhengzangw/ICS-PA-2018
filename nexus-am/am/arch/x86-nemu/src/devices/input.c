@@ -14,7 +14,7 @@ size_t input_read(uintptr_t reg, void *buf, size_t size) {
 					kbd->keydown = 1;
 			} else {
 					// break code
-					kbd->keycode = _KEY_NONE;
+					kbd->keycode = code;
 					kbd->keydown = 0;
 			}
 			
