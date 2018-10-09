@@ -158,6 +158,7 @@ repeat:
 							goto repeat;
 			}
 
+			_putc('D'); _putc('\n');
 			if (isdigit(*fmt)){
 					field_width = my_atoi(&fmt);
 					goto repeat;
@@ -190,7 +191,6 @@ repeat:
 					++fmt;
 					goto repeat;
 			}
-			_putc('D'); _putc('\n');
 
 		  switch (*fmt) {
 					case 'c':
