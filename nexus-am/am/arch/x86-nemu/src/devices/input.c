@@ -7,7 +7,7 @@ size_t input_read(uintptr_t reg, void *buf, size_t size) {
     case _DEVREG_INPUT_KBD: {
       _KbdReg *kbd = (_KbdReg *)buf;
 			uint32_t code = inl(0x60);
-			
+		  	
 			if (code & 0x8000) {
 					// make code
 					kbd->keycode = code ^ 0x8000;
