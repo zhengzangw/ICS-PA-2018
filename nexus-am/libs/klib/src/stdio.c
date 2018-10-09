@@ -135,7 +135,7 @@ int vsprintf(char *out, const char *fmt, va_list args) {
 			precision = -1;
 			qualifier = -1;
 			base = 10;
-			
+			_putc('I'); _putc('\n');
 repeat:
 		  ++fmt;
 			if (*fmt==':') _halt(0);
