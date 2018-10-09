@@ -93,12 +93,29 @@ make_EHelper(not) {
 }
 
 make_EHelper(ror) {
-  rtl_mv(&t0, &id_dest->val);
-		
-	}
+  rtl_mv(&t0, &id_src->val);
+	rtl_mv(&t2, &id_dest->val);
+	while (t0--){
+			rtl_andi(&t1, &t2, 0x1);
+			rtl_set_CF(&t1);
+		  t2 = (t2>>1)+(t1<<((id_dest->width)-1));
+  }	
+	operand_write(id_dest, &t2);
+
+	print_asm_template2(ror);
+}
 
 make_EHelper(rol){
-		TODO();
+  rtl_mv(&t0, &id_src->val);
+	rtl_mv(&t2, &id_dest->val);
+	while (t0--){
+			rtl_msb(&t1, &t2, id_dest->width);
+			rtl_set_CF(&t1);
+			t2 = (t2<<1) + (t1);
+	}
+	operand_write(id_dest, &t2);
+
+	print_asm_template2(rol);
 }
 
 make_EHelper(rcr){
