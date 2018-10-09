@@ -11,7 +11,7 @@
 #define SPECIAL 32 // 0x
 #define LARGE		64 // ABCDEF
 
-static inline int isdigit(int ch){return (ch>='0')&&(ch<='0');}
+static inline int isdigit(int ch){return (ch>='0')&&(ch<='9');}
 static inline int my_atoi(const char **s){
 		int i=0;
 		while (isdigit(**s))
