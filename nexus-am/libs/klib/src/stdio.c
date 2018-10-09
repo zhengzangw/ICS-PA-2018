@@ -268,7 +268,7 @@ repeat:
 					if (flags & SIGN)
 							num = (short)num;
 			} else if (flags & SIGN){
-			//_putc('D'); _putc('\n');
+			_putc('D'); _putc('\n');
 					num = va_arg(args, int);
 			}
 			else
