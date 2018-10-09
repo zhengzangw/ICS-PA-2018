@@ -2,14 +2,13 @@
 #include <x86.h>
 #include <amdev.h>
 
+
 size_t timer_read(uintptr_t reg, void *buf, size_t size) {
   switch (reg) {
     case _DEVREG_TIMER_UPTIME: {
       _UptimeReg *uptime = (_UptimeReg *)buf;
-			if (uptime->lo == 0xffffffff){
-					uptime->hi ++;
-			}
-			uptime->lo ++;
+			uint8_t tmp = inb(0x48);
+			uptime->lo = tmp;
       return sizeof(_UptimeReg);
     }
     case _DEVREG_TIMER_DATE: {
