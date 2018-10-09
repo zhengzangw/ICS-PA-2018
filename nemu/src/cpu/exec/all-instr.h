@@ -18,6 +18,10 @@ make_EHelper(not);
 make_EHelper(sar);
 make_EHelper(shr);
 make_EHelper(shl);
+make_EHelper(rcl);
+make_EHelper(rcr);
+make_EHelper(ror);
+make_EHelper(rol);
 
 /* arith */
 make_EHelper(sub);
