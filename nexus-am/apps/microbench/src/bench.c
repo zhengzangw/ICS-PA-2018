@@ -85,8 +85,6 @@ int main() {
       pass &= succ;
 
       unsigned long cur = score(bench, 0, msec);
-			
-			printf("T\n");
 
       printk("\n");
       if (SETTING != 0) {
@@ -94,6 +92,7 @@ int main() {
       }
 
       bench_score += cur;
+			printf("T\n");
     }
   }
 
