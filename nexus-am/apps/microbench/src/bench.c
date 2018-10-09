@@ -66,6 +66,7 @@ int main() {
     setting = &bench->settings[SETTING];
     const char *msg = bench_check(bench);
     printk("[%s] %s: ", bench->name, bench->desc);
+		printf("T\n");
     if (msg != NULL) {
       printk("Ignored %s\n", msg);
     } else {
