@@ -139,6 +139,7 @@ int vsprintf(char *out, const char *fmt, va_list args) {
 repeat:
 			_putc('I'); _putc('\n');
 		  ++fmt;
+			_putc(*fmt); _putc('\n');
 			if (*fmt==':') _halt(0);
 			switch(*fmt){
 					case '-':
