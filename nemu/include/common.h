@@ -2,7 +2,7 @@
 #define __COMMON_H__
 
 #define DEBUG
-//#define ALL_LOG
+#define ALL_LOG
 #define DIFF_TEST
 
 #if _SHARE
