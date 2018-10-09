@@ -171,9 +171,7 @@ void fce_update_screen()
     int y1 = y * (H - 1) / h + 1;
     for (int x = pad; x < w - pad; x ++) {
       row[x] = palette[canvas[y1][xmap[x] + 0xff]];
-			printf("%d ",xmap[x]);
     }
-		printf("\n");
 	// log("x:%d,y:%d,w:%d,h:%d\n", pad, y, w - 2 * pad, 1);
 	// log("xmap[]:%d, canvas[y1][]:%d\n", xmap[10], canvas[5][5]);
 	// log("(row + pad)[-]: %x, %x\n", row[pad + 15], row[pad + 50]);

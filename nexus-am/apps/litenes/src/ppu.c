@@ -26,6 +26,7 @@ static word ppu_ram_map[0x4000];
 
 static inline void draw(int col, int row, int idx) {
   canvas[row][col + 0xff] = idx;
+  printf("row:%d, col:%d, idx:%d\n", row, col, idx);
   if(idx != 0) {
 	  log("row:%d, col:%d, idx:%d\n", row, col, idx);
   }
