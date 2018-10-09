@@ -68,10 +68,8 @@ int main() {
     printk("[%s] %s: ", bench->name, bench->desc);
 		printf("T\n");
     if (msg != NULL) {
-		  printf("First\n");
       printk("Ignored %s\n", msg);
     } else {
-		  printf("Second\n");
       unsigned long msec = ULONG_MAX;
       int succ = 1;
       for (int i = 0; i < REPEAT; i ++) {
@@ -81,6 +79,7 @@ int main() {
         succ &= res.pass;
         if (res.msec < msec) msec = res.msec;
       }
+		  printf("Second\n");
 
       if (succ) printk(" Passed.");
       else printk(" Failed.");
