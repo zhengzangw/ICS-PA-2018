@@ -23,7 +23,6 @@ uint32_t uptime() {
   _UptimeReg uptime;
   _Device *dev = getdev(&timer_dev, _DEV_TIMER);
   dev->read(_DEVREG_TIMER_UPTIME, &uptime, sizeof(uptime));
-	printf("%d\n",uptime.lo);
   return uptime.lo;
 }
 
