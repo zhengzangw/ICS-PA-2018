@@ -102,7 +102,7 @@ int printf(const char *fmt, ...) {
 	int ret;
 
 	va_start(args, fmt);
-  ret = sprintf(buf, fmt, args);
+  ret = vsprintf(buf, fmt, args);
 	va_end(args);
 
 	uint32_t len = strlen(buf);
@@ -112,13 +112,7 @@ int printf(const char *fmt, ...) {
   return ret;
 }
 
-int vsprintf(char *out, const char *fmt, va_list ap) {
-  return 0;
-}
-
-int sprintf(char *out, const char *fmt, ...) {
-  va_list args;
-  
+int vsprintf(char *out, const char *fmt, va_list args) {
 	char *str;
 	int flags;
 	int field_width;
@@ -130,11 +124,7 @@ int sprintf(char *out, const char *fmt, ...) {
 	const char *s;
 	uint32_t num;
 
-	va_start(args, fmt);
-			//_putc('R'); _putc('\n');
-
   for (str=out; *fmt; ++fmt){
-		//	_putc('T'); _putc('\n');
 			if (*fmt != '%') {
 					*str++ = *fmt;
 					continue;
@@ -287,8 +277,16 @@ repeat:
 	}
 
   *str = '\0';
-	va_end(args);
+
   return str-out;
+}
+
+int sprintf(char *out, const char *fmt, ...) {
+  va_list args;
+	va_start(args, fmt);
+	int ret = vsprintf(out, fmt, args); 
+	va_end(args);
+  return ret;
 }
 
 int snprintf(char *out, size_t n, const char *fmt, ...) {

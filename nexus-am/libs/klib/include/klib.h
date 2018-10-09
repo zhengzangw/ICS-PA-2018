@@ -68,7 +68,7 @@ int rand();
 int printf(const char* fmt, ...);
 int sprintf(char* out, const char* format, ...);
 int snprintf(char* s, size_t n, const char* format, ...);
-int vsprintf(char *str, const char *format, va_list ap);
+int vsprintf(char *, const char*, va_list);
 int vsnprintf(char *str, size_t size, const char *format, va_list ap);
 int sscanf(const char *str, const char *format, ...);
 
