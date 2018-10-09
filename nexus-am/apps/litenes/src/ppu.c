@@ -283,8 +283,7 @@ void ppu_draw_sprite_scanline()
                 if (do_update) {
 					log("call ppu_ram_read\n");
                     int idx = ppu_ram_read(palette_address + color);
-										printf("%d ",idx);
-                    if (PPU_SPRRAM[n + 2] & 0x20) {
+                    if (PPU_SPRRAM[n + 2] & 0x20) {	
                         draw(screen_x, sprite_y + y_in_tile + 1, idx); // bbg
                     }
                     else {
