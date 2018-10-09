@@ -63,6 +63,7 @@ void difftest_step(uint32_t eip) {
 
   if (is_skip_dut) {
     is_skip_dut = false;
+	  qemu_total_instr++;
     return;
   }
 
@@ -70,6 +71,7 @@ void difftest_step(uint32_t eip) {
     // to skip the checking of an instruction, just copy the reg state to reference design
     ref_difftest_setregs(&cpu);
     is_skip_ref = false;
+	  qemu_total_instr++;
     return;
   }
 
