@@ -175,7 +175,8 @@ void fce_update_screen()
 	// log("x:%d,y:%d,w:%d,h:%d\n", pad, y, w - 2 * pad, 1);
 	// log("xmap[]:%d, canvas[y1][]:%d\n", xmap[10], canvas[5][5]);
 	// log("(row + pad)[-]: %x, %x\n", row[pad + 15], row[pad + 50]);
-	  printf("pad=%d,y=%d",  pad, y);
+	  //int tmp = w - 2*pad;
+	  //printf("pad=%d,y=%d\n,w-2*pad=%d",  pad, y);
     draw_rect(row + pad, pad, y, w - 2 * pad, 1);
   }
 
