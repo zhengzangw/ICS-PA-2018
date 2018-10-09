@@ -95,11 +95,8 @@ make_EHelper(neg) {
   rtl_setrelopi(RELOP_EQ, &t0, &id_dest->val, 0);
 	rtl_set_CF(&t0);
   
-	Log("%#x",t0);
-	rtl_not(&t1, &t0);
-	Log("%#x",t1);
-	rtl_addi(&t0, &t1, 1);
-	Log("%#x",t0);
+	rtl_not(&t0, &id_dest->val);
+	rtl_addi(&t0, &t0, 1);
 	operand_write(id_dest, &t0);
 
   print_asm_template1(neg);
