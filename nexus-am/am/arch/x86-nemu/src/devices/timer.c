@@ -8,7 +8,7 @@ size_t timer_read(uintptr_t reg, void *buf, size_t size) {
       _UptimeReg *uptime = (_UptimeReg *)buf;
 			uint8_t tmp = inb(0x48);
 			uint8_t pre = uptime->lo & 0xff;
-			uint8_t high= uptime->lo & 0xff00;
+			uint8_t high= uptime->lo >> 8;
 			if (tmp<pre) {
 					if (high==0xff) uptime->hi += 1;
 					high = 0;
