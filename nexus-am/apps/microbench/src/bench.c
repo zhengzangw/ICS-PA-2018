@@ -68,8 +68,10 @@ int main() {
     printk("[%s] %s: ", bench->name, bench->desc);
 		printf("T\n");
     if (msg != NULL) {
+		  printf("First\n");
       printk("Ignored %s\n", msg);
     } else {
+		  printf("Second\n");
       unsigned long msec = ULONG_MAX;
       int succ = 1;
       for (int i = 0; i < REPEAT; i ++) {
