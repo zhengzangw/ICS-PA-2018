@@ -61,7 +61,6 @@ int main() {
   int pass = 1;
 
   for (int i = 0; i < ARR_SIZE(benchmarks); i ++) {
-		printf("Once");
     Benchmark *bench = &benchmarks[i];
     current = bench;
     setting = &bench->settings[SETTING];
@@ -86,6 +85,8 @@ int main() {
       pass &= succ;
 
       unsigned long cur = score(bench, 0, msec);
+			
+			printf("T\n");
 
       printk("\n");
       if (SETTING != 0) {
