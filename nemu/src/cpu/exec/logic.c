@@ -96,3 +96,15 @@ make_EHelper(ror) {
   rtl_mv(&t0, &id_dest->val);
 		
 	}
+
+make_EHelper(rol){
+		TODO();
+}
+
+make_EHelper(rcr){
+		TODO();
+}
+
+make_EHelper(rcl){
+		TODO();
+}
