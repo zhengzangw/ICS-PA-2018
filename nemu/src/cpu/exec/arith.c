@@ -95,6 +95,7 @@ make_EHelper(neg) {
   rtl_setrelopi(RELOP_EQ, &t0, &id_dest->val, 0);
 	rtl_set_CF(&t0);
   
+	Log("%#x",t0);
 	rtl_not(&t1, &t0);
 	Log("%#x",t1);
 	rtl_addi(&t0, &t1, 1);
