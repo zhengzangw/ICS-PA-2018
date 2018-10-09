@@ -13,6 +13,8 @@
 #else
 #ifdef DEBUG
 #define print_flag (n<MAX_INSTR_TO_PRINT)
+#else
+#define print_flag 0
 #endif
 #endif
 
