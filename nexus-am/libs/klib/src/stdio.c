@@ -126,7 +126,6 @@ int vsprintf(char *out, const char *fmt, va_list args) {
 
   for (str=out; *fmt; ++fmt){
 			if (*fmt != '%') {
-					if (*fmt == ':') _halt(0);
 					*str++ = *fmt;
 					continue;
 			}
@@ -139,6 +138,7 @@ int vsprintf(char *out, const char *fmt, va_list args) {
 			
 repeat:
 		  ++fmt;
+			if (*fmt==':') _halt(0);
 			switch(*fmt){
 					case '-':
 							flags |= LEFT;
