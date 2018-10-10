@@ -3,7 +3,7 @@
 
 //volatile static int dummy;
 
-//#define DEBUG
+#define DEBUG
 //#define ALL_LOG
 //#define DIFF_TEST
 
