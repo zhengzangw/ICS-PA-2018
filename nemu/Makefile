@@ -72,4 +72,4 @@ clean:
 	$(MAKE) -C tools/qemu-diff clean
 
 count:
-	find -regex ".*\.\(h\|c\)" | xargs cat | grep -v "^$$" | wc -l
+	@find -regex ".*\.\(h\|c\)" | xargs cat | grep -v "^$$" | wc -l
