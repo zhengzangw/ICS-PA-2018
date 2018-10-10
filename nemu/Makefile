@@ -38,10 +38,13 @@ $(OBJ_DIR)/%.o: src/%.c
 
 # Some convenient rules
 
-.PHONY: app run clean count pre
+.PHONY: app run clean count tmp
 app: $(BINARY)
 
-pre: $(CC) -E $(CFLAGS) -c -o tmp src/%.c
+DIRS := $(shell find src -type d)
+FILES := $(foreach dir, $(DIRS), $(wildcard $(dir)/*.c))
+tmp: 
+	$(CC) -E $(CFLAGS) -c $(FILES) > tmp
 
 override ARGS ?= -l $(BUILD_DIR)/nemu-log.txt
 override ARGS += -d $(NEMU_HOME)/tools/qemu-diff/build/qemu-so
