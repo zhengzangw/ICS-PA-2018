@@ -36,10 +36,12 @@ $(OBJ_DIR)/%.o: src/%.c
 # Depencies
 -include $(OBJS:.o=.d)
 
-# Some convinient rules
+# Some convenient rules
 
-.PHONY: app run clean count
+.PHONY: app run clean count pre
 app: $(BINARY)
+
+pre: $(CC) -E $(CFLAGS) -c -o tmp src/%.c
 
 override ARGS ?= -l $(BUILD_DIR)/nemu-log.txt
 override ARGS += -d $(NEMU_HOME)/tools/qemu-diff/build/qemu-so
