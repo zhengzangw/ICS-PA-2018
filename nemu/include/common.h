@@ -2,6 +2,7 @@
 #define __COMMON_H__
 
 volatile static int dummy;
+volatile static int dummy;
 
 //#define DEBUG
 //#define ALL_LOG
