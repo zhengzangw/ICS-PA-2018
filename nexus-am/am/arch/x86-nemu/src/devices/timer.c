@@ -3,16 +3,17 @@
 #include <amdev.h>
 
 uint32_t startTime;
+uint32_t tmpTime;
 
 size_t timer_read(uintptr_t reg, void *buf, size_t size) {
   switch (reg) {
     case _DEVREG_TIMER_UPTIME: {
       _UptimeReg *uptime = (_UptimeReg *)buf;
-			uint32_t tmp= uptime->lo;
 			uptime->lo = inl(0x48) - startTime;
-			if (uptime->lo<tmp) {
+			if (uptime->lo<tmpTime) {
 					uptime->hi += 1;
 			}
+			tmpTime = inl(0x48);
       return sizeof(_UptimeReg);
     }
     case _DEVREG_TIMER_DATE: {
@@ -31,4 +32,5 @@ size_t timer_read(uintptr_t reg, void *buf, size_t size) {
 
 void timer_init() {
 		startTime = inl(0x48);
+		tmpTime = startTime;
 }

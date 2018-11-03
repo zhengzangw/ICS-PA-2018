@@ -84,6 +84,7 @@ void difftest_step(uint32_t eip) {
 	ref_difftest_getregs(&ref_cpu);
 	bool all_same = true;
 
+//Log("%#x\n",ref_cpu.eip);
   if (ref_cpu.eax!=cpu.eax) diff_error(eax);
   if (ref_cpu.ebx!=cpu.ebx) diff_error(ebx);
   if (ref_cpu.ecx!=cpu.ecx) diff_error(ecx);
