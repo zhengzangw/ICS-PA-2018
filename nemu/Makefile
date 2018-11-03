@@ -36,10 +36,15 @@ $(OBJ_DIR)/%.o: src/%.c
 # Depencies
 -include $(OBJS:.o=.d)
 
-# Some convinient rules
+# Some convenient rules
 
-.PHONY: app run clean count
+.PHONY: app run clean count tmp
 app: $(BINARY)
+
+DIRS := $(shell find src -type d)
+FILES := $(foreach dir, $(DIRS), $(wildcard $(dir)/*.c))
+tmp: 
+	$(CC) -E $(CFLAGS) -c $(FILES) > tmp
 
 override ARGS ?= -l $(BUILD_DIR)/nemu-log.txt
 override ARGS += -d $(NEMU_HOME)/tools/qemu-diff/build/qemu-so
@@ -49,6 +54,7 @@ NEMU_EXEC := $(BINARY) $(ARGS)
 
 $(BINARY): $(OBJS)
 	$(call git_commit, "compile")
+	@make -C tools/qemu-diff/
 	@echo + LD $@
 	@$(LD) -O2 -rdynamic $(SO_LDLAGS) -o $@ $^ -lSDL2 -lreadline -ldl
 
@@ -66,4 +72,4 @@ clean:
 	$(MAKE) -C tools/qemu-diff clean
 
 count:
-	find -regex ".*\.\(h\|c\)" | xargs cat | grep -v "^$$" | wc -l
+	@find -regex ".*\.\(h\|c\)" | xargs cat | grep -v "^$$" | wc -l

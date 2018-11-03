@@ -8,12 +8,21 @@
  * You can modify this value as you want.
  */
 #define MAX_INSTR_TO_PRINT 10
+#ifdef ALL_LOG
+#define print_flag 1
+#else
+#ifdef DEBUG
+#define print_flag (n<MAX_INSTR_TO_PRINT)
+#else
+#define print_flag 0
+#endif
+#endif
 
 int nemu_state = NEMU_STOP;
 
 void exec_wrapper(bool);
 
-static uint64_t g_nr_guest_instr = 0;
+uint64_t g_nr_guest_instr = 0;
 
 void nr_guest_instr_add(uint32_t n) {
   g_nr_guest_instr += n;
@@ -31,7 +40,7 @@ void cpu_exec(uint64_t n) {
   }
   nemu_state = NEMU_RUNNING;
 
-  bool print_flag = n < MAX_INSTR_TO_PRINT;
+  //bool print_flag = n < MAX_INSTR_TO_PRINT;
 
   for (; n > 0; n --) {
 	if (nemu_state == NEMU_STOP){
@@ -45,9 +54,7 @@ void cpu_exec(uint64_t n) {
     nr_guest_instr_add(1);
 
 #ifdef DEBUG
-    /* TODO: check watchpoints here. */
 	if (wp_check()) nemu_state = NEMU_STOP;
-
 #endif
 
 #ifdef HAS_IOE

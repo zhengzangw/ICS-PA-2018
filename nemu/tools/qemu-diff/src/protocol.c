@@ -125,6 +125,7 @@ struct gdb_conn* gdb_begin_inet(const char *addr, uint16_t port) {
     assert(0);
   }
 
+	printf("TEST\n");
   // initialize the rest of gdb on this handle
   return gdb_begin(fd);
 }

@@ -1,6 +1,7 @@
 #!/bin/bash
 
 nemu=build/nemu
+diff_file=tools/qemu-diff/build/qemu-so
 
 echo "compiling NEMU..."
 if make &> /dev/null; then
@@ -25,7 +26,7 @@ for file in $files; do
   base=`basename $file | sed -e 's/-x86-nemu.bin//'`
   printf "[%14s] " $base
   logfile=$base-log.txt
-  $nemu -b -l $ori_log $file &> $logfile
+  $nemu -b -l $ori_log $file -d $diff_file &> $logfile
 
   if (grep 'nemu: HIT GOOD TRAP' $logfile > /dev/null) then
     echo -e "\033[1;32mPASS!\033[0m"

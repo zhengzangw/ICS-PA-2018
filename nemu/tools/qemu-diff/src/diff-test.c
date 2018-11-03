@@ -73,7 +73,7 @@ void difftest_init(void) {
   }
   else if (pid == 0) {
     // child
-
+		
     // install a parent death signal in the chlid
     int r = prctl(PR_SET_PDEATHSIG, SIGTERM);
     if (r == -1) {
@@ -93,7 +93,6 @@ void difftest_init(void) {
   }
   else {
     // father
-
     gdb_connect_qemu();
     printf("Connect to QEMU successfully\n");
 

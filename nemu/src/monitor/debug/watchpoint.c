@@ -43,10 +43,12 @@ static void free_wp_(WP *wp){
 	assert(wp!=NULL);
 	if (wp==head){
 		head = wp->next;
-		wp->next->pre = NULL;
+		if (wp->next!=NULL) 
+		  wp->next->pre = NULL;
 	} else {
 		wp->pre->next = wp->next;
-		wp->next->pre = wp->pre;
+		if (wp->next!=NULL)
+		  wp->next->pre = wp->pre;
 	}
 	wp->enable = false;
 	wp->pre    = NULL;
