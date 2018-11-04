@@ -215,6 +215,7 @@ repeat:
 
 					case 'p':
 							base = 16;
+							flags |= SPECIAL;
 							if (field_width == -1) {
 									field_width = 2 * sizeof(void *);
 									flags |= ZEROPAD;
