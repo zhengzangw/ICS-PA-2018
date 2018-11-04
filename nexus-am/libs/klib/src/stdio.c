@@ -220,7 +220,7 @@ repeat:
 									flags |= ZEROPAD;
 							}
 							str = get_number(str,
-											(unsigned long)va_arg(args, void *), sizeof(void *),
+											(unsigned long)va_arg(args, void *), base,
 											field_width, precision, flags);
 							continue;
 
