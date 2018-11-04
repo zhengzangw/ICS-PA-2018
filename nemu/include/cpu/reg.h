@@ -24,7 +24,7 @@ typedef struct {
 
   /*XXX: EFlags may be implemented in a better way*/
   union{
-	  uint32_t EFlags;
+	  uint32_t eflags;
 	  struct {
 		  uint8_t CF : 1;
 	    uint8_t : 1;
@@ -45,6 +45,8 @@ typedef struct {
 		  uint8_t VM : 1;
 	  };
   };
+
+	uint32_t cs, ss, ds, es, fs, gs;
 } CPU_state;
 
 extern CPU_state cpu;
