@@ -5,7 +5,7 @@
 #include "diff-test.h"
 
 #define diff_error(x) do {\
-		printf(#x " : %x!=%x\n", cpu.x, ref_r.x); \
+		printf(#x " : %x!=%x(ref)\n", cpu.x, ref_r.x); \
 		all_same = false;\
 } while (0)
 
