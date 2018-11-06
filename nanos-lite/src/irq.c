@@ -1,7 +1,7 @@
 #include "common.h"
 
 static _Context* do_event(_Event e, _Context* c) {
-  Log("%u", e.event);
+  Log("%x", e.event);
   switch (e.event) {
 		case _EVENT_SYSCALL: printf("SYSCALL event\n"); break;
 		case _EVENT_YIELD: printf("YIELD event\n"); break;
