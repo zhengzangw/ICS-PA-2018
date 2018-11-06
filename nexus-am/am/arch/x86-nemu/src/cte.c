@@ -5,10 +5,10 @@
 static _Context* (*user_handler)(_Event, _Context*) = NULL;
 
 void vectrap();
+void vecsys();
 void vecnull();
 
 _Context* irq_handle(_Context *tf) {
-  assert(0);
   _Context *next = tf;
 	//XXX: Cannot Print eflags in difftest
 
@@ -40,6 +40,7 @@ int _cte_init(_Context*(*handler)(_Event, _Context*)) {
 
   // -------------------- system call --------------------------
   idt[0x81] = GATE(STS_TG32, KSEL(SEG_KCODE), vectrap, DPL_KERN);
+	idt[0x80] = GATE(STS_TG32, KSEL(SEG_KCODE), vecsys, DPL_KERN);
 
   set_idt(idt, sizeof(idt));
 
