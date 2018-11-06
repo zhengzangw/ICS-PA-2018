@@ -8,7 +8,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 	Log("Size of ramdisk = %u", size);
 	ramdisk_read(buffer, 0, size);
 	memcpy((uintptr_t *)DEFAULT_ENTRY, buffer, size);
-	Log("ramdisk initialized!\n");
+	Log("ramdisk initialized!");
   
   return DEFAULT_ENTRY;
 }
