@@ -9,19 +9,7 @@ void vecnull();
 
 _Context* irq_handle(_Context *tf) {
   _Context *next = tf;
-	mylog(edi);
-	mylog(esi);
-	mylog(ebp);
-	mylog(esp);
-	mylog(ebx);
-	mylog(edx);
-	mylog(ecx);
-	mylog(eax);
-	mylog(irq);
-	mylog(err);
-	mylog(eflags);
-	mylog(eip);
-	//mylog(cs);
+	//XXX: Cannot Print eflags in difftest
 
   if (user_handler) {
     _Event ev;
