@@ -15,11 +15,8 @@ void raise_intr(uint8_t NO, vaddr_t ret_addr) {
 //Get offset
  assert(gatedesc_hi & 8000);
  uint32_t offset = (gatedesc_lo & 0xffff) + (gatedesc_hi & 0xffff0000);
- Log("%x",gatedesc_lo);
- Log("%x",gatedesc_hi);
- Log("offset = %x", offset);
-		
- TODO();
+//Jump		
+ rtl_j(cpu.eip+offset);
 }
 
 void dev_raise_intr() {
