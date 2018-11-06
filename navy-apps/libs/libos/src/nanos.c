@@ -39,7 +39,15 @@ int _write(int fd, void *buf, size_t count){
 extern char _end;
 intptr_t prog_brk = &_end;
 void *_sbrk(intptr_t increment){
-  return (void *)-1;
+  intptr_t new_prog_brk = prog_brk + increment;
+	int idt = _syscall_(SYS_brk, new_prog_brk, 0, 0);
+  if (idt == 0) {
+		intptr_t tmp = prog_brk;
+	  prog_brk = new_prog_brk;
+    return (void *)prog_brk;
+	} else {
+		return (void *)-1;
+	}
 }
 
 int _read(int fd, void *buf, size_t count) {
