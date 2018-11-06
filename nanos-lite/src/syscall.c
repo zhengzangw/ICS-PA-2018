@@ -17,6 +17,7 @@ _Context* do_syscall(_Context *c) {
 				} else {
 						assert(0);
 				}
+				c->eax = c->GPR4;
 				break;
     default: panic("Unhandled syscall ID = %d", a[0]);
   }
