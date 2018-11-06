@@ -8,8 +8,6 @@ void vectrap();
 void vecnull();
 
 _Context* irq_handle(_Context *tf) {
-  
-  printf("%#x\n", tf->irq);
   assert(0);
   _Context *next = tf;
 	//XXX: Cannot Print eflags in difftest
