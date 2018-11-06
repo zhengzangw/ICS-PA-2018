@@ -16,7 +16,6 @@ void raise_intr(uint8_t NO, vaddr_t ret_addr) {
  assert(gatedesc_hi & 8000);
  uint32_t offset = (gatedesc_lo & 0xffff) + (gatedesc_hi & 0xffff0000);
 //Jump		
- Log("%x",offset);
  rtl_j(offset);
 }
 
