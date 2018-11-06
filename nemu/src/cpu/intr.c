@@ -18,7 +18,7 @@ void raise_intr(uint8_t NO, vaddr_t ret_addr) {
 //Jump		
  Log("%x",cpu.eip+offset);
  Log("%x",cpu.eip);
- rtl_j(cpu.eip+offset);
+ //rtl_j(cpu.eip+offset);
 }
 
 void dev_raise_intr() {
