@@ -11,6 +11,7 @@ _Context* do_syscall(_Context *c) {
 		case SYS_yield: _yield(); c->eax = 0; break;
 		case SYS_write: 
 				Log("write: %s", (char *)c->GPR3);
+				Log("%p", &end);
 				if (c->GPR2==1||c->GPR2==2){
 						for (size_t i=0;i<c->GPR4;++i){
 								_putc(*(char *)(c->GPR3+i));
@@ -21,7 +22,6 @@ _Context* do_syscall(_Context *c) {
 				c->eax = c->GPR4;
 				break;
 		case SYS_brk:
-				Log("%p", &end);
 				c->eax = 0;
 				break;
     default: panic("Unhandled syscall ID = %d", a[0]);
