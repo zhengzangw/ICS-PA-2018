@@ -6,10 +6,10 @@ void difftest_skip_dut();
 
 make_EHelper(lidt) {
   Log("%#x", id_dest->addr);
-  //rtl_lm(&t0, id_dest->val,1);
-	//cpu.idtr.size = t0;
-  //rtl_lm(&t0, id_dest->val + 1, 2);
-	//cpu.idtr.addr = t0;
+  rtl_lm(&t0, &id_dest->addr,1);
+  cpu.idtr.size = t0;
+  rtl_lm(&t0, &id_dest->addr + 1, 2);
+	cpu.idtr.addr = t0;
 
   Log("size = %u", cpu.idtr.size);
 	Log("addr = %u", cpu.idtr.addr);
