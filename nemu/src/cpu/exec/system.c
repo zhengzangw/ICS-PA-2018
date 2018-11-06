@@ -11,9 +11,6 @@ make_EHelper(lidt) {
   rtl_lm(&t0, &t1 ,4);
 	cpu.idtr.addr = t0;
 
-  Log("size = %u", cpu.idtr.size);
-	Log("addr = %u", cpu.idtr.addr);
-
   print_asm_template1(lidt);
 }
 
