@@ -97,12 +97,15 @@ static inline void set_cr0(uint32_t cr0) {
   __asm__ volatile("movl %0, %%cr0" : : "r"(cr0));
 }
 
+#include <klib.h>
 
 static inline void set_idt(GateDesc *idt, int size) {
   volatile static uint16_t data[3];
   data[0] = size - 1;
   data[1] = (uint32_t)idt;
   data[2] = (uint32_t)idt >> 16;
+	printf("size = %u\n", data[0]);
+	printf("addr = %u\n", (uint32_t)idt);
   __asm__ volatile("lidt (%0)" : : "r"(data));
 }
 
