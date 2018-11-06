@@ -1,6 +1,6 @@
 #include "common.h"
 #include "syscall.h"
-extern char end;
+extern char _end;
 
 _Context* do_syscall(_Context *c) {
   uintptr_t a[4];
@@ -11,7 +11,7 @@ _Context* do_syscall(_Context *c) {
 		case SYS_yield: _yield(); c->eax = 0; break;
 		case SYS_write: 
 				Log("write: %s", (char *)c->GPR3);
-				Log("%p", &end);
+				Log("%p", &_end);
 				if (c->GPR2==1||c->GPR2==2){
 						for (size_t i=0;i<c->GPR4;++i){
 								_putc(*(char *)(c->GPR3+i));
