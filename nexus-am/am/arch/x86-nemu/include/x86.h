@@ -106,7 +106,7 @@ static inline void set_idt(GateDesc *idt, int size) {
   data[2] = (uint32_t)idt >> 16;
 	printf("size = %u\n", data[0]);
 	printf("addr = %u\n", (uint32_t)idt);
-	printf("&data= %u\n", data);
+	printf("&data= %x\n", data);
   __asm__ volatile("lidt (%0)" : : "r"(data));
 }
 
