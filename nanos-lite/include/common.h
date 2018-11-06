@@ -13,4 +13,6 @@ typedef char bool;
 #define true 1
 #define false 0
 
+_Context* do_syscall(_Context*);
+
 #endif
