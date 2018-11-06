@@ -8,7 +8,9 @@ make_EHelper(lidt) {
   Log("%#x", id_dest->addr);
   rtl_lm(&t0, &id_dest->addr,1);
   cpu.idtr.size = t0;
-  rtl_lm(&t0, &id_dest->addr + 1, 2);
+  rtl_lm(&t0, &id_dest->addr+1,1);
+	rtl_lm(&t1, &id_dest->addr+2,1);
+	cpu.idtr.addr = (t1 << 16) + t0;
 	cpu.idtr.addr = t0;
 
   Log("size = %u", cpu.idtr.size);
