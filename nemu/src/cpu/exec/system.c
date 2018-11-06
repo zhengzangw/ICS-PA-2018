@@ -5,7 +5,7 @@ void difftest_skip_ref();
 void difftest_skip_dut();
 
 make_EHelper(lidt) {
-  Log("%u", id_dest->val);
+  Log("%#x", id_dest->val);
   //rtl_lm(&t0, id_dest->val,1);
 	//cpu.idtr.size = t0;
   //rtl_lm(&t0, id_dest->val + 1, 2);
