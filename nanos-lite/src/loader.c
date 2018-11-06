@@ -3,7 +3,9 @@
 #define DEFAULT_ENTRY 0x4000000
 
 static uintptr_t loader(PCB *pcb, const char *filename) {
-  TODO();
+	size_t size = get_ramdisk_size();
+	printf("%u\n", size);
+	TODO();
   return DEFAULT_ENTRY;
 }
 
