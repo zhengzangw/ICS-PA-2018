@@ -1,7 +1,7 @@
 #include "proc.h"
 
 #define DEFAULT_ENTRY 0x4000000
-uint8_t buffer[0x200000];
+uint8_t buffer[0x300000];
 
 static uintptr_t loader(PCB *pcb, const char *filename) {
 	size_t size = get_ramdisk_size();
