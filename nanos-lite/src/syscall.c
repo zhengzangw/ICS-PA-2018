@@ -12,7 +12,7 @@ _Context* do_syscall(_Context *c) {
 				//Log("write: %s", (char *)c->GPR2);
 				if (c->GPR2==1||c->GPR2==2){
 						for (size_t i=0;i<c->GPR4;++i){
-								_putc(*((char *)c->GPR3+i));
+								_putc(*(char *)(c->GPR3+i));
 						}
 				} else {
 						assert(0);
