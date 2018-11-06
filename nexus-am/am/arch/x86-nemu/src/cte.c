@@ -8,10 +8,11 @@ void vecnull();
 
 _Context* irq_handle(_Context *tf) {
   _Context *next = tf;
-	printf("%u %u\n", tf->irq, tf->errorcode);
+	//printf("%u %u\n", tf->irq, tf->errorcode);
   if (user_handler) {
     _Event ev;
     switch (tf->irq) {
+      case 0x81: ev.event = _EVENT_YIELD; break; 
       default: ev.event = _EVENT_ERROR; break;
     }
 
