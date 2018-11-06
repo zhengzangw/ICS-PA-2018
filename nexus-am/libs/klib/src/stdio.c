@@ -98,7 +98,7 @@ static char *get_number(char *str, long num, int base, int size, int precision, 
 }
 
 int printf(const char *fmt, ...) {
-  char buf[1024];
+  char buf[2048];
 	va_list args;
 	int ret;
 
