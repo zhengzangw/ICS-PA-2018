@@ -5,7 +5,8 @@ void raise_intr(uint8_t NO, vaddr_t ret_addr) {
 // Push eflags, cs, eip
  rtl_push(&cpu.eflags);
  rtl_push(&cpu.cs);
- rtl_push(&cpu.eip);
+ rtl_addi(&t0, &cpu.eip, 2);
+ rtl_push(&t0);
 //Get idt address
  rtlreg_t addr = cpu.idtr.addr + NO*8;
  assert(addr < cpu.idtr.addr+cpu.idtr.size);
