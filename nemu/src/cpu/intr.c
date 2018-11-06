@@ -12,6 +12,8 @@ void raise_intr(uint8_t NO, vaddr_t ret_addr) {
 //Get Gate descriptor
  uint32_t gatedesc_lo = vaddr_read(addr, 4);
  uint32_t gatedesc_hi = vaddr_read(addr + 4, 4);
+//Get offset
+ assert(gatedesc_hi & 8000);
  uint32_t offset = (gatedesc_lo & 0xffff) + (gatedesc_hi & 0xffff0000);
  Log("%x",gatedesc_lo);
  Log("%x",gatedesc_hi);
