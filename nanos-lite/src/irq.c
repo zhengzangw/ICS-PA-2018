@@ -2,7 +2,7 @@
 
 static _Context* do_event(_Event e, _Context* c) {
   assert(0);
-  Log("%x", e.event);
+  Log("event = %#x", e.event);
   switch (e.event) {
 		case _EVENT_SYSCALL: printf("SYSCALL event\n"); break;
 		case _EVENT_YIELD: printf("YIELD event\n"); break;
