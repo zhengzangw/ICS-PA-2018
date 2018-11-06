@@ -90,7 +90,7 @@ static char *get_number(char *str, long num, int base, int size, int precision, 
 				while (size-- > 0) *str++ = c;
 		while (i<precision--)
 				*str++ = '0';
-		while (i-- > 0)
+		while (--i > 0)
 				*str++ = tmp[i];
 		while (size-- > 0)
 				*str++ = ' ';
