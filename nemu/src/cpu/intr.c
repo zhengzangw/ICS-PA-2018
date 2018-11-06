@@ -9,6 +9,7 @@ void raise_intr(uint8_t NO, vaddr_t ret_addr) {
  rtlreg_t addr = cpu.idtr.addr;
  rtlreg_t tt = addr + NO*4;
  rtl_lm(&t3, &tt, 4);
+ Log("addr = %u", tt);
  Log("%u", t3);
 
 		

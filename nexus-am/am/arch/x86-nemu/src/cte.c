@@ -33,7 +33,8 @@ int _cte_init(_Context*(*handler)(_Event, _Context*)) {
 
   // -------------------- system call --------------------------
   idt[0x81] = GATE(STS_TG32, KSEL(SEG_KCODE), vectrap, DPL_KERN);
-	printf("%u", idt[0x81]);
+	printf("%u\n", idt+0x81);
+	printf("%u\n", idt[0x81]);
 
   set_idt(idt, sizeof(idt));
 
