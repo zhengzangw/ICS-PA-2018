@@ -20,8 +20,8 @@ _Context* irq_handle(_Context *tf) {
 	mylog(irq);
 	mylog(err);
 	mylog(eip);
-	mylog(cs);
-	//mylog(eflags);
+	//mylog(cs);
+	mylog(eflags);
   if (user_handler) {
     _Event ev;
     switch (tf->irq) {
