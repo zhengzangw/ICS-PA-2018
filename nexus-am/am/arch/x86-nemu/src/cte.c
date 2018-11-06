@@ -1,6 +1,7 @@
 #include <am.h>
 #include <x86.h>
-
+#define mylog(v) \
+		printf(# v "= %u\n", tf->v)
 static _Context* (*user_handler)(_Event, _Context*) = NULL;
 
 void vectrap();
@@ -8,7 +9,19 @@ void vecnull();
 
 _Context* irq_handle(_Context *tf) {
   _Context *next = tf;
-	//printf("%u %u\n", tf->irq, tf->errorcode);
+	mylog(edi);
+	mylog(esi);
+	mylog(ebp);
+	mylog(esp);
+	mylog(ebx);
+	mylog(edx);
+	mylog(ecx);
+	mylog(eax);
+	mylog(irq);
+	mylog(err);
+	mylog(eip);
+	mylog(cs);
+	mylog(eflags);
   if (user_handler) {
     _Event ev;
     switch (tf->irq) {

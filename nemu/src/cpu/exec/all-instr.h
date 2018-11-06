@@ -56,6 +56,7 @@ make_EHelper(cwtl);
 make_EHelper(nemu_trap);
 make_EHelper(inv);
 make_EHelper(nop);
+make_EHelper(iret);
 
 /* prefix */
 make_EHelper(operand_size);
