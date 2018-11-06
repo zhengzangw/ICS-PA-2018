@@ -8,11 +8,13 @@ void raise_intr(uint8_t NO, vaddr_t ret_addr) {
  rtl_push(&cpu.eip);
 //Get idt address
  rtlreg_t addr = cpu.idtr.addr + NO*8;
- Log("addr %x < %x", addr, cpu.idtr.addr+cpu.idtr.size);
+ assert(addr < cpu.idtr.addr+cpu.idtr.size);
 //Get Gate descriptor
  uint32_t gatedesc_lo = vaddr_read(addr, 4);
  uint32_t gatedesc_hi = vaddr_read(addr + 4, 4);
  uint32_t offset = gatedesc_lo && 0xff + gatedesc_hi && 0xff00;
+ Log("%x",gatedesc_lo);
+ Log("%x",gatedesc_hi);
  Log("offset = %x", offset);
 		
  TODO();
