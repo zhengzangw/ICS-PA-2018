@@ -34,7 +34,7 @@ int _cte_init(_Context*(*handler)(_Event, _Context*)) {
   // -------------------- system call --------------------------
   idt[0x81] = GATE(STS_TG32, KSEL(SEG_KCODE), vectrap, DPL_KERN);
 
-	printf("%llx\n", idt[0x81]);
+	printf("%x,%x\n", idt[0x81].off_31_16,idt[0x81].off_15_0);
   set_idt(idt, sizeof(idt));
 
   // register event handler
