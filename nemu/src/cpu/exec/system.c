@@ -5,7 +5,6 @@ void difftest_skip_ref();
 void difftest_skip_dut();
 
 make_EHelper(lidt) {
-  Log("%#x", id_dest->addr);
   rtl_lm(&t0, &id_dest->addr,2);
   cpu.idtr.size = t0;
 	rtl_addi(&t1, &id_dest->addr, 2);
@@ -14,7 +13,6 @@ make_EHelper(lidt) {
 
   Log("size = %u", cpu.idtr.size);
 	Log("addr = %u", cpu.idtr.addr);
-	TODO();
 
   print_asm_template1(lidt);
 }
