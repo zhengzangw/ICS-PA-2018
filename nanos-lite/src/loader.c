@@ -7,8 +7,8 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 	size_t size = get_ramdisk_size();
 	Log("Size of ramdisk = %u", size);
 	ramdisk_read(buffer, 0, size);
-	//vaddr_write(DEFAULT_ENTRY, buffer[0], size);
-  TODO();
+	memcpy((uintptr_t *)DEFAULT_ENTRY, buffer, size);
+  
   return DEFAULT_ENTRY;
 }
 
