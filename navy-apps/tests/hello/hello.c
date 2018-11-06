@@ -2,7 +2,6 @@
 #include <stdio.h>
 
 int main() {
-		printf("%d", 10);
   write(1, "Hello World!\n", 13);
   int i = 2;
   volatile int j = 0;
@@ -10,7 +9,7 @@ int main() {
     j ++;
     if (j == 10000) {
 				i++;
-      printf("Hello World from Navy-apps for the %dth time!\n", 10);
+      printf("Hello World from Navy-apps for the %uth time!\n", 10);
       j = 0;
     }
   }
