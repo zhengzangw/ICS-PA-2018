@@ -1,7 +1,7 @@
 #include <am.h>
 #include <x86.h>
 #define mylog(v) \
-		printf(# v "= %u\n", tf->v)
+		printf(# v "= %#x\n", tf->v)
 static _Context* (*user_handler)(_Event, _Context*) = NULL;
 
 void vectrap();
