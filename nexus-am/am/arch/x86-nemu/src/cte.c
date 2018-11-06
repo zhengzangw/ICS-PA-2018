@@ -9,13 +9,13 @@ void vecnull();
 
 _Context* irq_handle(_Context *tf) {
   _Context *next = tf;
-	/*mylog(edi);
+	mylog(edi);
 	mylog(esi);
 	mylog(ebp);
 	mylog(esp);
 	mylog(ebx);
 	mylog(edx);
-	mylog(ecx);*/
+	mylog(ecx);
 	mylog(eax);
 	mylog(irq);
 	mylog(err);
