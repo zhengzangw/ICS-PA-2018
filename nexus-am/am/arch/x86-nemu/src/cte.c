@@ -19,9 +19,10 @@ _Context* irq_handle(_Context *tf) {
 	mylog(eax);
 	mylog(irq);
 	mylog(err);
+	mylog(eflags);
 	mylog(eip);
 	//mylog(cs);
-	mylog(eflags);
+
   if (user_handler) {
     _Event ev;
     switch (tf->irq) {
