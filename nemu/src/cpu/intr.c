@@ -10,7 +10,7 @@ void raise_intr(uint8_t NO, vaddr_t ret_addr) {
  rtlreg_t tt = addr + NO*8;
  rtl_lm(&t3, &tt, 4);
  Log("addr = %u", tt);
- Log("%u", t3);
+ Log("%x", t3);
 
 		
  TODO();
