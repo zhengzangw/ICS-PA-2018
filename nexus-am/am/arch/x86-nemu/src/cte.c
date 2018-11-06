@@ -9,7 +9,7 @@ void vecnull();
 
 _Context* irq_handle(_Context *tf) {
   _Context *next = tf;
-	mylog(edi);
+	/*mylog(edi);
 	mylog(esi);
 	mylog(ebp);
 	mylog(esp);
@@ -21,7 +21,7 @@ _Context* irq_handle(_Context *tf) {
 	mylog(err);
 	mylog(eip);
 	mylog(cs);
-	mylog(eflags);
+	mylog(eflags);*/
   if (user_handler) {
     _Event ev;
     switch (tf->irq) {
