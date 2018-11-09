@@ -11,8 +11,9 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 
 #ifdef FILE_SYSTEM
 	int fd = fs_open(filename, 0, 0);
-	fs_read(fd, buffer, size);
-	memcpy((uintptr_t *)DEFAULT_ENTRY, buffer, size);
+	size_t fs_size = fs_filesz(fd);
+	fs_read(fd, buffer, fs_size);
+	memcpy((uintptr_t *)DEFAULT_ENTRY, buffer, fs_size);
 	Log("file system initialized!");
 #else
 	ramdisk_read(buffer, 0, size);

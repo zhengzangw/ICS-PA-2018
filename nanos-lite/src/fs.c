@@ -39,7 +39,12 @@ void init_fs() {
 }
 
 int fs_open(const char *pathname, int flags, int mode){
-		printf("TODO\n"); assert(0);
+		int fd = -1;
+		for (int i=0; i<NR_FILES; ++i){
+				if (strcmp(file_table[i].name, pathname)==0)
+						return fd;
+		}
+		return fd;
 }
 
 int fs_close(int fd){
@@ -47,6 +52,7 @@ int fs_close(int fd){
 }
 
 size_t fs_read(int fd, void *buf, size_t len){
+		panic("read TODO");
 		return 0;
 }
 size_t fs_write(int fd, const void *buf, size_t len){
@@ -58,5 +64,5 @@ size_t fs_lseek(int fd, size_t offset, int whence){
 }
 
 size_t fs_filesz(int fd){
-		return 0;
+		return file_table[fd].size;
 }
