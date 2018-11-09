@@ -10,7 +10,6 @@ int main() {
 	printf("%d\n", size);
   assert(size == 5000);
 
-	printf("Part Third\n");
   fseek(fp, 500 * 5, SEEK_SET);
   int i, n;
   for (i = 500; i < 1000; i ++) {
