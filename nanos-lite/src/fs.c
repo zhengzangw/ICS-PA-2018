@@ -87,7 +87,7 @@ off_t fs_lseek(int fd, off_t offset, int whence){
 			return -1;
 		}
 
-		return 0;
+		return offset;
 }
 
 size_t fs_filesz(int fd){
