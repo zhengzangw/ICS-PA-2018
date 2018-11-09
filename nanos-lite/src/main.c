@@ -23,10 +23,11 @@ int main() {
   init_irq();
 #endif
 
-	printf("before init_fs\n");
   init_fs();
 
+	Log("1");
   init_proc();
+	Log("2");
 
 #ifdef HAS_CTE
   _yield();
