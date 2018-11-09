@@ -1,4 +1,5 @@
 #include "fs.h"
+#include "proc.h"
 
 typedef size_t (*ReadFn) (void *buf, size_t offset, size_t len);
 typedef size_t (*WriteFn) (const void *buf, size_t offset, size_t len);
@@ -52,14 +53,16 @@ int fs_close(int fd){
 }
 
 size_t fs_read(int fd, void *buf, size_t len){
-		panic("read TODO");
+		ramdisk_read(buf, file_table[fd].disk_offset, len);
 		return 0;
 }
 size_t fs_write(int fd, const void *buf, size_t len){
+		panic("TODO");
 		return 0;
 }
 
 size_t fs_lseek(int fd, size_t offset, int whence){
+		TODO();
 		return 0;
 }
 
