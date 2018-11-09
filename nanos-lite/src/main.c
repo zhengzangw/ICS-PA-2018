@@ -23,6 +23,7 @@ int main() {
   init_irq();
 #endif
 
+	printf("before init_fs\n");
   init_fs();
 
   init_proc();
