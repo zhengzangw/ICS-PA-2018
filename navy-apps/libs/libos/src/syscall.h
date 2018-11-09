@@ -24,6 +24,4 @@ enum {
   SYS_gettimeofday
 };
 
-int _write(int, void *, size_t);
-
 #endif

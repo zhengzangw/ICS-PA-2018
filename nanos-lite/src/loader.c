@@ -6,8 +6,13 @@ uint8_t buffer[0x300000];
 static uintptr_t loader(PCB *pcb, const char *filename) {
 	size_t size = get_ramdisk_size();
 	Log("Size of ramdisk = %u", size);
-	ramdisk_read(buffer, 0, size);
-	memcpy((uintptr_t *)DEFAULT_ENTRY, buffer, size);
+
+	//Without File System
+	//ramdisk_read(buffer, 0, size);
+	//memcpy((uintptr_t *)DEFAULT_ENTRY, buffer, size);
+	
+	//With File System
+	
 	Log("ramdisk initialized!");
   
   return DEFAULT_ENTRY;
