@@ -8,7 +8,6 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 	size_t size = get_ramdisk_size();
 	Log("Size of ramdisk = %u", size);
 
-#undef FILE_SYSTEM
 #ifdef FILE_SYSTEM
 	Log("file system initialized!");
 #else
