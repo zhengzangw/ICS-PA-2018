@@ -57,7 +57,7 @@ size_t fs_read(int fd, void *buf, size_t len){
 		return 0;
 }
 size_t fs_write(int fd, const void *buf, size_t len){
-		panic("TODO");
+		TODO();
 		return 0;
 }
 
