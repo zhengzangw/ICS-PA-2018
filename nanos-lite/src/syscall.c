@@ -26,16 +26,7 @@ _Context* do_syscall(_Context *c) {
 				c->eax = fs_read((int)c->GPR2, (void *)c->GPR3, (size_t)c->GPR4);
 				break;
 		case SYS_write: 
-				if (c->GPR2==1||c->GPR2==2){
-						// To stdout or stderr
-						for (size_t i=0;i<c->GPR4;++i){
-								_putc(*(char *)(c->GPR3+i));
-						}
-						c->eax = c->GPR4;
-				} else {
-						// To file
-						c->eax = fs_write((int)c->GPR2, (void *)c->GPR3, (size_t)c->GPR4);
-				}
+				c->eax = fs_write((int)c->GPR2, (void *)c->GPR3, (size_t)c->GPR4);
 				break;
     default: panic("Unhandled syscall ID = %d", a[0]);
   }

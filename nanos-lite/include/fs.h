@@ -9,11 +9,12 @@
 enum {SEEK_SET, SEEK_CUR, SEEK_END};
 #endif
 
-int fs_open(const char *pathname, int flags, int mode);
-ssize_t fs_read(int fd, void *buf, size_t len);
-ssize_t fs_write(int fd, const void *buf, size_t len);
-off_t fs_lseek(int fd, off_t offset, int whence);
-int fs_close(int fd);
-size_t fs_filesz(int fd);
+int fs_open(const char *, int, int);
+ssize_t fs_read(int, void *, size_t);
+ssize_t fs_write(int, const void *, size_t);
+off_t fs_lseek(int, off_t, int);
+int fs_close(int);
+size_t fs_filesz(int);
+size_t serial_write(const void *, size_t, size_t);
 
 #endif
