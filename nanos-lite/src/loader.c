@@ -11,6 +11,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 
 #ifdef FILE_SYSTEM
 	int fd = fs_open(filename, 0, 0);
+	Log("%d", fd);
 	size_t fs_size = fs_filesz(fd);
 	//Log("%d", fs_size);
 	fs_read(fd, buffer, fs_size);
