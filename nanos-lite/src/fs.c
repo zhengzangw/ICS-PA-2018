@@ -48,7 +48,7 @@ int fs_open(const char *pathname, int flags, int mode){
 				}
 		}
 		Log("%d", fd);
-		if (fd==-1) panic("fd == -1: NO SUCH FILE!");
+		if (fd==-1) panic("No Such File!");
 		else return fd;
 }
 
@@ -76,9 +76,16 @@ off_t fs_lseek(int fd, off_t offset, int whence){
 				case SEEK_SET: start = file_table[fd].disk_offset; break;
 				case SEEK_CUR: start = file_table[fd].open_offset; break;
 				case SEEK_END: start = file_table[fd].disk_offset + file_table[fd].size; break;
-				default: panic("fs_lseek: whence>2");
+				default: panic("fs_lseek: whence Invalid!");
 		}
+
+		off_t off_set = start + offset;
+		if (file_table[fd].disk_offset<=off_set && off_set <= file_table[fd].disk_offset + file_table[fd].size){
 		file_table[fd].open_offset = start + offset;
+		} else {
+		  panic("Out of file bound!");
+			return -1;
+		}
 
 		return 0;
 }
