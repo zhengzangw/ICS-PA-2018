@@ -80,7 +80,7 @@ off_t fs_lseek(int fd, off_t offset, int whence){
 		}
 		file_table[fd].open_offset = start + offset;
 
-		return whence;
+		return 0;
 }
 
 size_t fs_filesz(int fd){
