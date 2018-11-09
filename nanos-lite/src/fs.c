@@ -56,20 +56,20 @@ int fs_close(int fd){
 		return 0;
 }
 
-size_t fs_read(int fd, void *buf, size_t len){
+ssize_t fs_read(int fd, void *buf, size_t len){
 		Log("read");
 		int real_len = len < file_table[fd].size ? len : file_table[fd].size;
 		ramdisk_read(buf, file_table[fd].disk_offset+file_table[fd].open_offset, real_len);
 		return real_len;
 }
 
-size_t fs_write(int fd, const void *buf, size_t len){
+ssize_t fs_write(int fd, const void *buf, size_t len){
 		if (len > file_table[fd].size) panic("Write into file exceeding its oringinal size");
 		TODO();
 		return 0;
 }
 
-size_t fs_lseek(int fd, size_t offset, int whence){
+off_t fs_lseek(int fd, off_t offset, int whence){
 panic("TODO");
 		TODO();
 		return 0;

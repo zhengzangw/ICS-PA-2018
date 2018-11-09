@@ -30,6 +30,8 @@ _Context* do_syscall(_Context *c) {
 		case SYS_close:
 				c->eax = fs_close(c->ebx);
 				break;
+		case SYS_lseek:
+				TODO();
 		case SYS_read:
 				TODO();
     default: panic("Unhandled syscall ID = %d", a[0]);
