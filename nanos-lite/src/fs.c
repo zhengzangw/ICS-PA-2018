@@ -45,3 +45,18 @@ int fs_open(const char *pathname, int flags, int mode){
 int fs_close(int fd){
 		return 0;
 }
+
+size_t fs_read(int fd, void *buf, size_t len){
+		return 0;
+}
+size_t fs_write(int fd, const void *buf, size_t len){
+		return 0;
+}
+
+size_t fs_lseek(int fd, size_t offset, int whence){
+		return 0;
+}
+
+size_t fs_filesz(int fd){
+		return 0;
+}

@@ -1,4 +1,5 @@
 #include "proc.h"
+#include "fs.h"
 
 #define DEFAULT_ENTRY 0x4000000
 #define FILE_SYSTEM
