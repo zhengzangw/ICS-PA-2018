@@ -25,7 +25,6 @@ int main() {
 
   init_fs();
 
-	Log("1");
   init_proc();
 	Log("2");
 
