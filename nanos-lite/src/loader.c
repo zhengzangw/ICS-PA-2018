@@ -12,7 +12,6 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 #ifdef FILE_SYSTEM
 	int fd = fs_open(filename, 0, 0);
 	size_t fs_size = fs_filesz(fd);
-	Log("%d", fs_size);
 	fs_read(fd, buffer, fs_size);
 	memcpy((uintptr_t *)DEFAULT_ENTRY, buffer, fs_size);
 	Log("file system initialized!");
@@ -28,6 +27,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 
 void naive_uload(PCB *pcb, const char *filename) {
   uintptr_t entry = loader(pcb, filename);
+	Log("1");
   ((void(*)())entry) ();
 }
 
