@@ -79,15 +79,15 @@ off_t fs_lseek(int fd, off_t offset, int whence){
 				default: panic("fs_lseek: whence Invalid!");
 		}
 
-		off_t off_set = start + offset;
-		if (file_table[fd].disk_offset<=off_set && off_set <= file_table[fd].disk_offset + file_table[fd].size){
+		off_t pos = start + offset;
+		if (file_table[fd].disk_offset<=pos && pos <= file_table[fd].disk_offset + file_table[fd].size){
 		file_table[fd].open_offset = start + offset;
 		} else {
 		  panic("Out of file bound!");
 			return -1;
 		}
 
-		return offset;
+		return pos - file_table[fd].disk_offset;
 }
 
 size_t fs_filesz(int fd){
