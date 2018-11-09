@@ -62,7 +62,7 @@ ssize_t fs_read(int fd, void *buf, size_t len){
 		size_t real_len = len < left ? len : left;
 		ramdisk_read(buf, file_table[fd].disk_offset+file_table[fd].open_offset, real_len);
 		file_table[fd].open_offset += real_len;
-		return real_len;
+		return -1;
 }
 
 ssize_t fs_write(int fd, const void *buf, size_t len){
