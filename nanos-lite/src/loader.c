@@ -1,17 +1,20 @@
 #include "proc.h"
 
 #define DEFAULT_ENTRY 0x4000000
+#define FILE_SYSTEM
 uint8_t buffer[0x300000];
 
 static uintptr_t loader(PCB *pcb, const char *filename) {
 	size_t size = get_ramdisk_size();
 	Log("Size of ramdisk = %u", size);
 
-	//Without File System
-	//ramdisk_read(buffer, 0, size);
-	//memcpy((uintptr_t *)DEFAULT_ENTRY, buffer, size);
-	
-	//With File System
+#undef FILE_SYSTEM
+#ifdef FILE_SYSTEM
+	Log("file system initialized!");
+#else
+	ramdisk_read(buffer, 0, size);
+	memcpy((uintptr_t *)DEFAULT_ENTRY, buffer, size);
+#endif
 	
 	Log("ramdisk initialized!");
   
