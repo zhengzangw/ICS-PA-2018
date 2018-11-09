@@ -83,7 +83,7 @@ off_t fs_lseek(int fd, off_t offset, int whence){
 
 		off_t pos = start + offset;
 		if (file_table[fd].disk_offset<=pos && pos <= file_table[fd].disk_offset + file_table[fd].size){
-		file_table[fd].open_offset = start + offset;
+      file_table[fd].open_offset = pos;
 		} else {
 		  panic("Out of file bound!");
 			return -1;
