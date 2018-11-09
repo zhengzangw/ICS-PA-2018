@@ -65,13 +65,22 @@ ssize_t fs_read(int fd, void *buf, size_t len){
 
 ssize_t fs_write(int fd, const void *buf, size_t len){
 		if (len > file_table[fd].size) panic("Write into file exceeding its oringinal size");
-		TODO();
-		return 0;
+		
+		ramdisk_write(buf, file_table[fd].disk_offset+file_table[fd].open_offset, len);
+		return len;
 }
 
 off_t fs_lseek(int fd, off_t offset, int whence){
-		TODO();
-		return 0;
+		off_t start;
+		switch (whence) {
+				case SEEK_SET: start = file_table[fd].disk_offset; break;
+				case SEEK_CUR: start = file_table[fd].open_offset; break;
+				case SEEK_END: start = file_table[fd].disk_offset + file_table[fd].size; break;
+				default: panic("fs_lseek: whence>2");
+		}
+		file_table[fd].open_offset = start + offset;
+
+		return whence;
 }
 
 size_t fs_filesz(int fd){
