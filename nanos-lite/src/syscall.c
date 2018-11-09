@@ -28,12 +28,14 @@ _Context* do_syscall(_Context *c) {
 		    c->eax = fs_open((char *)c->ebx, (int)c->ecx, (int)c->edx);
 				break;
 		case SYS_close:
-				c->eax = fs_close(c->ebx);
+				c->eax = fs_close((int)c->ebx);
 				break;
 		case SYS_lseek:
-				TODO();
+				c->eax = fs_lseek((int)c->ebx, (off_t)c->ecx, (int)c->edx);
+				break;
 		case SYS_read:
-				TODO();
+				c->eax = fs_read((int)c->eax, (void *)c->ecx, (size_t)c->edx);
+				break;
     default: panic("Unhandled syscall ID = %d", a[0]);
   }
 
