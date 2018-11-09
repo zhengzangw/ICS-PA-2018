@@ -58,10 +58,9 @@ int fs_close(int fd){
 
 ssize_t fs_read(int fd, void *buf, size_t len){
 		Log("read");
-		Log("%d", file_table[fd].open_offset);
 		size_t left = file_table[fd].disk_offset + file_table[fd].size - file_table[fd].open_offset;
 		size_t real_len = len < left ? len : left;
-		ramdisk_read(buf, file_table[fd].open_offset, real_len);
+		ramdisk_read(buf, file_table[fd].disk_offset+file_table[fd].open_offset, real_len);
 		file_table[fd].open_offset += real_len;
 		return real_len;
 }
@@ -77,20 +76,20 @@ off_t fs_lseek(int fd, off_t offset, int whence){
 		off_t start;
 		switch (whence) {
 				case SEEK_SET: start = file_table[fd].disk_offset; break;
-				case SEEK_CUR: start = file_table[fd].open_offset; break;
+				case SEEK_CUR: start = file_table[fd].disk_offset + file_table[fd].open_offset; break;
 				case SEEK_END: start = file_table[fd].disk_offset + file_table[fd].size; break;
 				default: panic("fs_lseek: whence Invalid!");
 		}
 
 		off_t pos = start + offset;
 		if (file_table[fd].disk_offset<=pos && pos <= file_table[fd].disk_offset + file_table[fd].size){
-      file_table[fd].open_offset = pos;
+      file_table[fd].open_offset = pos - file_table[fd].disk_offset;
 		} else {
 		  panic("Out of file bound!");
 			return -1;
 		}
 
-		return pos - file_table[fd].disk_offset;
+		return file_table[fd].open_offset;
 }
 
 size_t fs_filesz(int fd){
