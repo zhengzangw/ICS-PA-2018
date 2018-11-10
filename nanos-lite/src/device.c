@@ -20,9 +20,9 @@ size_t events_read(void *buf, size_t offset, size_t len) {
   int key = read_key();
 	if (key) {
 			if (key&0x8000){ 
-				 	//sprintf(buf, "kd %s\n", keyname[key]);
 			}
 			else{
+				 	sprintf(buf, "kd %s\n", keyname[key]);
 					sprintf(buf, "kd RETURN\n");
 			}
 	} else {
