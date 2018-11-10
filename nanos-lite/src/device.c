@@ -23,7 +23,7 @@ size_t events_read(void *buf, size_t offset, size_t len) {
 static char dispinfo[128] __attribute__((used));
 
 size_t dispinfo_read(void *buf, size_t offset, size_t len) {
-  Log("offset = %d, len = %d", offset, len);
+  //Log("offset = %d, len = %d", offset, len);
   strncpy(buf, dispinfo+offset, len);
 	printf(buf);
   return len;
@@ -48,5 +48,4 @@ void init_device() {
 	int width = screen_width();
 	int height = screen_height();
 	sprintf(dispinfo, "WIDTH:%d\nHEIGHT:%d", width, height);
-	printf(dispinfo);
 }
