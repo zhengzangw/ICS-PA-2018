@@ -30,7 +30,7 @@ size_t dispinfo_read(void *buf, size_t offset, size_t len) {
 
 size_t fb_write(const void *buf, size_t offset, size_t len) {
   Log("offset = %u", offset);
-  int x = offset/4 / screen_width();
+  int x = offset/4 / screen_height();
 	Log("x = %u", x);
 	int y = offset/4 - x;
 	Log("y = %u", y);
@@ -44,7 +44,5 @@ void init_device() {
 
   // TODO: print the string to array `dispinfo` with the format
   // described in the Navy-apps convention
-	int width = screen_width();
-	int height = screen_height();
-	sprintf(dispinfo, "WIDTH:%d\nHEIGHT:%d", width, height);
+	sprintf(dispinfo, "WIDTH:%d\nHEIGHT:%d", screen_width(), screen_height());
 }
