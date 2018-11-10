@@ -35,6 +35,7 @@ size_t fb_write(const void *buf, size_t offset, size_t len) {
 	Log("x = %u", x);
 	int y = offset_m / screen_width();
 	Log("y = %u", y);
+	Log("len = %u", len);
 	draw_rect((uint32_t*)buf, x, y, len/32, 1);
   return len;
 }
