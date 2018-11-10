@@ -43,7 +43,7 @@ void *_sbrk(intptr_t increment){
   if (idt == 0) {
 		intptr_t tmp = prog_brk;
 	  prog_brk = new_prog_brk;
-    return (void *)prog_brk;
+    return (void *)tmp;
 	} else {
 		return (void *)-1;
 	}

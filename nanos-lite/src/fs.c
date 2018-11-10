@@ -41,14 +41,12 @@ void init_fs() {
 
 int fs_open(const char *pathname, int flags, int mode){
 		int fd = -1;
-		Log("%d", fd);
 		for (int i=0; i<NR_FILES; ++i){
 				if (strcmp(file_table[i].name, pathname)==0){
 						fd = i;
 						break;
 				}
 		}
-		Log("%d", fd);
 		if (fd==-1) panic("No Such File!");
 		else return fd;
 }
@@ -89,7 +87,6 @@ off_t fs_lseek(int fd, off_t offset, int whence){
 				case SEEK_END: start = file_table[fd].disk_offset + file_table[fd].size; break;
 				default: panic("fs_lseek: whence Invalid!");
 		}
-		Log("Begin");
 
 		off_t pos = start + offset;
 		if (file_table[fd].disk_offset<=pos && pos <= file_table[fd].disk_offset + file_table[fd].size){
