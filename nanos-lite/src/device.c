@@ -46,4 +46,5 @@ void init_device() {
 	int width = screen_width();
 	int height = screen_height();
 	sprintf(dispinfo, "WIDTH : %d\nHEIGHT:%d\n", width, height);
+	printf(dispinfo);
 }
