@@ -47,6 +47,6 @@ void init_device() {
   // described in the Navy-apps convention
 	int width = screen_width();
 	int height = screen_height();
-	sprintf(dispinfo, "WIDTH:%dHEIGHT:%d", width, height);
+	sprintf(dispinfo, "WIDTH:%d\nHEIGHT:%d", width, height);
 	printf(dispinfo);
 }
