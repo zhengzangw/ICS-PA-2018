@@ -90,7 +90,6 @@ ssize_t fs_write(int fd, const void *buf, size_t len){
 }
 
 off_t fs_lseek(int fd, off_t offset, int whence){
-		Log("lseek");
 		off_t start;
 		switch (whence) {
 				case SEEK_SET: start = file_table[fd].disk_offset; break;
