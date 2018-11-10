@@ -1,6 +1,7 @@
 #include <assert.h>
 #include <stdlib.h>
 #include <ndl.h>
+#include <stdio.h>
 
 int main() {
   printf("begin");
