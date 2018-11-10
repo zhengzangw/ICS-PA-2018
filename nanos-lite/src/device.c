@@ -22,8 +22,8 @@ size_t events_read(void *buf, size_t offset, size_t len) {
 			if (key&0x8000){ 
 			}
 			else{
-				 	sprintf(buf, "kd %s\n", keyname[key]);
 					sprintf(buf, "kd RETURN\n");
+				 	sprintf(buf, "kd %s\n", keyname[key]);
 			}
 	} else {
 			sprintf(buf, "t %u\n", uptime());
