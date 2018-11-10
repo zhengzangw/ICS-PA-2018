@@ -30,7 +30,7 @@ size_t dispinfo_read(void *buf, size_t offset, size_t len) {
 
 size_t fb_write(const void *buf, size_t offset, size_t len) {
   Log("offset = %u", offset);
-  int x = offset / screen_width();
+  int x = offset / screen_width()/32;
 	Log("x = %u", x);
 	int y = offset - x;
 	Log("y = %u", y);
