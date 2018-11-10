@@ -18,5 +18,6 @@ size_t fs_filesz(int);
 size_t serial_write(const void *, size_t, size_t);
 size_t fb_write(const void *, size_t, size_t);
 size_t dispinfo_read(void *, size_t, size_t);
+size_t events_read(void *, size_t, size_t);
 
 #endif

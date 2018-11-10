@@ -17,6 +17,13 @@ static const char *keyname[256] __attribute__((used)) = {
 };
 
 size_t events_read(void *buf, size_t offset, size_t len) {
+  int key = read_key();
+	if (key) {
+			if (key&0x8000) sprintf(buf, "kd RETURN\n");
+			else sprintf(buf, "kd %s\n", keyname[key]);
+	} else {
+			sprintf(buf, "t %u\n", uptime());
+	}
   return 0;
 }
 
@@ -43,5 +50,5 @@ void init_device() {
   // TODO: print the string to array `dispinfo` with the format
   // described in the Navy-apps convention
 	sprintf(dispinfo, "WIDTH:%d\nHEIGHT:%d", screen_width(), screen_height());
-	Log("WIDTH:%d HEIGHT:%d", screen_width(), screen_height());
+	Log("VGA WIDTH:%d HEIGHT:%d", screen_width(), screen_height());
 }
