@@ -24,6 +24,7 @@ static char dispinfo[128] __attribute__((used));
 
 size_t dispinfo_read(void *buf, size_t offset, size_t len) {
   strncpy(buf, dispinfo+offset, len);
+	printf(buf);
   return 0;
 }
 
@@ -45,6 +46,6 @@ void init_device() {
   // described in the Navy-apps convention
 	int width = screen_width();
 	int height = screen_height();
-	sprintf(dispinfo, "WIDTH : %d\nHEIGHT:%d\n", width, height);
+	sprintf(dispinfo, "WIDTH : %d\nHEIGHT: %d\n", width, height);
 	printf(dispinfo);
 }
