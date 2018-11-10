@@ -3,7 +3,7 @@
 
 #define DEFAULT_ENTRY 0x4000000
 #define FILE_SYSTEM
-uint8_t buffer[0x300000];
+uint8_t buffer[0x3000000];
 
 static uintptr_t loader(PCB *pcb, const char *filename) {
 	size_t size = get_ramdisk_size();

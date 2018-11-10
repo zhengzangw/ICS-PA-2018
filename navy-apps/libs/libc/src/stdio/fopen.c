@@ -139,6 +139,8 @@ _fopen_r (struct _reent *ptr,
 
   _newlib_flockfile_start (fp);
 
+	printf("INT");
+
   fp->_file = f;
   fp->_flags = flags;
   fp->_cookie = (void *) fp;
