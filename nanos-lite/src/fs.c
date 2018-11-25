@@ -55,7 +55,7 @@ int fs_open(const char *pathname, int flags, int mode){
 	}
 	if (fd==-1) panic("No Such File!");
     else {
-        Log("File %s fd=%d loaded\n", pathname, fd);
+        Log("File %s fd=%d loaded", pathname, fd);
         return fd;
     }
 }
