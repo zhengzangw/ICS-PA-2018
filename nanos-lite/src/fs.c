@@ -30,9 +30,9 @@ static Finfo file_table[] __attribute__((used)) = {
   {"stdin", 0, 0, 0, invalid_read, invalid_write},
   {"stdout", 0, 0, 0, invalid_read, serial_write},
   {"stderr", 0, 0, 0, invalid_read, serial_write},
-	{"/dev/fb", 0, 0, 0, invalid_read, fb_write},
-	{"/proc/dispinfo", 0, 0, 0, dispinfo_read, invalid_write},
-	{"/dev/events", 0, 0, 0, events_read, invalid_write},
+  {"/dev/fb", 0, 0, 0, invalid_read, fb_write},
+  {"/proc/dispinfo", 0, 0, 0, dispinfo_read, invalid_write},
+  {"/dev/events", 0, 0, 0, events_read, invalid_write},
 #include "files.h"
 };
 
@@ -40,42 +40,43 @@ static Finfo file_table[] __attribute__((used)) = {
 
 void init_fs() {
   // TODO: initialize the size of /dev/fb
-  file_table[3].size = screen_width()*screen_height()*32;	
+  file_table[3].size = screen_width()*screen_height()*32;
 
 	Log("fb_size = %u", file_table[3].size);
 }
 
 int fs_open(const char *pathname, int flags, int mode){
-		int fd = -1;
-		for (int i=0; i<NR_FILES; ++i){
-				if (strcmp(file_table[i].name, pathname)==0){
-						fd = i;
-						break;
-				}
-		}
-		if (fd==-1) panic("No Such File!");
-		else return fd;
+	int fd = -1;
+	for (int i=0; i<NR_FILES; ++i){
+		if (strcmp(file_table[i].name, pathname)==0){
+			fd = i;
+			break;
+			}
+	}
+    Log("%d\n", fd);
+	if (fd==-1) panic("No Such File!");
+	else return fd;
 }
 
 int fs_close(int fd){
-		return 0;
+	return 0;
 }
 
 ssize_t fs_read(int fd, void *buf, size_t len){
-		if (file_table[fd].read!=NULL){
-		  size_t real_len = file_table[fd].read(buf, file_table[fd].open_offset, len);
-			file_table[fd].open_offset += real_len;
-			return real_len;
-		} else {
-		  size_t left = file_table[fd].size - file_table[fd].open_offset;
-		  size_t real_len = len < left ? len : left;
-		  ramdisk_read(buf, file_table[fd].disk_offset + file_table[fd].open_offset, real_len);
-		  file_table[fd].open_offset += real_len;
-		  return real_len;
-		}
+	if (file_table[fd].read!=NULL){
+	    size_t real_len = file_table[fd].read(buf, file_table[fd].open_offset, len);
+		file_table[fd].open_offset += real_len;
+		return real_len;
+	} else {
+	  size_t left = file_table[fd].size - file_table[fd].open_offset;
+	  size_t real_len = len < left ? len : left;
+	  ramdisk_read(buf, file_table[fd].disk_offset + file_table[fd].open_offset, real_len);
+	  file_table[fd].open_offset += real_len;
+	  return real_len;
+	}
 }
 
-ssize_t fs_write(int fd, const void *buf, size_t len){	
+ssize_t fs_write(int fd, const void *buf, size_t len){
 		if (file_table[fd].write!=NULL){
 				size_t real_len = file_table[fd].write(buf, file_table[fd].open_offset, len);
 				file_table[fd].open_offset += real_len;
