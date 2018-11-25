@@ -61,6 +61,7 @@ int fs_open(const char *pathname, int flags, int mode){
 }
 
 int fs_close(int fd){
+    file_table[fd].open_offset = 0;
 	return 0;
 }
 
@@ -113,5 +114,5 @@ off_t fs_lseek(int fd, off_t offset, int whence){
 }
 
 size_t fs_filesz(int fd){
-		return file_table[fd].size;
+	return file_table[fd].size;
 }
