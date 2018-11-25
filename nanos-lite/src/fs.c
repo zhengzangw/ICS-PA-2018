@@ -80,9 +80,9 @@ ssize_t fs_read(int fd, void *buf, size_t len){
 
 ssize_t fs_write(int fd, const void *buf, size_t len){
 		if (file_table[fd].write!=NULL){
-				size_t real_len = file_table[fd].write(buf, file_table[fd].open_offset, len);
-				file_table[fd].open_offset += real_len;
-				return real_len;
+			size_t real_len = file_table[fd].write(buf, file_table[fd].open_offset, len);
+			file_table[fd].open_offset += real_len;
+			return real_len;
 		} else {
 		  size_t left = file_table[fd].size - file_table[fd].open_offset;
 		  if (left<len) panic("Out of File Boundary!");
