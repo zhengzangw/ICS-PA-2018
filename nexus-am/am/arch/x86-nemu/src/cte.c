@@ -13,10 +13,10 @@ _Context* irq_handle(_Context *tf) {
 	//XXX: Cannot Print eflags in difftest
 
   if (user_handler) {
-    _Event ev;
+    _Event ev = {0};
     switch (tf->irq) {
 		  case 0x80: ev.event = _EVENT_SYSCALL; break;
-      case 0x81: ev.event = _EVENT_YIELD; break; 
+      case 0x81: ev.event = _EVENT_YIELD; break;
       default: ev.event = _EVENT_ERROR; break;
     }
 
