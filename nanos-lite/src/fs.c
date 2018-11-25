@@ -49,13 +49,16 @@ int fs_open(const char *pathname, int flags, int mode){
 	int fd = -1;
 	for (int i=0; i<NR_FILES; ++i){
 		if (strcmp(file_table[i].name, pathname)==0){
-			fd = i;
-			break;
-			}
+		fd = i;
+		break;
+		}
 	}
     Log("%d\n", fd);
 	if (fd==-1) panic("No Such File!");
-	else return fd;
+    else {
+        Log("File %s fd=%d loaded\n", pathname, fd);
+        return fd;
+    }
 }
 
 int fs_close(int fd){
