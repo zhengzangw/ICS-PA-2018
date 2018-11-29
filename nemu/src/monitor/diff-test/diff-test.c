@@ -11,7 +11,6 @@ extern int diff_on;
 		all_same = false;\
 } while (0)
 
-uint64_t qemu_total_instr = 0;
 extern uint64_t g_nr_guest_instr;
 
 static void (*ref_difftest_memcpy_from_dut)(paddr_t dest, void *src, size_t n);
@@ -74,6 +73,7 @@ void difftest_attach(){
     ref_difftest_setregs(&cpu);
 }
 
+uint64_t qemu_total_instr = 0;
 void difftest_step(uint32_t eip) {
   if (!diff_on){
     return;
@@ -83,7 +83,7 @@ void difftest_step(uint32_t eip) {
 
   if (is_skip_dut) {
     is_skip_dut = false;
-	  qemu_total_instr++;
+	//qemu_total_instr++;
     return;
   }
 
@@ -91,7 +91,7 @@ void difftest_step(uint32_t eip) {
     // to skip the checking of an instruction, just copy the reg state to reference design
     ref_difftest_setregs(&cpu);
     is_skip_ref = false;
-	qemu_total_instr++;
+	//qemu_total_instr++;
     return;
   }
 
@@ -113,10 +113,12 @@ void difftest_step(uint32_t eip) {
   if (ref_r.edi!=cpu.edi) diff_error(edi);
   if (ref_r.eip!=cpu.eip) diff_error(eip);
   if (!all_same) nemu_state = NEMU_ABORT;
+  /* With detach, this part doesn't work
   if (qemu_total_instr!=g_nr_guest_instr) {
     printf("total instr different: %ld!=%ld", g_nr_guest_instr, qemu_total_instr);
     assert(0);
   }
   qemu_total_instr++;
+  */
 }
 
