@@ -164,8 +164,8 @@ static int cmd_d(char *args){
 bool diff_on=true;
 static int cmd_detach(char *args){
 #ifdef DIFF_TEST
-    puts("Diff-test off!");
     diff_on = false;
+    puts("Diff-test off!");
 #else
     puts("Diff-test is not enabled");
 #endif
@@ -175,9 +175,9 @@ static int cmd_detach(char *args){
 void difftest_attach();
 static int cmd_attach(char *args){
 #ifdef DIFF_TEST
-    puts("Diff-test on!");
     diff_on = true;
     difftest_attach();
+    puts("Diff-test on!");
 #else
     puts("Diff-test is not enabled");
 #endif

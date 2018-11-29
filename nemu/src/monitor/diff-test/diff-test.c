@@ -77,9 +77,9 @@ void difftest_attach(){
     } idtr;
     idtr.size = cpu.idtr.size;
     idtr.addr = cpu.idtr.addr;
-    ref_difftest_memcpy_from_dut(0x7c00, &idtr, 6);
-    CPU_state tmp;
-    int8_t inst[] = {0x0f,0x01,0x1D,0x00,0x7e,0x00,0x00};
+    ref_difftest_memcpy_from_dut(0x7c00, &idtr, sizeof(idtr));
+    CPU_state tmp = cpu;
+    int8_t inst[] = {0x0f,0x01,0xD1,0x00,0x7e,0x00,0x00};
     ref_difftest_memcpy_from_dut(0x7e40, inst, sizeof(inst));
     tmp.eip = 0x7e40;
     ref_difftest_setregs(&tmp);
