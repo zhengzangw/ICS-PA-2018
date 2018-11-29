@@ -40,7 +40,7 @@ void cpu_exec(uint64_t n) {
   }
   nemu_state = NEMU_RUNNING;
 
-  //bool print_flag = n < MAX_INSTR_TO_PRINT;
+  bool flag = print_flag;
 
   for (; n > 0; n --) {
 	if (nemu_state == NEMU_STOP){
@@ -50,7 +50,7 @@ void cpu_exec(uint64_t n) {
 
     /* Execute one instruction, including instruction fetch,
      * instruction decode, and the actual execution. */
-    exec_wrapper(print_flag);
+    exec_wrapper(flag);
     nr_guest_instr_add(1);
 
 #ifdef DEBUG
