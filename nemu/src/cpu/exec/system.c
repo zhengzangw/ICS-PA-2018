@@ -7,9 +7,9 @@ void difftest_skip_dut();
 make_EHelper(lidt) {
   rtl_lm(&t0, &id_dest->addr,2);
   cpu.idtr.size = t0;
-	rtl_addi(&t1, &id_dest->addr, 2);
+  rtl_addi(&t1, &id_dest->addr, 2);
   rtl_lm(&t0, &t1 ,4);
-	cpu.idtr.addr = t0;
+  cpu.idtr.addr = t0;
 
   print_asm_template1(lidt);
 }
@@ -44,7 +44,7 @@ make_EHelper(iret) {
   rtl_pop(&t0);
 	rtl_j(t0);
   rtl_pop(&cpu.cs);
-  rtl_pop(&cpu.eflags);	
+  rtl_pop(&cpu.eflags);
   print_asm("iret");
 }
 

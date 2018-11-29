@@ -14,9 +14,9 @@ typedef struct {
 	    uint16_t _16;
 	    uint8_t _8[2];
 	  } gpr[8];
-	
+
 	  /* Do NOT change the order of the GPRs' definitions. */
-	
+
 	  struct {rtlreg_t eax, ecx, edx, ebx, esp, ebp, esi, edi;};
   };
 
@@ -48,8 +48,8 @@ typedef struct {
 
 	uint32_t cs, ss, ds, es, fs, gs;
 	struct {
-			uint16_t size;
-			uint32_t addr;
+		uint16_t size;
+		uint32_t addr;
 	} idtr;
 } CPU_state;
 
