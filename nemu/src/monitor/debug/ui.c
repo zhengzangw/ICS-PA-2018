@@ -2,6 +2,7 @@
 #include "monitor/expr.h"
 #include "monitor/watchpoint.h"
 #include "nemu.h"
+#include "common.h"
 
 #include <stdlib.h>
 #include <readline/readline.h>
@@ -56,7 +57,7 @@ static int cmd_si(char *args){
 	return 0;
 }
 
-static int cmd_info(char *args){ 
+static int cmd_info(char *args){
 	if (args==NULL){
 		printf("info must have parameters\n");
 		return 0;
@@ -69,7 +70,7 @@ static int cmd_info(char *args){
 		printf("edx%#20x%20u\n",cpu.edx,cpu.edx);
 		printf("esi%#20x%20u\n",cpu.esi,cpu.esi);
 		printf("edi%#20x%20u\n",cpu.edi,cpu.edi);
-		printf("ebp%#20x%#20x\n",cpu.ebp,cpu.ebp);	
+		printf("ebp%#20x%#20x\n",cpu.ebp,cpu.ebp);
 		printf("esp%#20x%#20x\n",cpu.esp,cpu.esp);
 		printf("eip%#20x%#20x\n",cpu.eip,cpu.eip);
 	} else if (strcmp(arg,"w")==0){
@@ -80,7 +81,7 @@ static int cmd_info(char *args){
 		printf("ZF=%u\n",cpu.ZF);
 		printf("SF=%u\n",cpu.SF);
 		printf("IF=%u\n",cpu.IF);
-	} else	
+	} else
 		printf("Invalid input!\n");
 	return 0;
 }
@@ -89,7 +90,7 @@ static int cmd_x(char *args){
 	char *pos1, *pos2;
     char *arg1 = strtok(NULL," ");
 	char *arg2 = strtok(NULL," ");
-	if (arg1==NULL && arg2==NULL) { 
+	if (arg1==NULL && arg2==NULL) {
 		printf("Invalid input!\n");
 		return 0;
 	}
@@ -108,7 +109,7 @@ static int cmd_x(char *args){
 		  if (x_pos+i*size>=0x8000000) {
 			printf("Out of range 0x8000000, not availabel!\n");
 			break;
-		  }		  
+		  }
 	      printf("%#x:%#20x\n",(uint32_t)x_pos+i*size,vaddr_read(x_pos+i*size,4));
 	}
 	}
@@ -126,7 +127,7 @@ static int cmd_p(char *args){
 		printf("%u%#20x\n",val,val);
  	else printf("Invalid Input!\n");
 	return 0;
-} 
+}
 
 static int cmd_w(char *args){
 	if (args==NULL) {
@@ -160,6 +161,30 @@ static int cmd_d(char *args){
 }
 
 
+bool diff_on=true;
+static int cmd_detach(char *args){
+#ifdef DIFF_TEST
+    puts("Diff-test off!");
+    diff_on = false;
+#else
+    puts("Diff-test is not enabled");
+#endif
+    return 0;
+}
+
+void difftest_attach();
+static int cmd_attach(char *args){
+#ifdef DIFF_TEST
+    puts("Diff-test on!");
+    diff_on = true;
+    difftest_attach();
+#else
+    puts("Diff-test is not enabled");
+#endif
+    return 0;
+}
+
+
 static struct {
   char *name;
   char *description;
@@ -173,7 +198,9 @@ static struct {
   { "x", "Examine memory", cmd_x },
   { "p", "Expression Calculation", cmd_p },
   { "w", "Add a watchpoint", cmd_w },
-  { "d", "Delete a watchpoint", cmd_d }
+  { "d", "Delete a watchpoint", cmd_d },
+  { "detach", "Detach from diff-test mode", cmd_detach },
+  { "attach", "Attach the diff-test mode", cmd_attach }
 };
 
 #define NR_CMD (sizeof(cmd_table) / sizeof(cmd_table[0]))
@@ -213,7 +240,7 @@ void ui_mainloop(int is_batch_mode) {
     char *str = rl_gets();
 	strcpy(tmp,str);
     char *str_end = str + strlen(str);
-	
+
 	/* Empty command means repetition of previous command*/
 
     /* extract the first token as the command */

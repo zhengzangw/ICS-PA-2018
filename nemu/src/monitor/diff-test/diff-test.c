@@ -4,6 +4,8 @@
 #include "monitor/monitor.h"
 #include "diff-test.h"
 
+extern int diff_on;
+
 #define diff_error(x) do {\
 		printf(#x " : %x!=%x(ref)\n", cpu.x, ref_r.x); \
 		all_same = false;\
@@ -20,9 +22,16 @@ static void (*ref_difftest_exec)(uint64_t n);
 static bool is_skip_ref;
 static bool is_skip_dut;
 
-void difftest_skip_ref() { is_skip_ref = true; }
-void difftest_skip_dut() { is_skip_dut = true; }
+void difftest_skip_ref() {
+    if (!diff_on) return;
+    is_skip_ref = true;
+}
+void difftest_skip_dut() {
+    if (!diff_on) return;
+    is_skip_dut = true;
+}
 
+long memsize;
 void init_difftest(char *ref_so_file, long img_size) {
 #ifndef DIFF_TEST
   return;
@@ -55,10 +64,21 @@ void init_difftest(char *ref_so_file, long img_size) {
       "If it is not necessary, you can turn it off in include/common.h.", ref_so_file);
   ref_difftest_init();
   ref_difftest_memcpy_from_dut(ENTRY_START, guest_to_host(ENTRY_START), img_size);
+  memsize = img_size;
   ref_difftest_setregs(&cpu);
 }
 
+void difftest_attach(){
+    ref_difftest_memcpy_from_dut(0, guest_to_host(0), 0x7c00);
+    ref_difftest_memcpy_from_dut(ENTRY_START, guest_to_host(ENTRY_START), memsize);
+    ref_difftest_setregs(&cpu);
+}
+
 void difftest_step(uint32_t eip) {
+  if (!diff_on){
+    return;
+  }
+
   CPU_state ref_r;
 
   if (is_skip_dut) {
@@ -71,7 +91,7 @@ void difftest_step(uint32_t eip) {
     // to skip the checking of an instruction, just copy the reg state to reference design
     ref_difftest_setregs(&cpu);
     is_skip_ref = false;
-	  qemu_total_instr++;
+	qemu_total_instr++;
     return;
   }
 
@@ -89,13 +109,14 @@ void difftest_step(uint32_t eip) {
   if (ref_r.edx!=cpu.edx) diff_error(edx);
   if (ref_r.esp!=cpu.esp) diff_error(esp);
   if (ref_r.ebp!=cpu.ebp) diff_error(ebp);
-	if (ref_r.esi!=cpu.esi) diff_error(esi);
+  if (ref_r.esi!=cpu.esi) diff_error(esi);
   if (ref_r.edi!=cpu.edi) diff_error(edi);
   if (ref_r.eip!=cpu.eip) diff_error(eip);
-	if (!all_same) nemu_state = NEMU_ABORT;
-	if (qemu_total_instr!=g_nr_guest_instr) {
-			printf("total instr different: %ld!=%ld", g_nr_guest_instr, qemu_total_instr);
-			assert(0);
-	}
-	qemu_total_instr++;
+  if (!all_same) nemu_state = NEMU_ABORT;
+  if (qemu_total_instr!=g_nr_guest_instr) {
+    printf("total instr different: %ld!=%ld", g_nr_guest_instr, qemu_total_instr);
+    assert(0);
+  }
+  qemu_total_instr++;
 }
+
