@@ -71,6 +71,7 @@ void init_difftest(char *ref_so_file, long img_size) {
 void difftest_attach(){
     ref_difftest_memcpy_from_dut(0, guest_to_host(0), 0x7c00);
     ref_difftest_memcpy_from_dut(ENTRY_START, guest_to_host(ENTRY_START), memsize);
+    printf("%lu\n", memsize);
     ref_difftest_setregs(&cpu);
 }
 
