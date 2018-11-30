@@ -196,8 +196,8 @@ static int cmd_save(char *args){
     path = strtok(NULL, " ");
     FILE *fp = fopen(path, "w");
     assert(fp);
-    fwrite(&cpu, 32, 10, fp);
-    fwrite(pmem, 8, PMEM_SIZE, fp);
+    fwrite(&cpu, 4, 10, fp);
+    fwrite(pmem, 1, PMEM_SIZE, fp);
     printf("Snapshot saved to %s\n",path);
     fclose(fp);
     return 0;
@@ -212,10 +212,10 @@ static int cmd_load(char *args){
     path = strtok(NULL, " ");
     FILE *fp = fopen(path, "r");
     assert(fp);
-    puts("DEBUG");
-    fread(&cpu, 32, 10, fp);
+    fread(&cpu, 4, 10, fp);
     puts("DE");
-    fread(pmem, 8, PMEM_SIZE, fp);
+    fread(pmem, 1, PMEM_SIZE, fp);
+    puts("DEBUG");
     printf("Snapshot loaded from %s\n",path);
     fclose(fp);
     return 0;
