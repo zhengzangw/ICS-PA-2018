@@ -12,7 +12,12 @@ _Context* do_syscall(_Context *c) {
 	a[3] = c->GPR4;
 
   switch (a[0]) {
-		case SYS_exit : _halt(a[1]); break;
+		case SYS_exit :
+            //_halt(a[1]);
+            Log("In exit: before load");
+            naive_uload(NULL, "/bin/init");
+            panic("Should not reach here!");
+            break;
 		case SYS_yield: _yield(); c->GPRx = 0; break;
 		case SYS_brk:
 			c->GPRx = 0;
@@ -33,9 +38,8 @@ _Context* do_syscall(_Context *c) {
 			c->GPRx = fs_write((int)a[1], (void *)a[2], (size_t)a[3]);
 			break;
         case SYS_execve:
-            Log("In syscall.c");
             naive_uload(NULL, (char *)a[1]);
-            c->GPRx = -1;
+            c->GPRx = 0;
             break;
     default: panic("Unhandled syscall ID = %d", a[0]);
   }
