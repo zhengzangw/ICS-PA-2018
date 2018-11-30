@@ -190,6 +190,7 @@ extern uint8_t pmem[PMEM_SIZE];
 static int cmd_save(char *args){
     if (args==NULL){
         puts("Path must be specified!");
+        return 0;
     }
     char *path;
     path = strtok(NULL, " ");
@@ -204,6 +205,7 @@ static int cmd_save(char *args){
 static int cmd_load(char *args){
     if (args==NULL){
         puts("Path must be specified!");
+        return 0;
     }
     char *path;
     path = strtok(NULL, " ");
