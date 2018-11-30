@@ -8,7 +8,7 @@ typedef struct {
   char *name;
   size_t size;
   size_t disk_offset;
-	size_t open_offset;
+  size_t open_offset;
   ReadFn read;
   WriteFn write;
 } Finfo;
@@ -107,7 +107,7 @@ off_t fs_lseek(int fd, off_t offset, int whence){
 		if (file_table[fd].disk_offset<=pos && pos <= file_table[fd].disk_offset + file_table[fd].size){
             file_table[fd].open_offset = pos - file_table[fd].disk_offset;
 		} else {
-		  panic("Out of file bound!");
+		  panic("End of File is %u, pointer locates %u. Out of file bound!", file_table[fd].disk_offset+file_table[fd].size, pos);
 		  return -1;
 		}
 
