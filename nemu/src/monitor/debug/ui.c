@@ -194,6 +194,7 @@ static int cmd_save(char *args){
     char *path;
     path = strtok(NULL, " ");
     FILE *fp = fopen(path, "w");
+    assert(fp);
     fwrite(&cpu, 32, 10, fp);
     fwrite(pmem, 8, PMEM_SIZE, fp);
     printf("Snapshot saved to %s\n",path);
@@ -207,6 +208,7 @@ static int cmd_load(char *args){
     char *path;
     path = strtok(NULL, " ");
     FILE *fp = fopen(path, "r");
+    assert(fp);
     fread(&cpu, 32, 10, fp);
     fread(pmem, 8, PMEM_SIZE, fp);
     printf("Snapshot loaded from %s\n",path);
