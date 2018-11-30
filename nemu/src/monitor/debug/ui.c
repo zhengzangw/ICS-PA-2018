@@ -184,15 +184,19 @@ static int cmd_attach(char *args){
     return 0;
 }
 
+
+#define PMEM_SIZE (128 * 1024 * 1024)
+extern uint8_t pmem[PMEM_SIZE];
 static int cmd_save(char *args){
     if (args==NULL){
         puts("Path must be specified!");
     }
     char *path;
     path = strtok(NULL, " ");
-    printf("%s\n",path);
-    //FILE *fp = fopen(path, "w");
-
+    FILE *fp = fopen(path, "w");
+    fwrite(&cpu, 32, 10, fp);
+    fwrite(pmem, 8, PMEM_SIZE, fp);
+    printf("Snapshot saved to %s\n",path);
     return 0;
 }
 
@@ -202,7 +206,10 @@ static int cmd_load(char *args){
     }
     char *path;
     path = strtok(NULL, " ");
-    printf("%s\n",path);
+    FILE *fp = fopen(path, "r");
+    fread(&cpu, 32, 10, fp);
+    fread(pmem, 8, PMEM_SIZE, fp);
+    printf("Snapshot loaded from %s\n",path);
     return 0;
 }
 
