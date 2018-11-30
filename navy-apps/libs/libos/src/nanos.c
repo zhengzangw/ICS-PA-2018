@@ -28,15 +28,15 @@ void _exit(int status) {
 }
 
 int _open(const char *path, int flags, mode_t mode) {
-  return _syscall_(SYS_open, path, flags, mode);
+  return _syscall_(SYS_open, (intptr_t)path, flags, mode);
 }
 
 int _write(int fd, void *buf, size_t count){
-	return _syscall_(SYS_write, fd, buf, count);
+	return _syscall_(SYS_write, fd, (intptr_t)buf, count);
 }
 
 extern char _end;
-intptr_t prog_brk = &_end;
+intptr_t prog_brk = (intptr_t)&_end;
 void *_sbrk(intptr_t increment){
   intptr_t new_prog_brk = prog_brk + increment;
 	int idt = _syscall_(SYS_brk, new_prog_brk, 0, 0);
@@ -50,7 +50,7 @@ void *_sbrk(intptr_t increment){
 }
 
 int _read(int fd, void *buf, size_t count) {
-  return _syscall_(SYS_read, fd, buf, count);
+  return _syscall_(SYS_read, fd, (intptr_t)buf, count);
 }
 
 int _close(int fd) {
@@ -76,6 +76,14 @@ int _fstat(int fd, struct stat *buf) {
 int _kill(int pid, int sig) {
   _exit(-SYS_kill);
   return -1;
+}
+
+int _wait(){
+    assert(0);
+}
+
+int _fork(){
+    assert(0);
 }
 
 pid_t _getpid() {
