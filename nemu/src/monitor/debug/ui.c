@@ -211,7 +211,9 @@ static int cmd_load(char *args){
     char *path;
     path = strtok(NULL, " ");
     FILE *fp = fopen(path, "r");
+    puts("DE");
     assert(fp);
+    puts("DEBUG");
     fread(&cpu, 32, 10, fp);
     fread(pmem, 8, PMEM_SIZE, fp);
     printf("Snapshot loaded from %s\n",path);
