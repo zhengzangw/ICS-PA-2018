@@ -72,12 +72,10 @@ void difftest_attach(){
     ref_difftest_memcpy_from_dut(ENTRY_START, guest_to_host(ENTRY_START), memsize);
     ref_difftest_memcpy_from_dut(0x7e00, &cpu.idtr.size, 2);
     ref_difftest_memcpy_from_dut(0x7e02, &cpu.idtr.addr, 4);
-    //uint8_t inst[] = {0x0f,0x01,0x1D,0x00,0x7e,0x00,0x00};
-    uint8_t inst[] = {0x0f, 0x01, 0x18};
+    uint8_t inst[] = {0x0f,0x01,0x1D,0x00,0x7e,0x00,0x00};
     ref_difftest_memcpy_from_dut(0x7e40, inst, sizeof(inst));
     CPU_state tmp = cpu;
     tmp.eip = 0x7e40;
-    tmp.eax = 0x7e00;
     ref_difftest_setregs(&tmp);
     ref_difftest_exec(1);
 
