@@ -26,6 +26,7 @@ size_t invalid_write(const void *buf, size_t offset, size_t len) {
 }
 
 /* This is the information about all files in disk. */
+#define VFS_NUM 7
 static Finfo file_table[] __attribute__((used)) = {
   {"stdin", 0, 0, 0, invalid_read, invalid_write},
   {"stdout", 0, 0, 0, invalid_read, serial_write},
@@ -104,7 +105,7 @@ off_t fs_lseek(int fd, off_t offset, int whence){
 		}
 
 		off_t pos = start + offset;
-		if (file_table[fd].disk_offset<=pos && pos <= file_table[fd].disk_offset + file_table[fd].size){
+		if (fd<VFS_NUM || (file_table[fd].disk_offset<=pos && pos <= file_table[fd].disk_offset + file_table[fd].size)){
             file_table[fd].open_offset = pos - file_table[fd].disk_offset;
 		} else {
 		  panic("End of File is %u, pointer locates %u. Out of file bound!", file_table[fd].disk_offset+file_table[fd].size, pos);
