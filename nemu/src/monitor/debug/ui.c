@@ -199,6 +199,7 @@ static int cmd_save(char *args){
     fwrite(&cpu, 32, 10, fp);
     fwrite(pmem, 8, PMEM_SIZE, fp);
     printf("Snapshot saved to %s\n",path);
+    fclose(fp);
     return 0;
 }
 
@@ -214,6 +215,7 @@ static int cmd_load(char *args){
     fread(&cpu, 32, 10, fp);
     fread(pmem, 8, PMEM_SIZE, fp);
     printf("Snapshot loaded from %s\n",path);
+    fclose(fp);
     return 0;
 }
 
