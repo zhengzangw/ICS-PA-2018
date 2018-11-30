@@ -1,6 +1,7 @@
 #include "common.h"
 #include "syscall.h"
 #include "fs.h"
+#include "proc.h"
 
 
 _Context* do_syscall(_Context *c) {
@@ -14,23 +15,27 @@ _Context* do_syscall(_Context *c) {
 		case SYS_exit : _halt(a[1]); break;
 		case SYS_yield: _yield(); c->GPRx = 0; break;
 		case SYS_brk:
-				c->GPRx = 0;
-				break;
+			c->GPRx = 0;
+			break;
 		case SYS_open:
 		    c->GPRx = fs_open((char *)a[1], (int)a[2], (int)a[3]);
-				break;
+			break;
 		case SYS_close:
-				c->GPRx = fs_close((int)a[1]);
-				break;
+			c->GPRx = fs_close((int)a[1]);
+			break;
 		case SYS_lseek:
-				c->GPRx = fs_lseek((int)a[1], (off_t)a[2], (int)a[3]);
-				break;
+			c->GPRx = fs_lseek((int)a[1], (off_t)a[2], (int)a[3]);
+			break;
 		case SYS_read:
-				c->GPRx = fs_read((int)a[1], (void *)a[2], (size_t)a[3]);
-				break;
-		case SYS_write: 
-				c->GPRx = fs_write((int)a[1], (void *)a[2], (size_t)a[3]);
-				break;
+			c->GPRx = fs_read((int)a[1], (void *)a[2], (size_t)a[3]);
+			break;
+		case SYS_write:
+			c->GPRx = fs_write((int)a[1], (void *)a[2], (size_t)a[3]);
+			break;
+        case SYS_execve:
+            naive_uload(NULL, (char *)a[1]);
+            c->GPRx = -1;
+            break;
     default: panic("Unhandled syscall ID = %d", a[0]);
   }
 
