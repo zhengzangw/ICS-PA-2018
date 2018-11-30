@@ -184,6 +184,26 @@ static int cmd_attach(char *args){
     return 0;
 }
 
+static int cmd_save(char *args){
+    if (args==NULL){
+        puts("Path must be specified!");
+    }
+    char *path;
+    path = strtok(NULL, " ");
+    printf("%s\n",path);
+    return 0;
+}
+
+static int cmd_load(char *args){
+    if (args==NULL){
+        puts("Path must be specified!");
+    }
+    char *path;
+    path = strtok(NULL, " ");
+    printf("%s\n",path);
+    return 0;
+}
+
 
 static struct {
   char *name;
@@ -200,7 +220,9 @@ static struct {
   { "w", "Add a watchpoint", cmd_w },
   { "d", "Delete a watchpoint", cmd_d },
   { "detach", "Detach from diff-test mode", cmd_detach },
-  { "attach", "Attach the diff-test mode", cmd_attach }
+  { "attach", "Attach the diff-test mode", cmd_attach },
+  { "save", "Save snapshot", cmd_save },
+  { "load", "Load snapshot", cmd_load }
 };
 
 #define NR_CMD (sizeof(cmd_table) / sizeof(cmd_table[0]))
