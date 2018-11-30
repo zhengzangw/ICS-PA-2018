@@ -14,14 +14,13 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 	size_t fs_size = fs_filesz(fd);
 	fs_read(fd, buffer, fs_size);
 	memcpy((uintptr_t *)DEFAULT_ENTRY, buffer, fs_size);
-	Log("file system initialized!");
+	Log("File %s loaded",filename);
 #else
 	ramdisk_read(buffer, 0, size);
 	memcpy((uintptr_t *)DEFAULT_ENTRY, buffer, size);
+	Log("Ramdisk initialized!");
 #endif
-	
-	Log("ramdisk initialized!");
-  
+
   return DEFAULT_ENTRY;
 }
 

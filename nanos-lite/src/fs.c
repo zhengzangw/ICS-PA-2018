@@ -57,6 +57,7 @@ int fs_open(const char *pathname, int flags, int mode){
 	}
 	if (fd==-1) panic("File %s not exist", pathname);
     else {
+        file_table[fd].open_offset = 0;
         Log("File %s fd=%d loaded", pathname, fd);
         return fd;
     }
