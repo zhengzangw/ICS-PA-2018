@@ -191,6 +191,8 @@ static int cmd_save(char *args){
     char *path;
     path = strtok(NULL, " ");
     printf("%s\n",path);
+    //FILE *fp = fopen(path, "w");
+
     return 0;
 }
 

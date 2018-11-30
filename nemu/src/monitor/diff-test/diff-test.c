@@ -70,14 +70,8 @@ void init_difftest(char *ref_so_file, long img_size) {
 void difftest_attach(){
     ref_difftest_memcpy_from_dut(0, guest_to_host(0), 0x7c00);
     ref_difftest_memcpy_from_dut(ENTRY_START, guest_to_host(ENTRY_START), memsize);
-
-    struct IDTR{
-        uint16_t size;
-        uint32_t addr;
-    } idtr;
-    idtr.size = cpu.idtr.size;
-    idtr.addr = cpu.idtr.addr;
-    ref_difftest_memcpy_from_dut(0x7e00, &idtr, sizeof(idtr));
+    ref_difftest_memcpy_from_dut(0x7e00, &cpu.idtr.size, 2);
+    ref_difftest_memcpy_from_dut(0x7e02, &cpu.idtr.addr, 4);
     //uint8_t inst[] = {0x0f,0x01,0x1D,0x00,0x7e,0x00,0x00};
     uint8_t inst[] = {0x0f, 0x01, 0x18};
     ref_difftest_memcpy_from_dut(0x7e40, inst, sizeof(inst));
