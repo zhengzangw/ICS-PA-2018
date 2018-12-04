@@ -31,6 +31,7 @@ void args_uload(PCB *pcb, const char *filename, char *argv[], char *envp[]){
     int i = 0;
     while (argv[i]){
         strcpy(sargv[i], argv[i]);
+        Log("%d",i);
         pargv[i] = sargv[i];
         i++;
     }
