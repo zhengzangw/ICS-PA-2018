@@ -24,10 +24,10 @@ void naive_uload(PCB *pcb, const char *filename) {
 
 void args_uload(PCB *pcb, const char *filename, char *argv[], char *envp[]){
     Log("\n\n\nHERE\n\n\n");
-    char sargv[256][256];
-    char senvp[256][256];
-    char *pargv[256];
-    char *penvp[256];
+    char sargv[16][32];
+    char senvp[16][32];
+    char *pargv[16];
+    char *penvp[16];
 
     int i = 0;
     while (argv[i]){
