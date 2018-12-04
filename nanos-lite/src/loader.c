@@ -25,10 +25,13 @@ void naive_uload(PCB *pcb, const char *filename) {
 void args_uload(PCB *pcb, const char *filename, char *argv[], char *envp[]){
     char sargv[256][256];
     char senvp[256][256];
+    char *pargv[256];
+    char *penvp[256];
 
     int i = 0;
     while (argv[i]){
         strcpy(sargv[i], argv[i]);
+        pargv[i] = sargv[i];
         i++;
     }
     int argc = i;
@@ -36,12 +39,13 @@ void args_uload(PCB *pcb, const char *filename, char *argv[], char *envp[]){
     i = 0;
     while (envp[i]){
         strcpy(senvp[i], envp[i]);
+        penvp[i] = senvp[i];
         i++;
     }
 
     uintptr_t entry = loader(pcb, filename);
 
-    ((void(*)(int, char **, char *[]))entry) (argc, (char **)sargv, (char **)senvp);
+    ((void(*)(int, char **, char *[]))entry) (argc, pargv, penvp);
 }
 
 void context_kload(PCB *pcb, void *entry) {
