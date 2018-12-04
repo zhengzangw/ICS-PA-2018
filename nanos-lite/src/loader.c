@@ -23,12 +23,12 @@ void naive_uload(PCB *pcb, const char *filename) {
 
 
 void args_uload(PCB *pcb, const char *filename, char *argv[], char *envp[]){
+    Log("\n\n\nHERE\n\n\n");
     char sargv[256][256];
     char senvp[256][256];
     char *pargv[256];
     char *penvp[256];
 
-    Log("\n\n\nHERE\n\n\n");
     int i = 0;
     while (argv[i]){
         strcpy(sargv[i], argv[i]);

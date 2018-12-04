@@ -40,6 +40,7 @@ _Context* do_syscall(_Context *c) {
         case SYS_execve:
             Log("IN EXE");
             args_uload(NULL, (char *)a[1], (char **)a[2], (char **)a[3]);
+            Log("OUT EXE");
             //naive_uload(NULL, (char *)a[1]);
             c->GPRx = 0;
             break;
