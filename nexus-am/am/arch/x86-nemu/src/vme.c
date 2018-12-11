@@ -42,6 +42,7 @@ int _vme_init(void* (*pgalloc_f)(size_t), void (*pgfree_f)(void*)) {
     }
   }
 
+  printf("CR3 should be %x", kpdirs);
   set_cr3(kpdirs);
   set_cr0(get_cr0() | CR0_PG);
   printf("Initial finish");
