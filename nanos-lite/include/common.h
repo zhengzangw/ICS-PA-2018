@@ -14,5 +14,6 @@ typedef char bool;
 #define false 0
 
 _Context* do_syscall(_Context*);
+_Context* schedule(_Context *);
 
 #endif

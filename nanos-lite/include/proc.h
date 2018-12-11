@@ -9,7 +9,7 @@
 typedef union {
   uint8_t stack[STACK_SIZE] PG_ALIGN;
   struct {
-    _Context *tf;
+    _Context *cp;
     _Protect as;
     uintptr_t cur_brk;
     // we do not free memory, so use `max_brk' to determine when to call _map()
@@ -24,5 +24,7 @@ void args_uload(PCB *, const char *, char* argv[], char *envp[]);
 size_t ramdisk_write(const void *, size_t, size_t);
 size_t ramdisk_read(void *, size_t, size_t);
 size_t get_ramdisk_size();
+_Context* schedule(_Context*);
+void context_kload(PCB *, void *);
 
 #endif
