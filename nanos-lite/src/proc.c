@@ -21,15 +21,15 @@ void hello_fun(void *arg) {
 
 void init_proc() {
 	//naive_uload(NULL, "/bin/init");
-    //context_kload(&pcb[0], (void *)hello_fun);
-    //context_uload(&pcb[0], "/bin/hello");
-    context_uload(&pcb[0], "/bin/init");
+    context_kload(&pcb[0], (void *)hello_fun);
+    context_uload(&pcb[0], "/bin/hello");
+    //context_uload(&pcb[0], "/bin/init");
     switch_boot_pcb();
 }
 
 _Context* schedule(_Context *prev) {
   current->cp = prev;
   current = &pcb[0];
-  //current = (current == &pcb[0] ? &pcb[1] : &pcb[0]);
+  current = (current == &pcb[0] ? &pcb[1] : &pcb[0]);
   return current->cp;
 }
