@@ -19,6 +19,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
     uint32_t filesz = fs_filesz(fd);
     uint32_t nr_page = filesz / PGSIZE;
     void *va = (void *)DEFAULT_ENTRY;
+    Log("Begin Allocating page");
     for (int i=0; i < nr_page; ++i){
         void *pa = new_page(1);
         _map(&pcb->as, va, pa, 1);
@@ -26,6 +27,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
         filesz -= PGSIZE;
         va += PGSIZE;
     }
+    Log("Finish Allocating page");
 #endif
 
   return DEFAULT_ENTRY;
