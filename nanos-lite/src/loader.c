@@ -1,16 +1,31 @@
 #include "proc.h"
 #include "fs.h"
+#include "memory.h"
 
-#define DEFAULT_ENTRY 0x4000000
+#define DEFAULT_ENTRY 0x8048000
 #define FILE_SYSTEM
 
 static uintptr_t loader(PCB *pcb, const char *filename) {
+#ifndef HAS_VME
 #ifdef FILE_SYSTEM
 	int fd = fs_open(filename, 0, 0);
 	fs_read(fd, (void *)DEFAULT_ENTRY, fs_filesz(fd));
 #else
 	ramdisk_read((void *)DEFAULT_ENTRY, 0, get_ramdisk_size());
 	Log("Ramdisk initialized!");
+#endif
+#else
+	int fd = fs_open(filename, 0, 0);
+    uint32_t filesz = fs_filesz(fd);
+    uint32_t nr_page = filesz / PGSIZE;
+    void *va = (void *)DEFAULT_ENTRY;
+    for (int i=0; i < nr_page; ++i){
+        void *pa = new_page(1);
+        _map(&pcb->as, va, pa, 1);
+        fs_read(fd, pa, filesz>PGSIZE?PGSIZE:filesz);
+        filesz -= PGSIZE;
+        va += PGSIZE;
+    }
 #endif
 
   return DEFAULT_ENTRY;
@@ -49,7 +64,6 @@ void args_uload(PCB *pcb, const char *filename, char *argv[], char *envp[]){
 }
 
 void context_kload(PCB *pcb, void *entry) {
-  Log("In context_kload");
   _Area stack;
   stack.start = pcb->stack;
   stack.end = stack.start + sizeof(pcb->stack);

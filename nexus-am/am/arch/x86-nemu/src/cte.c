@@ -9,8 +9,9 @@ void vecsys();
 void vecnull();
 
 _Context* irq_handle(_Context *tf) {
+  get_cur_as(tf);
   _Context *next = tf;
-	//XXX: Cannot Print eflags in difftest
+  //XXX: Cannot Print eflags in difftest
 
   if (user_handler) {
     _Event ev = {0};
@@ -26,6 +27,7 @@ _Context* irq_handle(_Context *tf) {
     }
   }
 
+  _switch(tf);
   return next;
 }
 

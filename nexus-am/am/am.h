@@ -34,7 +34,7 @@ enum {
 // Memory area for [@start, @end)
 typedef struct _Area {
   void *start, *end;
-} _Area; 
+} _Area;
 
 // A device (@id, @name) with @read/@write support
 // See <amdev.h> for device descriptions
@@ -88,7 +88,8 @@ void _unprotect(_Protect *p);
 int _map(_Protect *p, void *va, void *pa, int prot);
 _Context *_ucontext(_Protect *p, _Area ustack, _Area kstack,
                                  void *entry, void *args);
-
+void _switch(_Context *c);
+void get_cur_as(_Context *c);
 // ================= Multi-Processor Extension (MPE) =================
 
 int _mpe_init(void (*entry)());
