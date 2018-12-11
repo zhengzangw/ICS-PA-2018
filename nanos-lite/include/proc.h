@@ -26,5 +26,6 @@ size_t ramdisk_read(void *, size_t, size_t);
 size_t get_ramdisk_size();
 _Context* schedule(_Context*);
 void context_kload(PCB *, void *);
+void context_uload(PCB *pcb, const char *filename);
 
 #endif
