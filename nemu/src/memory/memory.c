@@ -42,7 +42,7 @@ paddr_t page_translation(vaddr_t addr){
     uint32_t pdir_index = paddr_read(pdir+dir, 4);
     assert(pdir_index&0x1);
     uint32_t pte    = (pdir_index & ~0xfff) | (page&~0x2ffffc);
-    uint32_t pte_index  = paddr_read(pte+page, 4);
+    uint32_t pte_index  = paddr_read(pte, 4);
     assert(pte_index&0x1);
     paddr_t paddr   = (pte_index & ~0xfff) | offset;
     return paddr;
