@@ -87,7 +87,7 @@ int _map(_Protect *p, void *va, void *pa, int mode) {
     }
     PTE* pte = (PTE*) (pde[pde_idx] & ~0x3ff);
     printf("pte = %x\n", pte);
-    pte[pte_idx<<2] = (uint32_t)pa | PTE_P;
+    pte[pte_idx] = (uint32_t)pa | PTE_P;
   }
   return 0;
 }
