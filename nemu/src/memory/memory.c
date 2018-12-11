@@ -56,7 +56,7 @@ uint32_t vaddr_read(vaddr_t addr, int len) {
         uint32_t lo_len = (((addr+len)&~0xfff) - addr)/4;
         uint32_t hi_len = ((addr+len) - ((addr+len)&~0xfff))/4;
         paddr_t lo_paddr = page_translation(addr);
-        paddr_t hi_paddr = lo_paddr+1;
+        paddr_t hi_paddr = page_translation(addr+len);
         uint32_t lo = paddr_read(lo_paddr, lo_len);
         uint32_t hi = paddr_read(hi_paddr, hi_len);
         return lo | (hi<<lo_len);
