@@ -122,7 +122,7 @@ make_EHelper(mov_CR2r){
 make_EHelper(mov_r2CR){
     switch (id_dest->reg) {
         case 0: rtl_lr(&cpu.CR0, id_src->reg, 4); break;
-        case 3: rtl_lr(&cpu.CR3, id_src->reg, 4); Log("CR3=%x", cpu.CR3); break;
+        case 3: rtl_lr(&cpu.CR3, id_src->reg, 4); break;
         default: panic("mov to control register other than CR0 or CR3!");
     }
 }
