@@ -28,7 +28,6 @@ int _vme_init(void* (*pgalloc_f)(size_t), void (*pgfree_f)(void*)) {
   for (i = 0; i < NR_KSEG_MAP; i ++) {
     uint32_t pdir_idx = (uintptr_t)segments[i].start / (PGSIZE * NR_PTE);
     uint32_t pdir_idx_end = (uintptr_t)segments[i].end / (PGSIZE * NR_PTE);
-    printf("pdir_len = %x\n", pdir_idx_end - pdir_idx);
     for (; pdir_idx < pdir_idx_end; pdir_idx ++) {
       // fill PDE
       kpdirs[pdir_idx] = (uintptr_t)ptab | PTE_P;
@@ -45,7 +44,6 @@ int _vme_init(void* (*pgalloc_f)(size_t), void (*pgfree_f)(void*)) {
 
   set_cr3(kpdirs);
   set_cr0(get_cr0() | CR0_PG);
-  printf("Initial finish");
   return 0;
 }
 
@@ -76,7 +74,6 @@ void _switch(_Context *c) {
   cur_as = c->prot;
 }
 
-#define PGSHIFT 12
 int _map(_Protect *p, void *va, void *pa, int mode) {
   return 0;
 }
