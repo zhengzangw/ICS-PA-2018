@@ -77,6 +77,7 @@ void _switch(_Context *c) {
 int _map(_Protect *p, void *va, void *pa, int mode) {
   if (mode){
     PDE* pde = p->ptr;
+    printf("pde = %x\n", pde);
     uint32_t vaddr = (uint32_t) va;
     uint32_t pde_idx = vaddr >> 22;
     uint32_t pte_idx = (vaddr >> 12) & 0x3ff;
