@@ -9,7 +9,7 @@ void vecsys();
 void vecnull();
 
 _Context* irq_handle(_Context *tf) {
-  printf("In irq_handle\n");
+  //printf("In irq_handle\n");
   get_cur_as(tf);
   _Context *next = tf;
   //XXX: Cannot Print eflags in difftest
