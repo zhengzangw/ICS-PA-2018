@@ -16,6 +16,7 @@ void free_page(void *p) {
 
 /* The brk() system call handler. */
 int mm_brk(uintptr_t new_brk) {
+  assert(0);
   if (current->max_brk < new_brk){
     uint32_t szneed = new_brk - current->max_brk;
     uint32_t pgnum = szneed / PGSIZE;
