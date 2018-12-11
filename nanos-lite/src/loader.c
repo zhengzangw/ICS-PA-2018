@@ -22,6 +22,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
     for (int i=0; i < nr_page; ++i){
         Log("va = %x", va);
         void *pa = new_page(1);
+        Log("pa = %x", pa);
         _map(&pcb->as, va, pa, 1);
         fs_read(fd, pa, filesz>PGSIZE?PGSIZE:filesz);
         filesz -= PGSIZE;
