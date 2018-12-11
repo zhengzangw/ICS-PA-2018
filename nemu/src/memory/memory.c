@@ -38,8 +38,8 @@ paddr_t page_translation(vaddr_t addr){
     uint32_t laddr  = addr >> 12;
     uint32_t page   = laddr & 0x3ff;
     uint32_t dir    = laddr >> 10;
-    uint32_t pdir   = cpu.CR3;
-    uint32_t pdir_index = paddr_read(pdir+dir, 4);
+    uint32_t pdir   = (cpu.CR3 & ~0xfff) | (dir << 2);
+    uint32_t pdir_index = paddr_read(pdir, 4);
     assert(pdir_index&0x1);
     uint32_t pte    = (pdir_index & ~0xfff) | (page << 2);
     uint32_t pte_index  = paddr_read(pte, 4);
