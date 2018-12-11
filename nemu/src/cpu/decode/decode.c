@@ -21,7 +21,7 @@ make_DHelper(CR){
   id_src->reg = m.R_M;
   //dest is the control register
   id_dest->reg = m.reg;
-  panic("gr=%u, cr=%u", id_src->reg, id_dest->reg);
+  //panic("gr=%u, cr=%u", id_src->reg, id_dest->reg);
 }
 
 /* Ib, Iv */
