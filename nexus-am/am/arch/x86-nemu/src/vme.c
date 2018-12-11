@@ -75,6 +75,7 @@ void _switch(_Context *c) {
   cur_as = c->prot;
 }
 
+#define PGSHIFT 12
 int _map(_Protect *p, void *va, void *pa, int mode) {
   return 0;
 }

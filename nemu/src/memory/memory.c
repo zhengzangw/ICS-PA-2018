@@ -34,11 +34,21 @@ void paddr_write(paddr_t addr, uint32_t data, int len) {
 }
 
 paddr_t page_translation(vaddr_t addr){
-    TODO();
-    return 0;
+    uint32_t offset = addr & 0xfff;
+    uint32_t laddr  = addr >> 12;
+    uint32_t page   = laddr & 0x3ff;
+    uint32_t dir    = laddr >> 10;
+    uint32_t pdir   = cpu.CR3;
+    uint32_t pdir_index = paddr_read(pdir+dir, 4);
+    assert(pdir_index&0x1);
+    uint32_t pte    = (pdir_index & ~0xfff) | (page&~0x2ffffc);
+    uint32_t pte_index  = paddr_read(pte+page, 4);
+    assert(pte_index&0x1);
+    paddr_t paddr   = (pte_index & ~0xfff) | offset;
+    return paddr;
 }
 
-#define CROSS_PGBOUND(addr,len) ((addr>>10)!=((addr+len)>>10))
+#define CROSS_PGBOUND(addr,len) ((addr>>12)!=((addr+len)>>12))
 
 uint32_t vaddr_read(vaddr_t addr, int len) {
   if (PG) {
