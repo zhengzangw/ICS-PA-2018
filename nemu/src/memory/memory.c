@@ -33,18 +33,27 @@ void paddr_write(paddr_t addr, uint32_t data, int len) {
 	}
 }
 
+union VADDR{
+    uint32_t value;
+    struct {
+        uint32_t offset : 12;
+        struct {
+            uint32_t page : 10;
+            uint32_t dir  : 10;
+        };
+    };
+};
+typedef union VADDR Vaddr;
 paddr_t page_translation(vaddr_t addr){
-    uint32_t offset = addr & 0xfff;
-    uint32_t laddr  = addr >> 12;
-    uint32_t page   = laddr & 0x3ff;
-    uint32_t dir    = laddr >> 10;
-    uint32_t pdir   = (cpu.CR3 & ~0xfff) | (dir << 2);
+    Vaddr vaddr;
+    vaddr.value = addr;
+    uint32_t pdir   = (cpu.CR3 & ~0xfff) | (vaddr.dir << 2);
     uint32_t pdir_index = paddr_read(pdir, 4);
     assert(pdir_index&0x1);
-    uint32_t pte    = (pdir_index & ~0xfff) | (page << 2);
+    uint32_t pte    = (pdir_index & ~0xfff) | (vaddr.page << 2);
     uint32_t pte_index  = paddr_read(pte, 4);
     assert(pte_index&0x1);
-    paddr_t paddr   = (pte_index & ~0xfff) | offset;
+    paddr_t paddr   = (pte_index & ~0xfff) | vaddr.offset;
     return paddr;
 }
 
