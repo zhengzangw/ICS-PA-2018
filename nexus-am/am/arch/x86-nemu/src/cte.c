@@ -50,7 +50,6 @@ int _cte_init(_Context*(*handler)(_Event, _Context*)) {
 }
 
 _Context *_kcontext(_Area stack, void (*entry)(void *), void *arg) {
-  printf("In kontext\n");
   _Context *c = (_Context*)stack.end - 1;
   c->eip= (intptr_t)entry;
   c->cs = 8;
