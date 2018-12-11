@@ -44,6 +44,7 @@ typedef union {
 paddr_t page_translation(vaddr_t addr){
     Vaddr vaddr;
     vaddr.value = addr;
+    if ((vaddr.value >> 22)>0x20) Log("addr = %x", addr);
     uint32_t pdir   = (cpu.CR3 & ~0xfff) + (vaddr.dir << 2);
     uint32_t pdir_index = paddr_read(pdir, 4);
     Assert(pdir_index&0x1, "addr = %x, pdir = %x, pdir_index = %x, dir = %x",addr, pdir, pdir_index, vaddr.dir);
