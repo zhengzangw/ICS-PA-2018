@@ -53,7 +53,13 @@ paddr_t page_translation(vaddr_t addr){
 uint32_t vaddr_read(vaddr_t addr, int len) {
   if (PG) {
       if (CROSS_PGBOUND(addr, len)){
-        TODO();
+        uint32_t lo_len = ((addr+len)&~0xfff) - addr;
+        uint32_t hi_len = (addr+len) - ((addr+len)&~0xfff);
+        paddr_t lo_paddr = page_translation(addr);
+        paddr_t hi_paddr = lo_paddr+1;
+        uint32_t lo = paddr_read(lo_paddr, lo_len);
+        uint32_t hi = paddr_read(hi_paddr, hi_len);
+        return lo | (hi<<lo_len);
       } else {
           paddr_t paddr = page_translation(addr);
           return paddr_read(paddr, len);
