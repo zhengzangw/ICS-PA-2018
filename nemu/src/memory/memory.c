@@ -46,7 +46,7 @@ paddr_t page_translation(vaddr_t addr){
     vaddr.value = addr;
     uint32_t pdir   = (cpu.CR3 & ~0xfff) | (vaddr.dir << 2);
     uint32_t pdir_index = paddr_read(pdir, 4);
-    Assert(pdir_index&0x1, "pdir_index = %x", pdir_index);
+    Assert(pdir_index&0x1, "addr = %x, pdir = %x, pdir_index = %x",addr, pdir, pdir_index);
     uint32_t pte    = (pdir_index & ~0xfff) | (vaddr.page << 2);
     uint32_t pte_index  = paddr_read(pte, 4);
     assert(pte_index&0x1);
