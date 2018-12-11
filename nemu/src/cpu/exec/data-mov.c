@@ -121,7 +121,7 @@ make_EHelper(mov_CR2r){
 
 make_EHelper(mov_r2CR){
     switch (id_dest->reg) {
-        case 0: rtl_lr(&cpu.CR0, id_src->reg, 4); panic("PG=%u", cpu.CR0>>31); break;
+        case 0: rtl_lr(&cpu.CR0, id_src->reg, 4); break;
         case 3: rtl_lr(&cpu.CR3, id_src->reg, 4); break;
         default: panic("mov to control register other than CR0 or CR3!");
     }

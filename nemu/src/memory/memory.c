@@ -1,6 +1,7 @@
 #include "nemu.h"
 
 #include "device/mmio.h"
+#include "cpu/reg.h"
 
 #define PMEM_SIZE (128 * 1024 * 1024)
 
@@ -32,10 +33,35 @@ void paddr_write(paddr_t addr, uint32_t data, int len) {
 	}
 }
 
+paddr_t page_translation(vaddr_t addr){
+    TODO();
+    return 0;
+}
+
+#define CROSS_PGBOUND(addr,len) ((addr>>10)!=((addr+len)>>10))
+
 uint32_t vaddr_read(vaddr_t addr, int len) {
-  return paddr_read(addr, len);
+  if (PG) {
+      if (CROSS_PGBOUND(addr, len)){
+        TODO();
+      } else {
+          paddr_t paddr = page_translation(addr);
+          return paddr_read(paddr, len);
+      }
+  } else {
+    return paddr_read(addr, len);
+  }
 }
 
 void vaddr_write(vaddr_t addr, uint32_t data, int len) {
-  paddr_write(addr, data, len);
+  if (PG) {
+      if (CROSS_PGBOUND(addr, len)){
+        TODO();
+      } else {
+        paddr_t paddr = page_translation(addr);
+        paddr_write(paddr, data, len);
+      }
+  } else {
+    paddr_write(addr, data, len);
+  }
 }
