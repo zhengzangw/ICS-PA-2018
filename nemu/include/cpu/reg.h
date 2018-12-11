@@ -51,6 +51,7 @@ typedef struct {
 		uint16_t size;
 		uint32_t addr;
 	} idtr;
+    uint32_t CR0, CR3;
 } CPU_state;
 
 extern CPU_state cpu;
