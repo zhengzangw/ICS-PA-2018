@@ -39,7 +39,7 @@ make_EHelper(popa) {
 	rtl_pop(&reg_l(R_EBX));
 	rtl_pop(&reg_l(R_EDX));
 	rtl_pop(&reg_l(R_ECX));
-	rtl_pop(&reg_l(R_EAX));	
+	rtl_pop(&reg_l(R_EAX));
 
   print_asm("popa");
 }
@@ -109,4 +109,20 @@ make_EHelper(movzx) {
 make_EHelper(lea) {
   operand_write(id_dest, &id_src->addr);
   print_asm_template2(lea);
+}
+
+make_EHelper(mov_CR2r){
+    switch (id_dest->reg) {
+        case 0: rtl_sr(id_src->reg, &cpu.CR0, 4); break;
+        case 3: rtl_sr(id_src->reg, &cpu.CR3, 4); break;
+        default: panic("mov from control register other than CR0 or CR3!");
+    }
+}
+
+make_EHelper(mov_r2CR){
+    switch (id_dest->reg) {
+        case 0: rtl_lr(&cpu.CR0, id_src->reg, 4); break;
+        case 3: rtl_lr(&cpu.CR3, id_src->reg, 4); break;
+        default: panic("mov to control register other than CR0 or CR3!");
+    }
 }

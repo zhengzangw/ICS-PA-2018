@@ -14,6 +14,16 @@ void decoding_set_jmp(bool is_jmp) {
 
 /* Refer to Appendix A in i386 manual for the explanations of these abbreviations */
 
+make_DHelper(CR){
+  ModR_M m;
+  m.val = instr_fetch(eip, 1);
+  //src is the general register
+  id_src->reg = m.reg;
+  //dest is the control register
+  id_dest->reg = m.R_M;
+  panic("gr=%u, cr=%u", id_src->reg, id_dest->reg);
+}
+
 /* Ib, Iv */
 static inline make_DopHelper(I) {
   /* eip here is pointing to the immediate */
