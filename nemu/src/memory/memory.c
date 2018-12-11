@@ -37,10 +37,8 @@ union VADDR{
     uint32_t value;
     struct {
         uint32_t offset : 12;
-        struct {
-            uint32_t page : 10;
-            uint32_t dir  : 10;
-        };
+        uint32_t page : 10;
+        uint32_t dir  : 10;
     };
 };
 typedef union VADDR Vaddr;
