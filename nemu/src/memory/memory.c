@@ -57,12 +57,13 @@ paddr_t page_translation(vaddr_t addr){
 #define CROSS_PGBOUND(addr,len) ((addr>>12)!=((addr+len)>>12))
 
 uint32_t vaddr_read(vaddr_t addr, int len) {
-  if ((addr >> 22)) Log("addr = %x", addr>>22);
+  if ((addr >> 22)>0x20) Log("addr = %x", addr);
   if (PG) {
       if (CROSS_PGBOUND(addr, len)){
         uint32_t lo_len = ((addr+len)&~0xfff) - addr;
         uint32_t hi_len = (addr+len) - ((addr+len)&~0xfff);
         paddr_t lo_paddr = page_translation(addr);
+        if ((((addr+len)&~0xfff) >> 22)>0x20) Log("hi_addr = %x", addr);
         paddr_t hi_paddr = page_translation((addr+len)&~0xfff);
         uint32_t lo = paddr_read(lo_paddr, lo_len);
         uint32_t hi = paddr_read(hi_paddr, hi_len);
@@ -83,6 +84,7 @@ void vaddr_write(vaddr_t addr, uint32_t data, int len) {
         uint32_t lo_len = ((addr+len)&~0xfff) - addr;
         uint32_t hi_len = (addr+len) - ((addr+len)&~0xfff);
         paddr_t lo_paddr = page_translation(addr);
+        if ((((addr+len)&~0xfff) >> 22)>0x20) Log("hi_addr = %x", addr);
         paddr_t hi_paddr = page_translation((addr+len)&~0xfff);
         paddr_write(lo_paddr, data & ~((-1)<<lo_len), lo_len);
         paddr_write(hi_paddr, data >> lo_len, hi_len);
