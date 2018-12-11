@@ -18,9 +18,9 @@ make_DHelper(CR){
   ModR_M m;
   m.val = instr_fetch(eip, 1);
   //src is the general register
-  id_src->reg = m.reg;
+  id_src->reg = m.R_M;
   //dest is the control register
-  id_dest->reg = m.R_M;
+  id_dest->reg = m.reg;
   panic("gr=%u, cr=%u", id_src->reg, id_dest->reg);
 }
 
