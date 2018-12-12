@@ -39,14 +39,14 @@ extern char _end;
 intptr_t prog_brk = (intptr_t)&_end;
 void *_sbrk(intptr_t increment){
   intptr_t new_prog_brk = prog_brk + increment;
-	int idt = _syscall_(SYS_brk, new_prog_brk, 0, 0);
+  int idt = _syscall_(SYS_brk, new_prog_brk, 0, 0);
   if (idt == 0) {
-		intptr_t tmp = prog_brk;
-	  prog_brk = new_prog_brk;
+	intptr_t tmp = prog_brk;
+	prog_brk = new_prog_brk;
     return (void *)tmp;
-	} else {
-		return (void *)-1;
-	}
+  } else {
+	return (void *)-1;
+  }
 }
 
 int _read(int fd, void *buf, size_t count) {

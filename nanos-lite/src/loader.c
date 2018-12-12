@@ -5,6 +5,7 @@
 #define DEFAULT_ENTRY 0x8048000
 #define FILE_SYSTEM
 
+extern char _end;
 static uintptr_t loader(PCB *pcb, const char *filename) {
 #ifndef HAS_VME
 #ifdef FILE_SYSTEM
@@ -29,7 +30,8 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
         //Log("Filesz = %x", filesz);
         va += PGSIZE;
     }
-    pcb->max_brk = (uintptr_t) va;
+    pcb->max_brk = pcb->cur_brk = (intptr_t)&_end;
+    printf("va = %x, end = %x", va, pcb->cur_brk);
     //Log("Finish Allocating page");
 #endif
 
