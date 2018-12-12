@@ -29,7 +29,6 @@ _Context* irq_handle(_Context *tf) {
   }
 
   _switch(next);
-  printf("After switch");
   return next;
 }
 
