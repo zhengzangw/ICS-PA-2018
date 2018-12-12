@@ -29,6 +29,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
         //Log("Filesz = %x", filesz);
         va += PGSIZE;
     }
+    current->max_brk = (uintptr_t) va;
     //Log("Finish Allocating page");
 #endif
 
