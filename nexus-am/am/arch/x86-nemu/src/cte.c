@@ -22,7 +22,9 @@ _Context* irq_handle(_Context *tf) {
       default: ev.event = _EVENT_ERROR; break;
     }
 
+    printf("Before do_syscall\n");
     next = user_handler(ev, tf);
+    printf("After do_syscall\n");
     if (next == NULL) {
       next = tf;
     }
