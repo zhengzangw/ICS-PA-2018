@@ -41,23 +41,37 @@ typedef union {
         uint32_t dir  : 10;
     };
 } Vaddr;
+bool is_write;
+#define CROSS_PGBOUND(addr,len) ((addr>>12)!=((addr+len-1)>>12))
+#define SET_DIRTY(x) (is_write?((x)|0x20):x)
+#define SET_ACCESS(x) ((x)|0x40)
+
+
 paddr_t page_translation(vaddr_t addr){
     Vaddr vaddr;
     vaddr.value = addr;
     uint32_t pdir   = (cpu.CR3 & ~0xfff) + (vaddr.dir << 2);
     uint32_t pdir_index = paddr_read(pdir, 4);
+
+    uint32_t bk_pdir = SET_ACCESS(pdir_index);
+    paddr_write(pdir, bk_pdir, 4);
+
     Assert(pdir_index&0x1, "CR3 = %x, addr = %x, pdir = %x, pdir_index = %x, dir = %x", cpu.CR3, addr, pdir, pdir_index, vaddr.dir);
+
     uint32_t pte    = (pdir_index & ~0xfff) + (vaddr.page << 2);
     uint32_t pte_index  = paddr_read(pte, 4);
+
+    uint32_t bk_pte  = SET_DIRTY(SET_ACCESS(pte_index));
+    paddr_write(pte, bk_pte, 4);
+
     Assert(pte_index&0x1, "CR3 = %x, addr = %x, pte = %x, pte_index = %x, dir = %x", cpu.CR3, addr, pte, pte_index, vaddr.dir);
     paddr_t paddr   = (pte_index & ~0xfff) | vaddr.offset;
     return paddr;
 }
 
-#define CROSS_PGBOUND(addr,len) ((addr>>12)!=((addr+len-1)>>12))
 
 uint32_t vaddr_read(vaddr_t addr, int len) {
-  if (addr > 0xc0000000) Log("addr = %x", addr);
+  is_write = 0;
   if (PG) {
       if (CROSS_PGBOUND(addr, len)){
         uint32_t lo_len = ((addr+len-1)&~0xfff) - addr;
@@ -77,7 +91,7 @@ uint32_t vaddr_read(vaddr_t addr, int len) {
 }
 
 void vaddr_write(vaddr_t addr, uint32_t data, int len) {
-  if (addr > 0xc0000000) Log("addr = %x", addr);
+  is_write = 1;
   if (PG) {
       if (CROSS_PGBOUND(addr, len)){
         uint32_t lo_len = ((addr+len-1)&~0xfff) - addr;
