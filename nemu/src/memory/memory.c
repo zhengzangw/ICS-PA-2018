@@ -57,6 +57,7 @@ paddr_t page_translation(vaddr_t addr){
 #define CROSS_PGBOUND(addr,len) ((addr>>12)!=((addr+len-1)>>12))
 
 uint32_t vaddr_read(vaddr_t addr, int len) {
+  if (addr > 0xc0000000) Log("addr = %x", addr);
   if (PG) {
       if (CROSS_PGBOUND(addr, len)){
         uint32_t lo_len = ((addr+len-1)&~0xfff) - addr;
