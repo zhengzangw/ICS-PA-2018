@@ -32,7 +32,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
     pcb->max_brk = (uintptr_t) va;
     //Log("Finish Allocating page");
 #endif
-
+  Log("loader finish");
   return DEFAULT_ENTRY;
 }
 
