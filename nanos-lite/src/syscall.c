@@ -2,7 +2,7 @@
 #include "syscall.h"
 #include "fs.h"
 #include "proc.h"
-
+extern PCB* pcbbase;
 
 _Context* do_syscall(_Context *c) {
   uintptr_t a[4];
@@ -39,7 +39,8 @@ _Context* do_syscall(_Context *c) {
 			c->GPRx = fs_write((int)a[1], (void *)a[2], (size_t)a[3]);
 			break;
         case SYS_execve:
-            args_uload(NULL, (char *)a[1], (char **)a[2], (char **)a[3]);
+            context_uload(&pcbbase[1], (char *)a[1]);
+            //args_uload(NULL, (char *)a[1], (char **)a[2], (char **)a[3]);
             //naive_uload(NULL, (char *)a[1]);
             c->GPRx = 0;
             break;
