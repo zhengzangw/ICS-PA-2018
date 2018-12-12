@@ -19,7 +19,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
     int32_t filesz = fs_filesz(fd);
     void *va = (void *)DEFAULT_ENTRY;
     while (filesz > 0){
-        Log("va = %x", va);
+        Log("va = %x", (uint32_t)va);
         void *pa = new_page(1);
         Log("pa = %x", pa);
         _map(&pcb->as, va, pa, 1);
