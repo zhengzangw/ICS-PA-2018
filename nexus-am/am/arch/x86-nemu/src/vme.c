@@ -6,6 +6,7 @@ static PDE kpdirs[NR_PDE] PG_ALIGN;
 static PTE kptabs[PMEM_SIZE / PGSIZE] PG_ALIGN;
 static void* (*pgalloc_usr)(size_t);
 static void (*pgfree_usr)(void*);
+_Protect *kbase;
 
 _Area segments[] = {      // Kernel memory mappings
   {.start = (void*)0,          .end = (void*)PMEM_SIZE}
@@ -18,6 +19,7 @@ int _vme_init(void* (*pgalloc_f)(size_t), void (*pgfree_f)(void*)) {
   pgfree_usr = pgfree_f;
 
   int i;
+  kbase->ptr = kpdirs;
 
   // make all PDEs invalid
   for (i = 0; i < NR_PDE; i ++) {

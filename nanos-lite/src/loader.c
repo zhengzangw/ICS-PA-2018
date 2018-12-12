@@ -73,7 +73,7 @@ void context_kload(PCB *pcb, void *entry) {
   stack.start = pcb->stack;
   stack.end = stack.start + sizeof(pcb->stack);
 
-  pcb->cp = _kcontext(&pcb->as, stack, entry, NULL);
+  pcb->cp = _kcontext(stack, entry, NULL);
 }
 
 void context_uload(PCB *pcb, const char *filename) {
