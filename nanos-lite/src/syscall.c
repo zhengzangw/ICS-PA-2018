@@ -20,7 +20,7 @@ _Context* do_syscall(_Context *c) {
             break;
 		case SYS_yield: _yield(); c->GPRx = 0; break;
 		case SYS_brk:
-			c->GPRx = 0;
+			c->GPRx = mm_brk(a[1]);
 			break;
 		case SYS_open:
 		    c->GPRx = fs_open((char *)a[1], (int)a[2], (int)a[3]);
