@@ -22,8 +22,6 @@ int mm_brk(uintptr_t new_brk) {
     _map(&current->as, (void *)current->max_brk, pa, 1);
     current->max_brk += PGSIZE;
   }
-  uintptr_t tmp = current->max_brk;
-  Log("max_brk = %x", tmp);
   return 0;
 }
 
