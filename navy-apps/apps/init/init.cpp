@@ -122,7 +122,6 @@ int main(int argc, char *argv[], char *envp[]) {
 }
 
 static void open_display() {
-  printf("ON!\n");
   FILE *dispinfo = fopen("/proc/dispinfo", "r");
 
   if (!dispinfo) {
