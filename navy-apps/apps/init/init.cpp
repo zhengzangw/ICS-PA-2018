@@ -79,7 +79,6 @@ int main(int argc, char *argv[], char *envp[]) {
   NDL_LoadBitmap(&logo, "/share/pictures/projectn.bmp");
   set_i_max();
 
-  printf("A\n");
   while (1) {
     display_menu(i_max);
 
@@ -119,6 +118,7 @@ int main(int argc, char *argv[], char *envp[]) {
       fprintf(stderr, "Choose a number between %d and %d\n\n", 0, i_max);
     }
   }
+  printf("A\n");
   return -1;
 }
 
