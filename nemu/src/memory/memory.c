@@ -44,7 +44,7 @@ typedef union {
 bool is_write;
 #define CROSS_PGBOUND(addr,len) ((addr>>12)!=((addr+len-1)>>12))
 #define SET_DIRTY(x) (is_write?((x)|0x20):x)
-#define SET_ACCESS(x) ((x)|0x40)
+#define SET_ACCESS(x) ((x)|0x80)
 
 
 paddr_t page_translation(vaddr_t addr){
