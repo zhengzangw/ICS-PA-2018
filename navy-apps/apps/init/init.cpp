@@ -104,7 +104,7 @@ int main(int argc, char *argv[], char *envp[]) {
       case NDL_SCANCODE_RIGHT: next(); break;
     }
 
-      printf("BEFORE execve");
+      printf("BEFORE execve\n");
 
     if (i != -1 && i <= i_max) {
       i += page * 10;
