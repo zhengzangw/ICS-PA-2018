@@ -87,6 +87,7 @@ int main(int argc, char *argv[], char *envp[]) {
       NDL_WaitEvent(&e);
     } while (e.type != NDL_EVENT_KEYDOWN);
 
+    printf("A\n");
     int i = -1;
     switch (e.data) {
       case NDL_SCANCODE_0: i = 0; break;
@@ -118,7 +119,6 @@ int main(int argc, char *argv[], char *envp[]) {
       fprintf(stderr, "Choose a number between %d and %d\n\n", 0, i_max);
     }
   }
-  printf("A\n");
   return -1;
 }
 
