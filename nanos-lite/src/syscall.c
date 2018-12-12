@@ -11,7 +11,6 @@ _Context* do_syscall(_Context *c) {
 	a[2] = c->GPR3;
 	a[3] = c->GPR4;
 
-  Log("In do_syscall");
   switch (a[0]) {
 		case SYS_exit :
             _halt(a[1]);
