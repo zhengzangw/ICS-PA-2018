@@ -78,6 +78,7 @@ int main(int argc, char *argv[], char *envp[]) {
   font = new Font(font_fname);
   NDL_LoadBitmap(&logo, "/share/pictures/projectn.bmp");
   set_i_max();
+  printf("");
 
   while (1) {
     display_menu(i_max);
@@ -117,7 +118,6 @@ int main(int argc, char *argv[], char *envp[]) {
     } else {
       fprintf(stderr, "Choose a number between %d and %d\n\n", 0, i_max);
     }
-    printf("A\n");
   }
   return -1;
 }
