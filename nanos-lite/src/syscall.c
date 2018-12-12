@@ -5,6 +5,7 @@
 extern PCB* pcbbase;
 
 _Context* do_syscall(_Context *c) {
+  Log("In do_syscall");
   uintptr_t a[4];
   a[0] = c->GPR1;
 	a[1] = c->GPR2;
