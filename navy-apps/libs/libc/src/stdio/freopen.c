@@ -241,13 +241,11 @@ _freopen_r (struct _reent *ptr,
 
 #ifndef _REENT_ONLY
 
-#include <stdio.h>
 FILE *
 freopen (const char *__restrict file,
        const char *__restrict mode,
        register FILE *__restrict fp)
 {
-  printf("H");
   return _freopen_r (_REENT, file, mode, fp);
 }
 
