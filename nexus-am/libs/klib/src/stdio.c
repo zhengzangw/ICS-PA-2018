@@ -19,7 +19,7 @@ static inline int my_atoi(const char **s){
 		(*s)--;
 		return i;
 }
-static inline int div(long *n, unsigned base){	
+static inline int div(long *n, unsigned base){
 		int ret = ((unsigned long)*n)%(unsigned)base;
 		*n = ((unsigned long)*n) / (unsigned) base;
 		return ret;
@@ -98,7 +98,7 @@ static char *get_number(char *str, long num, int base, int size, int precision, 
 }
 
 int printf(const char *fmt, ...) {
-  char buf[1024];
+  char buf[128];
 	va_list args;
 	int ret;
 
@@ -130,7 +130,7 @@ int vsprintf(char *out, const char *fmt, va_list args) {
 					*str++ = *fmt;
 					continue;
 			}
-		  
+
 			flags = 0;
 		  field_width = -1;
 			precision = -1;
@@ -287,7 +287,7 @@ repeat:
 int sprintf(char *out, const char *fmt, ...) {
   va_list args;
 	va_start(args, fmt);
-	int ret = vsprintf(out, fmt, args); 
+	int ret = vsprintf(out, fmt, args);
 	va_end(args);
   return ret;
 }
