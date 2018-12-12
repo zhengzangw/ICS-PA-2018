@@ -65,7 +65,6 @@ static void clear_display();
 static void display_menu(int n);
 
 int main(int argc, char *argv[], char *envp[]) {
-  assert(0);
   if (!freopen("/dev/tty", "r", stdin) ||
       !freopen("/dev/tty", "w", stdout) ||
       !freopen("/dev/tty", "w", stderr)) {
@@ -119,6 +118,7 @@ int main(int argc, char *argv[], char *envp[]) {
       fprintf(stderr, "Choose a number between %d and %d\n\n", 0, i_max);
     }
   }
+  assert(0);
   return -1;
 }
 
