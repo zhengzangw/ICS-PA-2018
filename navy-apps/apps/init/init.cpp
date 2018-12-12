@@ -73,7 +73,6 @@ int main(int argc, char *argv[], char *envp[]) {
     exit(1);
   }
 
-  return 0;
   open_display();
 
   evtdev = fopen("/dev/events", "r");
@@ -81,6 +80,7 @@ int main(int argc, char *argv[], char *envp[]) {
   NDL_LoadBitmap(&logo, "/share/pictures/projectn.bmp");
   set_i_max();
 
+  return 0;
   while (1) {
     display_menu(i_max);
 
