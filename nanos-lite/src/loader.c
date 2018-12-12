@@ -17,7 +17,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 #else
 	int fd = fs_open(filename, 0, 0);
     uint32_t filesz = fs_filesz(fd);
-    uint32_t nr_page = filesz / PGSIZE + 1;
+    uint32_t nr_page = filesz / PGSIZE + 2;
     void *va = (void *)DEFAULT_ENTRY;
     for (int i=0; i < nr_page; ++i){
         void *pa = new_page(1);
