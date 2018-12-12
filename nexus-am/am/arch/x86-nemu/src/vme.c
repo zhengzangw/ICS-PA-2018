@@ -80,16 +80,13 @@ void _switch(_Context *c) {
 int _map(_Protect *p, void *va, void *pa, int mode) {
   if (mode){
     PDE* pde = p->ptr;
-    //printf("pde = %x\n", pde);
     uint32_t vaddr = (uint32_t) va;
-    uint32_t pde_idx = vaddr >> 22;
-    //printf("vaddr = %x\n", vaddr);
+    uint32_t pde_idx = (vaddr >> 22) & 0x3ff;
     uint32_t pte_idx = (vaddr >> 12) & 0x3ff;
     if (!(pde[pde_idx]&0x1)){
         pde[pde_idx] = (uint32_t) pgalloc_usr(1) | PTE_P;
     }
     PTE* pte = (PTE*) (pde[pde_idx] & ~0x3ff);
-    //printf("pte = %x\n", pte);
     pte[pte_idx] = (uint32_t)pa | PTE_P;
   }
   return 0;
