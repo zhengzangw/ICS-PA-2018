@@ -15,16 +15,10 @@ void free_page(void *p) {
 }
 
 /* The brk() system call handler. */
-extern char _end;
+extern PCB* current;
 int mm_brk(uintptr_t new_brk) {
-  //Log("in mm_brk");
-  //Log("new_brk = %x, max_brk = %x", new_brk, current->max_brk);
-  //Log("cur_brk = %x", current->cur_brk);
-  Log("end = %x", &_end);
   if (current->max_brk < new_brk){
     uint32_t new_brk_align = (new_brk & ~0xfff) + 0x1000;
-    //Log("new_brk_align = %x", new_brk_align);
-    //assert(0);
     uint32_t szneed = new_brk_align - current->max_brk;
     uint32_t pgnum = szneed / PGSIZE;
     uintptr_t va = current->max_brk;
