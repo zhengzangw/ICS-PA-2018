@@ -20,6 +20,7 @@ _Context* do_syscall(_Context *c) {
             break;
 		case SYS_yield: _yield(); c->GPRx = 0; break;
 		case SYS_brk:
+            Log("brk = %x", a[1]);
 			c->GPRx = mm_brk(a[1]);
 			break;
 		case SYS_open:
