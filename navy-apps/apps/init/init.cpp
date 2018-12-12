@@ -73,13 +73,13 @@ int main(int argc, char *argv[], char *envp[]) {
   }
 
   open_display();
-  printf("A\n");
 
   evtdev = fopen("/dev/events", "r");
   font = new Font(font_fname);
   NDL_LoadBitmap(&logo, "/share/pictures/projectn.bmp");
   set_i_max();
 
+  printf("A\n");
   while (1) {
     display_menu(i_max);
 
