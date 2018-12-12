@@ -26,7 +26,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
         _map(&pcb->as, va, pa, 1);
         fs_read(fd, pa, PGSIZE);
         filesz -= PGSIZE;
-        Log("Filesz = %x", filesz);
+        //Log("Filesz = %x", filesz);
         va += PGSIZE;
     }
     //Log("Finish Allocating page");

@@ -17,6 +17,7 @@ void free_page(void *p) {
 /* The brk() system call handler. */
 int mm_brk(uintptr_t new_brk) {
   Log("in mm_brk");
+  panic("new_brk = %x", new_brk);
   if (current->max_brk < new_brk){
     uint32_t new_brk_align = (new_brk & ~0xfff) + 0x1000;
     uint32_t szneed = new_brk_align - current->max_brk;
@@ -28,7 +29,6 @@ int mm_brk(uintptr_t new_brk) {
         va += PGSIZE;
     }
   }
-  panic("new_brk = %x", new_brk);
   return 0;
 }
 
