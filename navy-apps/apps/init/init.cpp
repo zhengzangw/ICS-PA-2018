@@ -87,7 +87,6 @@ int main(int argc, char *argv[], char *envp[]) {
       NDL_WaitEvent(&e);
     } while (e.type != NDL_EVENT_KEYDOWN);
 
-  assert(0);
     int i = -1;
     switch (e.data) {
       case NDL_SCANCODE_0: i = 0; break;
