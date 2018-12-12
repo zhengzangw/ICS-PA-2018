@@ -19,7 +19,6 @@ _Context* do_syscall(_Context *c) {
             break;
 		case SYS_yield: _yield(); c->GPRx = 0; break;
 		case SYS_brk:
-            panic("brk");
             if (mm_brk(current->cur_brk + a[1])){
                 c->GPRx = -1;
             } else {
