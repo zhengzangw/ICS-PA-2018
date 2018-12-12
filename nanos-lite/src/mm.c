@@ -25,13 +25,13 @@ int mm_brk(uintptr_t new_brk) {
     //assert(0);
     uint32_t szneed = new_brk_align - current->max_brk;
     uint32_t pgnum = szneed / PGSIZE;
-    uint32_t va = current->max_brk;
+    uintptr_t va = current->max_brk;
     for (int i=0; i < pgnum; ++i){
         void *pa = new_page(1);
         _map(&current->as, (void* )va, pa, 1);
         va += PGSIZE;
     }
-    current->max_brk = new_brk;
+    current->max_brk = new_brk_align;
   }
   current->cur_brk = new_brk;
   return 0;
