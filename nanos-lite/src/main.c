@@ -28,7 +28,7 @@ int main() {
   init_proc();
 
 #ifdef HAS_CTE
-  //Log("Before yield");
+  Log("Before yield");
   _yield();
 #endif
 
