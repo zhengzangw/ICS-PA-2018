@@ -104,7 +104,6 @@ int main(int argc, char *argv[], char *envp[]) {
       case NDL_SCANCODE_RIGHT: next(); break;
     }
 
-      printf("BEFORE execve\n");
 
     if (i != -1 && i <= i_max) {
       i += page * 10;
@@ -114,6 +113,7 @@ int main(int argc, char *argv[], char *envp[]) {
       exec_argv[1] = item->arg1;
       exec_argv[2] = NULL;
       clear_display();
+      printf("BEFORE execve\n");
       execve(exec_argv[0], (char**)exec_argv, (char**)envp);
       fprintf(stderr, "\033[31m[ERROR]\033[0m Exec %s failed.\n\n", exec_argv[0]);
     } else {
