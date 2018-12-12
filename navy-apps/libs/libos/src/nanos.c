@@ -32,21 +32,11 @@ int _open(const char *path, int flags, mode_t mode) {
 }
 
 int _write(int fd, void *buf, size_t count){
-	return _syscall_(SYS_write, fd, (intptr_t)buf, count);
+  return _syscall_(SYS_write, fd, (intptr_t)buf, count);
 }
 
-extern char _end;
-intptr_t prog_brk = (intptr_t)&_end;
 void *_sbrk(intptr_t increment){
-  intptr_t new_prog_brk = prog_brk + increment;
-  int idt = _syscall_(SYS_brk, new_prog_brk, 0, 0);
-  if (idt == 0) {
-	intptr_t tmp = prog_brk;
-	prog_brk = new_prog_brk;
-    return (void *)tmp;
-  } else {
-	return (void *)-1;
-  }
+  return _syscall_(SYS_brk, increment, 0, 0);
 }
 
 int _read(int fd, void *buf, size_t count) {
@@ -63,7 +53,6 @@ off_t _lseek(int fd, off_t offset, int whence) {
 
 int _execve(const char *fname, char * const argv[], char *const envp[]) {
   return _syscall_(SYS_execve, (intptr_t)fname, (intptr_t)&argv[0], (intptr_t)envp);
-  //_exit(SYS_execve);
 }
 
 // The code below is not used by Nanos-lite.

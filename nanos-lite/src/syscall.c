@@ -2,13 +2,13 @@
 #include "syscall.h"
 #include "fs.h"
 #include "proc.h"
-
+extern PCB* current;
 _Context* do_syscall(_Context *c) {
   uintptr_t a[4];
   a[0] = c->GPR1;
-	a[1] = c->GPR2;
-	a[2] = c->GPR3;
-	a[3] = c->GPR4;
+  a[1] = c->GPR2;
+  a[2] = c->GPR3;
+  a[3] = c->GPR4;
 
   switch (a[0]) {
 		case SYS_exit :
@@ -19,7 +19,12 @@ _Context* do_syscall(_Context *c) {
             break;
 		case SYS_yield: _yield(); c->GPRx = 0; break;
 		case SYS_brk:
-			c->GPRx = mm_brk(a[1]);
+            if (mm_brk(current->cur_brk + a[1])){
+                c->GPRx = -1;
+            } else {
+                c->GPRx = current->cur_brk;
+                current->cur_brk = current->cur_brk + a[1];
+            }
 			break;
 		case SYS_open:
 		    c->GPRx = fs_open((char *)a[1], (int)a[2], (int)a[3]);
@@ -38,7 +43,7 @@ _Context* do_syscall(_Context *c) {
 			break;
         case SYS_execve:
             assert(0);
-            context_uload(&pcbbase[1], (char *)a[1]);
+            //context_uload(&pcbbase[1], (char *)a[1]);
             //args_uload(NULL, (char *)a[1], (char **)a[2], (char **)a[3]);
             //naive_uload(NULL, (char *)a[1]);
             c->GPRx = 0;

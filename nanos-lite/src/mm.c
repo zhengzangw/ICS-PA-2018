@@ -29,7 +29,6 @@ int mm_brk(uintptr_t new_brk) {
     }
     current->max_brk = new_brk_align;
   }
-  current->cur_brk = new_brk;
   return 0;
 }
 
