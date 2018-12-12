@@ -105,6 +105,8 @@ int main(int argc, char *argv[], char *envp[]) {
     }
 
       printf("BEFORE execve");
+      printf("BEFORE execve");
+
     if (i != -1 && i <= i_max) {
       i += page * 10;
       auto *item = &items[i];
