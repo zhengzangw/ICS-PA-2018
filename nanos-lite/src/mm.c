@@ -17,18 +17,12 @@ void free_page(void *p) {
 /* The brk() system call handler. */
 extern PCB* current;
 int mm_brk(uintptr_t new_brk) {
-  if (current->max_brk < new_brk){
-    uint32_t new_brk_align = (new_brk & ~0xfff) + 0x1000;
-    uint32_t szneed = new_brk_align - current->max_brk;
-    uint32_t pgnum = szneed / PGSIZE;
-    uintptr_t va = current->max_brk;
-    for (int i=0; i < pgnum; ++i){
-        void *pa = new_page(1);
-        _map(&current->as, (void* )va, pa, 1);
-        va += PGSIZE;
-    }
-    current->max_brk = new_brk_align;
+  while (current->max_brk <= new_brk){
+    void *pa = new_page(1);
+    _map(&current->as, (void *)current->max_brk, pa, 1);
+    current->max_brk += PGSIZE;
   }
+  //Log("max_brk = %x", current->max_brk);
   return 0;
 }
 

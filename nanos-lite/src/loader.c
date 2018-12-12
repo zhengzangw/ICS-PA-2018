@@ -20,17 +20,14 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
     uint32_t nr_page = filesz / PGSIZE + 1;
     void *va = (void *)DEFAULT_ENTRY;
     for (int i=0; i < nr_page; ++i){
-        //Log("va = %x", va);
         void *pa = new_page(1);
-        //Log("pa = %x", pa);
         _map(&pcb->as, va, pa, 1);
         fs_read(fd, pa, PGSIZE);
         filesz -= PGSIZE;
-        //Log("Filesz = %x", filesz);
         va += PGSIZE;
     }
-    pcb->max_brk = (uintptr_t) va;
-    //Log("Finish Allocating page");
+    pcb->max_brk = pcb->cur_brk = (uintptr_t) va;
+    //Log("defualt: %x", pcb->max_brk);
 #endif
   return DEFAULT_ENTRY;
 }
