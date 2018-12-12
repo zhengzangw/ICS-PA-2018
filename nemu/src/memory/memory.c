@@ -77,6 +77,7 @@ uint32_t vaddr_read(vaddr_t addr, int len) {
 }
 
 void vaddr_write(vaddr_t addr, uint32_t data, int len) {
+  if (addr > 0xc0000000) Log("addr = %x", addr);
   if (PG) {
       if (CROSS_PGBOUND(addr, len)){
         uint32_t lo_len = ((addr+len-1)&~0xfff) - addr;
