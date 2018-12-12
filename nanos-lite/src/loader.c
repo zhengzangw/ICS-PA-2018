@@ -26,7 +26,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
         filesz -= PGSIZE;
         va += PGSIZE;
     }
-    pcb->max_brk = pcb->cur_brk = (uintptr_t) va;
+    pcb->max_brk = pcb->cur_brk = (uintptr_t) va+PGSIZE;
     //Log("defualt: %x", pcb->max_brk);
 #endif
   return DEFAULT_ENTRY;
