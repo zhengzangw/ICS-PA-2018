@@ -114,6 +114,7 @@ int main(int argc, char *argv[], char *envp[]) {
       exec_argv[2] = NULL;
       clear_display();
       printf("\n");
+      printf("\n");
       execve(exec_argv[0], (char**)exec_argv, (char**)envp);
       fprintf(stderr, "\033[31m[ERROR]\033[0m Exec %s failed.\n\n", exec_argv[0]);
     } else {
