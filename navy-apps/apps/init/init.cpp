@@ -66,6 +66,7 @@ static void display_menu(int n);
 
 
 int main(int argc, char *argv[], char *envp[]) {
+  printf("qswll\n");
   if (!freopen("/dev/tty", "r", stdin) ||
       !freopen("/dev/tty", "w", stdout) ||
       !freopen("/dev/tty", "w", stderr)) {
