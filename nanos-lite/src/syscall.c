@@ -5,6 +5,7 @@
 
 extern PCB* current;
 extern PCB* pcbbase;
+extern uint32_t proc_ctrl;
 _Context* do_syscall(_Context *c) {
   uintptr_t a[4];
   a[0] = c->GPR1;
@@ -46,11 +47,12 @@ _Context* do_syscall(_Context *c) {
 			break;
         case SYS_execve:
             context_uload(&pcbbase[1], (char *)a[1]);
-            current = &pcbbase[1];
+            proc_ctrl = 1;
+            _yield();
             c->GPRx = 0;
-            return current->cp;
             //args_uload(NULL, (char *)a[1], (char **)a[2], (char **)a[3]);
             //naive_uload(NULL, (char *)a[1]);
+            break;
     default: panic("Unhandled syscall ID = %d", a[0]);
   }
 
