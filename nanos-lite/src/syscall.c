@@ -15,7 +15,6 @@ _Context* do_syscall(_Context *c) {
 
   switch (a[0]) {
 		case SYS_exit :
-            _halt(a[1]);
             //Log("In exit: before load");
             //naive_uload(NULL, "/bin/init");
             proc_ctrl = 0;
@@ -48,7 +47,6 @@ _Context* do_syscall(_Context *c) {
 			c->GPRx = fs_write((int)a[1], (void *)a[2], (size_t)a[3]);
 			break;
         case SYS_execve:
-            assert(0);
             context_uload(&pcbbase[3], (char *)a[1]);
             proc_ctrl = 3;
             _yield();
