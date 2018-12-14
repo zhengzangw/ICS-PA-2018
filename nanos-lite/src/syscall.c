@@ -46,9 +46,9 @@ _Context* do_syscall(_Context *c) {
 			break;
         case SYS_execve:
             context_uload(&pcbbase[1], (char *)a[1]);
-            PCB* chng = &pcbbase[1];
+            current = &pcbbase[1];
             c->GPRx = 0;
-            return chng->cp;
+            return current->cp;
             //args_uload(NULL, (char *)a[1], (char **)a[2], (char **)a[3]);
             //naive_uload(NULL, (char *)a[1]);
     default: panic("Unhandled syscall ID = %d", a[0]);
