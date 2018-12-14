@@ -86,7 +86,7 @@ int _map(_Protect *p, void *va, void *pa, int mode) {
     if (!(pde[pde_idx]&0x1)){
         pde[pde_idx] = (uint32_t) pgalloc_usr(1) | PTE_P;
     }
-    PTE* pte = (PTE*) (pde[pde_idx] & ~0x3ff);
+    PTE* pte = (PTE*) (pde[pde_idx] & ~0xfff);
     pte[pte_idx] = (uint32_t)pa | PTE_P;
   }
   return 0;
