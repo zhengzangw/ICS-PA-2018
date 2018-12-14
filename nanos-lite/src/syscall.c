@@ -27,7 +27,7 @@ _Context* do_syscall(_Context *c) {
                 c->GPRx = current->cur_brk;
                 current->cur_brk = current->cur_brk + a[1];
             }
-            Log("max_brk = %x", current->max_brk);
+            //Log("max_brk = %x", current->max_brk);
 			break;
 		case SYS_open:
 		    c->GPRx = fs_open((char *)a[1], (int)a[2], (int)a[3]);
@@ -47,11 +47,10 @@ _Context* do_syscall(_Context *c) {
         case SYS_execve:
             context_uload(&pcbbase[1], (char *)a[1]);
             PCB* chng = &pcbbase[1];
+            c->GPRx = 0;
             return chng->cp;
             //args_uload(NULL, (char *)a[1], (char **)a[2], (char **)a[3]);
             //naive_uload(NULL, (char *)a[1]);
-            c->GPRx = 0;
-            break;
     default: panic("Unhandled syscall ID = %d", a[0]);
   }
 
