@@ -24,14 +24,14 @@ void init_proc() {
 	//naive_uload(NULL, "/bin/init");
     //context_kload(&pcb[1], (void *)hello_fun);
     context_uload(&pcb[1], "/bin/hello");
-    context_uload(&pcb[0], "/bin/pal");
+    //context_uload(&pcb[0], "/bin/pal");
     switch_boot_pcb();
 }
 
 uint32_t proc_ctrl;
 _Context* schedule(_Context *prev) {
   current->cp = prev;
-  //current = &pcb[proc_ctrl];
-  current = (current == &pcb[0] ? &pcb[1] : &pcb[0]);
+  current = &pcb[1];
+  //current = (current == &pcb[0] ? &pcb[1] : &pcb[0]);
   return current->cp;
 }
