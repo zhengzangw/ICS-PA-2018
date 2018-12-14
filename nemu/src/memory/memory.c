@@ -97,13 +97,12 @@ void vaddr_write(vaddr_t addr, uint32_t data, int len) {
   //if (addr>0x8000000) Log("waddr = %x", addr);
   is_write = 1;
   if (PG) {
-      Log("CROSS in write");
       if (CROSS_PGBOUND(addr, len)){
         uint32_t lo_len = 0x1000 - (addr&0xfff);
         uint32_t hi_len = len - lo_len;
         paddr_t lo_paddr = page_translation(addr);
         paddr_t hi_paddr = page_translation(addr+lo_len);
-        paddr_write(lo_paddr, data & ~((-1)<<(8*lo_len)), lo_len);
+        paddr_write(lo_paddr, data & ~((0xffffffff)<<(8*lo_len)), lo_len);
         paddr_write(hi_paddr, data >> (8*lo_len), hi_len);
       } else {
         paddr_t paddr = page_translation(addr);
