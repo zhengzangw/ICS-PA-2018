@@ -42,7 +42,8 @@ typedef union {
     };
 } Vaddr;
 bool is_write;
-#define CROSS_PGBOUND(addr,len) ((addr>>12)!=((addr+len-1)>>12))
+//#define CROSS_PGBOUND(addr,len) ((addr>>12)!=((addr+len-1)>>12))
+#define CROSS_PGBOUND(addr,len) ((addr&0xfff)+len-1>0xfff)
 #define SET_DIRTY(x) (is_write?((x)|0x40):(x))
 #define SET_ACCESS(x) ((x)|0x20)
 
@@ -81,7 +82,7 @@ uint32_t vaddr_read(vaddr_t addr, int len) {
         paddr_t hi_paddr = page_translation(addr+lo_len);
         uint32_t lo = paddr_read(lo_paddr, lo_len);
         uint32_t hi = paddr_read(hi_paddr, hi_len);
-        return lo | (hi<<(lo_len*8));
+        return lo + (hi<<(lo_len*8));
       } else {
           paddr_t paddr = page_translation(addr);
           return paddr_read(paddr, len);
