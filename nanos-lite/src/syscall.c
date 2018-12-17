@@ -19,6 +19,7 @@ _Context* do_syscall(_Context *c) {
             //naive_uload(NULL, "/bin/init");
             //proc_ctrl = 0;
             //_yield();
+            assert(0);
             _halt(a[0]);
             panic("Should not reach here!");
             break;
