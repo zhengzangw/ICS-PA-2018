@@ -24,8 +24,8 @@ bool proc_hang[MAX_NR_PROC];
 uint32_t proc_cur,proc_cur_select;
 void init_proc() {
     //context_kload(&pcb[1], (void *)hello_fun);
-    context_uload(&pcb[0], "/bin/hello");  proc_hang[0] = false;
-    context_uload(&pcb[1], "/bin/bmptest"); proc_hang[1] = false;
+    context_uload(&pcb[1], "/bin/hello");  proc_hang[0] = false;
+    context_uload(&pcb[0], "/bin/bmptest"); proc_hang[1] = false;
     context_uload(&pcb[2], "/bin/bmptest"); proc_hang[2] = true;
     context_uload(&pcb[3], "/bin/init"); proc_hang[3] = true;
     proc_cur = 0;
