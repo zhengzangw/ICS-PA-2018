@@ -2,9 +2,10 @@
 #include "syscall.h"
 
 #define MAX_NR_PROC 4
-uint32_t time_slice[MAX_NR_PROC] = {10,1,0,0};
-uint32_t time_count, cur_proc;
-uint32_t total_proc = 2;
+uint32_t time_slice[MAX_NR_PROC] = {1,1,1,1};
+extern uint32_t proc_cur;
+extern bool proc_hang[MAX_NR_PROC];
+uint32_t time_count;
 
 static _Context* do_event(_Event e, _Context* c) {
   switch (e.event) {
@@ -17,9 +18,8 @@ static _Context* do_event(_Event e, _Context* c) {
         case _EVENT_IRQ_TIMER:
             //Log("receive _EVENT_IRQ_TIMER");
             time_count++;
-            if (time_count == time_slice[cur_proc]){
+            if (time_count == time_slice[proc_cur]){
               time_count = 0;
-              cur_proc = (cur_proc + 1)%total_proc;
               _yield();
             }
             break;

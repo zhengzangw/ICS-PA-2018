@@ -33,13 +33,13 @@ void init_proc() {
     switch_boot_pcb();
 }
 
-#define proc_switch ((proc_cur+i)%4)
+#define PROC_SWITCH ((proc_cur+i)%4)
 _Context* schedule(_Context *prev) {
   current->cp = prev;
   for (int i=1;i<=4;++i){
-    if (!proc_hang[proc_switch]){
-      current = &pcb[proc_switch];
-      proc_cur = proc_switch;
+    if (!proc_hang[PROC_SWITCH]){
+      current = &pcb[PROC_SWITCH];
+      proc_cur = PROC_SWITCH;
     }
   }
   return current->cp;
