@@ -19,7 +19,7 @@ _Context* irq_handle(_Context *tf) {
     switch (tf->irq) {
       case 0x80: ev.event = _EVENT_SYSCALL; break;
       case 0x81: ev.event = _EVENT_YIELD; break;
-      case 32: ev.event = _EVENT_IRQ_TIMER; break;
+      case 32: ev.event = _EVENT_YIELD; break;
       default: ev.event = _EVENT_ERROR; break;
     }
 
