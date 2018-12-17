@@ -37,10 +37,6 @@ void init_proc() {
 
 _Context* schedule(_Context *prev) {
   current->cp = prev;
-  if (proc_select){
-    current = &pcb[proc_cur_select];
-    proc_select = false;
-  } else {
     for (int i=1;i<=MAX_NR_PROC;++i){
       uint32_t proc_switch = (proc_cur+i)%MAX_NR_PROC;
       if (!proc_hang[proc_switch]){
@@ -48,7 +44,6 @@ _Context* schedule(_Context *prev) {
         proc_cur = proc_switch;
         break;
       }
-    }
   }
   return current->cp;
 }
