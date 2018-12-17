@@ -50,8 +50,8 @@ _Context* do_syscall(_Context *c) {
         case SYS_execve:
             context_uload(&pcbbase[proc_cur_select], (char *)a[1]);
             proc_change(proc_cur_select);
-            _yield();
             c->GPRx = 0;
+            return pcbbase[proc_cur_select].cp;
             //args_uload(NULL, (char *)a[1], (char **)a[2], (char **)a[3]);
             //naive_uload(NULL, (char *)a[1]);
             break;
