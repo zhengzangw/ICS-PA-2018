@@ -48,6 +48,7 @@ _Context* do_syscall(_Context *c) {
 			c->GPRx = fs_write((int)a[1], (void *)a[2], (size_t)a[3]);
 			break;
         case SYS_execve:
+            assert(0);
             proc_add((const char *)a[1]);
             c->GPRx = 0;
             //args_uload(NULL, (char *)a[1], (char **)a[2], (char **)a[3]);
