@@ -16,12 +16,9 @@ _Context* do_syscall(_Context *c) {
 
   switch (a[0]) {
 		case SYS_exit :
-            //naive_uload(NULL, "/bin/init");
-            //_yield();
-            assert(0);
-            //_halt(a[0]);
-            //panic("Should not reach here!");
-            break;
+            context_uload(&pcbbase[proc_cur_select], (const char *)"/bin/init");
+            c->GPRx = 0;
+            return pcbbase[proc_cur_select].cp;
 		case SYS_yield: _yield(); c->GPRx = 0; break;
 		case SYS_brk:
             if (mm_brk(current->cur_brk + a[1])){
@@ -49,12 +46,10 @@ _Context* do_syscall(_Context *c) {
 			break;
         case SYS_execve:
             context_uload(&pcbbase[proc_cur_select], (char *)a[1]);
-            proc_change(proc_cur_select);
             c->GPRx = 0;
             return pcbbase[proc_cur_select].cp;
             //args_uload(NULL, (char *)a[1], (char **)a[2], (char **)a[3]);
             //naive_uload(NULL, (char *)a[1]);
-            break;
     default: panic("Unhandled syscall ID = %d", a[0]);
   }
 

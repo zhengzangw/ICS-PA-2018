@@ -22,7 +22,6 @@ void hello_fun(void *arg) {
 
 bool proc_hang[MAX_NR_PROC];
 uint32_t proc_cur,proc_cur_select;
-bool proc_select;
 void init_proc() {
     //context_kload(&pcb[1], (void *)hello_fun);
     context_uload(&pcb[0], "/bin/hello");  proc_hang[0] = true;
@@ -31,7 +30,6 @@ void init_proc() {
     context_uload(&pcb[3], "/bin/init"); proc_hang[3] = true;
     proc_cur = 1;
     proc_cur_select = 1;
-    proc_select = true;
     switch_boot_pcb();
 }
 
@@ -52,5 +50,4 @@ void proc_change(uint32_t p){
   proc_hang[proc_cur_select] = true;
   proc_hang[p] = false;
   proc_cur_select = p;
-  proc_select = true;
 }
