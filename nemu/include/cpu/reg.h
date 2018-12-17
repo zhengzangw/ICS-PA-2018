@@ -27,7 +27,7 @@ typedef struct {
 	  uint32_t eflags;
 	  struct {
 		  uint8_t CF : 1;
-	    uint8_t : 1;
+	      uint8_t : 1;
 		  uint8_t PF : 1;
 		  uint8_t : 1;
 		  uint8_t AF : 1;
@@ -40,9 +40,10 @@ typedef struct {
 		  uint8_t OF : 1;
 		  uint8_t IOPL : 2;
 		  uint8_t NT : 1;
-      uint8_t : 1;
+          uint8_t : 1;
 		  uint8_t RF : 1;
 		  uint8_t VM : 1;
+          uint16_t : 14;
 	  };
   };
 
