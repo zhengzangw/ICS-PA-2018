@@ -60,6 +60,7 @@ _Context *_kcontext(_Area stack, void (*entry)(void *), void *arg) {
   c->eip= (intptr_t)entry;
   c->cs = 8;
   c->prot = kbase;
+  *((uintptr_t *)stack.start) = (uintptr_t)c;
   return c;
 }
 
