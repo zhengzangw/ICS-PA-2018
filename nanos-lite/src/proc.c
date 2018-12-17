@@ -22,6 +22,7 @@ void hello_fun(void *arg) {
 
 bool proc_hang[MAX_NR_PROC];
 uint32_t proc_cur,proc_cur_select;
+bool proc_select;
 void init_proc() {
     //context_kload(&pcb[1], (void *)hello_fun);
     context_uload(&pcb[0], "/bin/hello");  proc_hang[0] = false;
@@ -30,17 +31,23 @@ void init_proc() {
     context_uload(&pcb[3], "/bin/init"); proc_hang[3] = true;
     proc_cur = 0;
     proc_cur_select = 1;
+    proc_select = true;
     switch_boot_pcb();
 }
 
 _Context* schedule(_Context *prev) {
   current->cp = prev;
-  for (int i=1;i<=4;++i){
-    uint32_t proc_switch = (proc_cur+i)%4;
-    if (!proc_hang[proc_switch]){
-      current = &pcb[proc_switch];
-      proc_cur = proc_switch;
-      break;
+  if (proc_select){
+    current = &pcb[proc_cur_select];
+    proc_select = false;
+  } else {
+    for (int i=1;i<=4;++i){
+      uint32_t proc_switch = (proc_cur+i)%4;
+      if (!proc_hang[proc_switch]){
+        current = &pcb[proc_switch];
+        proc_cur = proc_switch;
+        break;
+      }
     }
   }
   return current->cp;
@@ -49,4 +56,5 @@ _Context* schedule(_Context *prev) {
 void proc_change(uint32_t p){
   proc_hang[proc_cur_select] = true;
   proc_hang[p] = false;
+  proc_select = true;
 }

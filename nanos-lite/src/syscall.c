@@ -6,6 +6,7 @@
 extern PCB* current;
 extern PCB* pcbbase;
 extern uint32_t proc_cur_select;
+void proc_change(uint32_t);
 _Context* do_syscall(_Context *c) {
   uintptr_t a[4];
   a[0] = c->GPR1;
@@ -50,6 +51,7 @@ _Context* do_syscall(_Context *c) {
 			break;
         case SYS_execve:
             context_uload(&pcbbase[proc_cur_select], (char *)a[1]);
+            proc_change(proc_cur_select);
             _yield();
             c->GPRx = 0;
             //args_uload(NULL, (char *)a[1], (char **)a[2], (char **)a[3]);
