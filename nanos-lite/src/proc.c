@@ -32,6 +32,6 @@ uint32_t proc_ctrl;
 _Context* schedule(_Context *prev) {
   current->cp = prev;
   current = &pcb[proc_ctrl];
-  //current = (current == &pcb[0] ? &pcb[1] : &pcb[0]);
+  current = (current == &pcb[0] ? &pcb[1] : &pcb[0]);
   return current->cp;
 }
