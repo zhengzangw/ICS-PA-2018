@@ -4,6 +4,7 @@
 void raise_intr(uint8_t NO, vaddr_t ret_addr) {
 // Push eflags, cs, eip
  rtl_push(&cpu.eflags);
+ cpu.IF = 0;
  rtl_push(&cpu.cs);
  rtl_addi(&t0, &cpu.eip, 2);
  rtl_push(&t0);
@@ -16,9 +17,10 @@ void raise_intr(uint8_t NO, vaddr_t ret_addr) {
 //Get offset
  assert(gatedesc_hi & 8000);
  uint32_t offset = (gatedesc_lo & 0xffff) + (gatedesc_hi & 0xffff0000);
-//Jump		
+//Jump
  rtl_j(offset);
 }
 
 void dev_raise_intr() {
+  cpu.INTR = 1;
 }
