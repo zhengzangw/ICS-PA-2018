@@ -16,12 +16,18 @@ static const char *keyname[256] __attribute__((used)) = {
   _KEYS(NAME)
 };
 
+void proc_change(uint32_t);
 size_t events_read(void *buf, size_t offset, size_t len) {
   int key = read_key();
 	if (key) {
 			if (key&0x8000){
 				sprintf(buf, "kd %s\n", keyname[key&0x7fff]);
-				//sprintf(buf, "kd %d\n", key);
+                switch (key){
+                  case 32807: proc_change(1); break;
+                  case 32808: proc_change(2); break;
+                  case 32809: proc_change(3); break;
+                  default: break;
+                }
 			}
 			else{
 				sprintf(buf, "ku %s\n", keyname[key&0x7fff]);
