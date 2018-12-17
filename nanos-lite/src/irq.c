@@ -15,7 +15,7 @@ static _Context* do_event(_Event e, _Context* c) {
             return schedule(c);
 			break;
         case _EVENT_IRQ_TIMER:
-            Log("receive _EVENT_IRQ_TIMER");
+            //Log("receive _EVENT_IRQ_TIMER");
             time_count++;
             if (time_count == time_slice[cur_proc]){
               time_count = 0;
