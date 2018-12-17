@@ -2,12 +2,13 @@
 #include "memory/mmu.h"
 
 void raise_intr(uint8_t NO, vaddr_t ret_addr) {
-// Push eflags, cs, eip
+// Push eflags, cs, ret_addr
  rtl_push(&cpu.eflags);
  cpu.IF = 0;
  rtl_push(&cpu.cs);
- rtl_addi(&t0, &cpu.eip, 2);
- rtl_push(&t0);
+ //rtl_addi(&t0, &cpu.eip, 2);
+ //rtl_push(&t0);
+ rtl_push(&ret_addr);
 //Get idt address
  rtlreg_t addr = cpu.idtr.addr + NO*8;
  assert(addr < cpu.idtr.addr+cpu.idtr.size);
