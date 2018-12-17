@@ -1,6 +1,6 @@
 #include "proc.h"
 
-#define MAX_NR_PROC 4
+#define MAX_NR_PROC 8
 
 static PCB pcb[MAX_NR_PROC] __attribute__((used));
 static PCB pcb_boot;
@@ -21,17 +21,21 @@ void hello_fun(void *arg) {
 }
 
 bool proc_hang[MAX_NR_PROC];
+uint32_t proc_valid[MAX_NR_PROC];
+uint32_t init_back[MAX_NR_PROC];
 uint32_t proc_cur,proc_cur_select;
-bool proc_select;
+bool proc_select, proc_add_init;
 void init_proc() {
     //context_kload(&pcb[1], (void *)hello_fun);
     context_uload(&pcb[0], "/bin/hello");  proc_hang[0] = true;
     context_uload(&pcb[1], "/bin/init"); proc_hang[1] = false;
-    context_uload(&pcb[2], "/bin/events"); proc_hang[2] = true;
+    context_uload(&pcb[2], "/bin/init"); proc_hang[2] = true;
     context_uload(&pcb[3], "/bin/init"); proc_hang[3] = true;
+    proc_valid[0] = proc_valid[1] = proc_valid[2] = proc_valid[3] = 1;
     proc_cur = 1;
     proc_cur_select = 1;
     proc_select = true;
+    proc_add_init = false;
     switch_boot_pcb();
 }
 
@@ -54,8 +58,23 @@ _Context* schedule(_Context *prev) {
 }
 
 void proc_change(uint32_t p){
+  if (proc_add_init){
+    proc_add_init = false;
+    init_back[p] = proc_cur_select;
+  }
   proc_hang[proc_cur_select] = true;
   proc_hang[p] = false;
   proc_cur_select = p;
   proc_select = true;
+}
+
+void proc_add(const char * filename){
+    for (int i=0; i<MAX_NR_PROC; ++i){
+        if (!proc_valid[i]){
+          context_uload(&pcb[i], filename);
+          proc_add_init = true;
+          proc_change(i);
+          break;
+        }
+    }
 }
