@@ -46,7 +46,6 @@ _Context* schedule(_Context *prev) {
       if (!proc_hang[proc_switch]){
         current = &pcb[proc_switch];
         proc_cur = proc_switch;
-        Log("proc_cur = %d", proc_switch);
         break;
       }
     }
