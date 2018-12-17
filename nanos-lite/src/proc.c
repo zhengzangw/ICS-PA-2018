@@ -57,5 +57,6 @@ _Context* schedule(_Context *prev) {
 void proc_change(uint32_t p){
   proc_hang[proc_cur_select] = true;
   proc_hang[p] = false;
+  proc_cur_select = p;
   proc_select = true;
 }
