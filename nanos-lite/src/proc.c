@@ -41,11 +41,12 @@ _Context* schedule(_Context *prev) {
     current = &pcb[proc_cur_select];
     proc_select = false;
   } else {
-    for (int i=1;i<=4;++i){
-      uint32_t proc_switch = (proc_cur+i)%4;
+    for (int i=1;i<=MAX_NR_PROC;++i){
+      uint32_t proc_switch = (proc_cur+i)%MAX_NR_PROC;
       if (!proc_hang[proc_switch]){
         current = &pcb[proc_switch];
         proc_cur = proc_switch;
+        Log("proc_cur = %d", proc_switch);
         break;
       }
     }

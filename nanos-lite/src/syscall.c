@@ -16,6 +16,7 @@ _Context* do_syscall(_Context *c) {
 
   switch (a[0]) {
 		case SYS_exit :
+            Log("EXIT");
             //naive_uload(NULL, "/bin/init");
             //_yield();
             //assert(0);
@@ -48,8 +49,8 @@ _Context* do_syscall(_Context *c) {
 			c->GPRx = fs_write((int)a[1], (void *)a[2], (size_t)a[3]);
 			break;
         case SYS_execve:
-            context_uload(&pcbbase[proc_cur_select+1], (char *)a[1]);
-            proc_change(proc_cur_select+1);
+            context_uload(&pcbbase[2], (char *)a[1]);
+            proc_change(2);
             c->GPRx = 0;
             //args_uload(NULL, (char *)a[1], (char **)a[2], (char **)a[3]);
             //naive_uload(NULL, (char *)a[1]);
