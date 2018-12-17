@@ -35,10 +35,10 @@ void init_proc() {
 
 #define PROC_SWITCH ((proc_cur+i)%4)
 _Context* schedule(_Context *prev) {
-  Log("HHH");
   current->cp = prev;
   for (int i=1;i<=4;++i){
     if (!proc_hang[PROC_SWITCH]){
+  Log("HHH");
       current = &pcb[PROC_SWITCH];
       proc_cur = PROC_SWITCH;
     }
