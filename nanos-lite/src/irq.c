@@ -2,7 +2,7 @@
 #include "syscall.h"
 
 #define MAX_NR_PROC 4
-uint32_t time_slice[MAX_NR_PROC] = {1,1,1,1};
+uint32_t time_slice[MAX_NR_PROC] = {10,10,10,10};
 extern uint32_t proc_cur;
 extern bool proc_hang[MAX_NR_PROC];
 uint32_t time_count;
