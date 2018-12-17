@@ -5,7 +5,6 @@
 
 extern PCB* current;
 extern PCB* pcbbase;
-extern uint32_t proc_ctrl;
 _Context* do_syscall(_Context *c) {
   uintptr_t a[4];
   a[0] = c->GPR1;
@@ -17,9 +16,9 @@ _Context* do_syscall(_Context *c) {
 		case SYS_exit :
             //Log("In exit: before load");
             //naive_uload(NULL, "/bin/init");
-            proc_ctrl = 0;
-            _yield();
-            //_halt(a[0]);
+            //proc_ctrl = 0;
+            //_yield();
+            _halt(a[0]);
             panic("Should not reach here!");
             break;
 		case SYS_yield: _yield(); c->GPRx = 0; break;
@@ -48,8 +47,8 @@ _Context* do_syscall(_Context *c) {
 			c->GPRx = fs_write((int)a[1], (void *)a[2], (size_t)a[3]);
 			break;
         case SYS_execve:
+            assert(0);
             context_uload(&pcbbase[3], (char *)a[1]);
-            proc_ctrl = 3;
             _yield();
             c->GPRx = 0;
             //args_uload(NULL, (char *)a[1], (char **)a[2], (char **)a[3]);

@@ -20,18 +20,32 @@ void hello_fun(void *arg) {
   }
 }
 
+bool proc_hang[MAX_NR_PROC];
+uint32_t proc_cur,proc_cur_select;
 void init_proc() {
-	//naive_uload(NULL, "/bin/init");
     //context_kload(&pcb[1], (void *)hello_fun);
-    //context_uload(&pcb[1], "/bin/hello");
-    context_uload(&pcb[0], "/bin/events");
+    context_uload(&pcb[0], "/bin/hello");  proc_hang[0] = false;
+    context_uload(&pcb[1], "/bin/events"); proc_hang[1] = false;
+    context_uload(&pcb[2], "/bin/bmptest"); proc_hang[2] = true;
+    context_uload(&pcb[3], "/bin/init"); proc_hang[3] = true;
+    proc_cur = 0;
+    proc_cur_select = 1;
     switch_boot_pcb();
 }
 
-uint32_t proc_ctrl;
+#define proc_switch ((proc_cur+i)%4)
 _Context* schedule(_Context *prev) {
   current->cp = prev;
-  current = &pcb[proc_ctrl];
-  //current = (current == &pcb[0] ? &pcb[1] : &pcb[0]);
+  for (int i=1;i<=4;++i){
+    if (!proc_hang[proc_switch]){
+      current = &pcb[proc_switch];
+      proc_cur = proc_switch;
+    }
+  }
   return current->cp;
+}
+
+void proc_change(uint32_t p){
+  proc_hang[proc_cur_select] = true;
+  proc_hang[p] = false;
 }
