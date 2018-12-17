@@ -16,13 +16,11 @@ _Context* do_syscall(_Context *c) {
 
   switch (a[0]) {
 		case SYS_exit :
-            //Log("In exit: before load");
             //naive_uload(NULL, "/bin/init");
-            //proc_ctrl = 0;
             //_yield();
-            assert(0);
-            _halt(a[0]);
-            panic("Should not reach here!");
+            //assert(0);
+            //_halt(a[0]);
+            //panic("Should not reach here!");
             break;
 		case SYS_yield: _yield(); c->GPRx = 0; break;
 		case SYS_brk:
