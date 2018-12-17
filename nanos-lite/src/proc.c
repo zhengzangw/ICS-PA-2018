@@ -24,7 +24,7 @@ void init_proc() {
 	//naive_uload(NULL, "/bin/init");
     //context_kload(&pcb[1], (void *)hello_fun);
     //context_uload(&pcb[1], "/bin/hello");
-    context_uload(&pcb[0], "/bin/event");
+    context_uload(&pcb[0], "/bin/events");
     switch_boot_pcb();
 }
 
