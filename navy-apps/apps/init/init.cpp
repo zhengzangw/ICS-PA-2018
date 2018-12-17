@@ -31,6 +31,13 @@ struct MenuItem {
   {"events", "/bin/events", NULL},
   {"hello", "/bin/hello", NULL},
   {"text", "/bin/text", NULL},
+  {"coremark-am", "/bin/coremark-am", NULL},
+  {"dhrystone-am", "/bin/dhrystone-am", NULL},
+  {"hello-am", "/bin/hello-am", NULL},
+  {"microbench-am", "/bin/microbench-am", NULL},
+  {"slider-am", "/bin/slider-am", NULL},
+  {"typing-am", "/bin/typing-am", NULL},
+  {"litenes-am", "/bin/litenes-am", NULL}
 };
 
 #define nitems (sizeof(items) / sizeof(items[0]))
