@@ -19,22 +19,21 @@ static const char *keyname[256] __attribute__((used)) = {
 void proc_change(uint32_t);
 size_t events_read(void *buf, size_t offset, size_t len) {
   int key = read_key();
-	if (key) {
-			if (key&0x8000){
-				sprintf(buf, "kd %s\n", keyname[key&0x7fff]);
-                switch (key){
-                  case 32807: proc_change(1); Log("Change to proc 1"); break;
-                  case 32808: proc_change(2); Log("Change to proc 2"); break;
-                  case 32809: proc_change(3); Log("Change to proc 3"); break;
-                  default: break;
-                }
-			}
-			else{
-				sprintf(buf, "ku %s\n", keyname[key&0x7fff]);
-			}
-	} else {
-			sprintf(buf, "t %u\n", uptime());
+  if (key) {
+  if (key&0x8000){
+    sprintf(buf, "kd %s\n", keyname[key&0x7fff]);
+      switch (key){
+        case 32807: proc_change(1); Log("Change to proc 1"); break;
+        case 32808: proc_change(2); Log("Change to proc 2"); break;
+        case 32809: proc_change(3); Log("Change to proc 3"); break;
+        default: break;
+      }
+	}else{
+      sprintf(buf, "ku %s\n", keyname[key&0x7fff]);
 	}
+  } else {
+    sprintf(buf, "t %u\n", uptime());
+  }
   return strlen(buf);
 }
 
