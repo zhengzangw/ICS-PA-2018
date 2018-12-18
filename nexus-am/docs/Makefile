@@ -1,4 +1,4 @@
-MDS    = $(shell find -s src -name "*.md")
+MDS    = $(shell find src -name "*.md")
 OUTPUT = ambook.html
 
 RENDER_LIST = $(foreach f, $(MDS), $(f) .blankline)
